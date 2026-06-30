@@ -1,37 +1,37 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { MapPin, ArrowUpRight } from "lucide-react";
 
 const projects = [
   { id: 1, title: "Villa, Pea Cock Enclave-4", location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=85&auto=format&fit=crop" },
   { id: 2, title: "Dev Pristine Villa",        location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=85&auto=format&fit=crop" },
-  { id: 3, title: "Villa, Pushpa Ave",         location: "KK",      year: "2026", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=85&auto=format&fit=crop" },
+  { id: 3, title: "Villa, Pushpa Ave",         location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=85&auto=format&fit=crop" },
   { id: 4, title: "Dev Pristine Villa",        location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=700&q=85&auto=format&fit=crop" },
   { id: 5, title: "Dev Heritage Homes",        location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=85&auto=format&fit=crop" },
   { id: 6, title: "Green Valley Villas",       location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=700&q=85&auto=format&fit=crop" },
   { id: 7, title: "Pearl Residences",          location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85&auto=format&fit=crop" },
 ];
 
-const trackVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 48, scale: 0.92, filter: "blur(8px)" },
-  show: {
-    opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
-    transition: { type: "spring" as const, stiffness: 65, damping: 18, mass: 0.9 },
-  },
-};
-
 export default function ProjectsCarousel() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef  = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState(2); // center card starts active
+
+  /* Update active index based on scroll position */
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handler = () => {
+      const cardW = el.scrollWidth / projects.length;
+      const idx   = Math.round(el.scrollLeft / cardW);
+      setActive(Math.min(Math.max(idx, 0), projects.length - 1));
+    };
+    el.addEventListener("scroll", handler, { passive: true });
+    return () => el.removeEventListener("scroll", handler);
+  }, []);
 
   return (
-    <section id="projects" className="py-16 lg:py-24 bg-white">
+    <section id="projects" className="py-16 lg:py-24 bg-white overflow-hidden">
 
       {/* Heading */}
       <motion.div
@@ -39,75 +39,94 @@ export default function ProjectsCarousel() {
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         viewport={{ once: false, amount: 0.5 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className="text-center px-4 mb-12"
+        className="text-center px-4 mb-10 sm:mb-14"
       >
-        <h2 className="text-[28px] sm:text-[36px] lg:text-[44px] font-black text-gray-900 leading-tight mb-3">
+        <h2 className="text-[24px] sm:text-[34px] lg:text-[44px] font-black text-gray-900 leading-tight mb-3">
           Creative{" "}
           <span className="text-[#b08c1c] italic">Projects That</span>
           <br />
           <span className="text-[#b08c1c] italic">Define</span>{" "}
           Our Style
         </h2>
-        <p className="text-gray-400 text-[13px] sm:text-sm max-w-sm mx-auto leading-relaxed">
+        <p className="text-gray-400 text-[12.5px] sm:text-[13.5px] max-w-sm mx-auto leading-relaxed font-secondary">
           Our diverse portfolio represents decades of construction experience backed by a
           passion for quality, outstanding client service.
         </p>
       </motion.div>
 
-      {/* Edge-bleeding scroll track */}
+      {/* Scroll track */}
       <motion.div
         ref={scrollRef}
-        variants={trackVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: false, amount: 0.05 }}
-        className="flex gap-5 overflow-x-auto pb-5 px-[clamp(20px,5vw,90px)] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.1 }}
+        transition={{ duration: 0.6 }}
+        className="flex gap-4 sm:gap-5 overflow-x-auto pb-8
+          px-[calc(50vw-110px)] sm:px-[calc(50vw-130px)] lg:px-[calc(50vw-160px)]
+          scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
+          scroll-smooth"
+        style={{ scrollSnapType: "x mandatory" }}
       >
-        {projects.map((proj) => (
-          <motion.div
-            key={proj.id}
-            variants={cardVariants}
-            className="group shrink-0 cursor-pointer w-[clamp(220px,70vw,280px)] sm:w-[clamp(240px,40vw,300px)] lg:w-[clamp(260px,27vw,320px)]"
-          >
-            {/* Card */}
-            <div className="relative rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.10)] h-[clamp(260px,60vw,320px)] sm:h-[clamp(280px,40vw,360px)] lg:h-[clamp(300px,34vw,420px)]">
+        {projects.map((proj, i) => {
+          const isActive = i === active;
+          return (
+            <motion.div
+              key={proj.id}
+              onClick={() => {
+                setActive(i);
+                const el = scrollRef.current;
+                if (!el) return;
+                const cardW = el.scrollWidth / projects.length;
+                el.scrollTo({ left: cardW * i, behavior: "smooth" });
+              }}
+              animate={{
+                scale:  isActive ? 1 : 0.88,
+                y:      isActive ? 0 : 20,
+              }}
+              transition={{ type: "spring" as const, stiffness: 300, damping: 28 }}
+              className="shrink-0 cursor-pointer"
+              style={{ scrollSnapAlign: "center" }}
+            >
+              {/* Image card */}
+              <div
+                className={`relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-[0_4px_24px_rgba(0,0,0,0.10)]
+                  transition-all duration-300
+                  w-55 sm:w-65 lg:w-75
+                  ${isActive
+                    ? "h-75 sm:h-90 lg:h-105"
+                    : "h-65 sm:h-77.5 lg:h-90"
+                  }
+                `}
+              >
+                <img
+                  src={proj.img}
+                  alt={proj.title}
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
 
-              {/* Image */}
-              <img
-                src={proj.img}
-                alt={proj.title}
-                className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
-              />
-
-              {/* Year pill — top left */}
-              <div className="absolute top-3.5 left-3.5 bg-white/90 backdrop-blur-sm text-gray-800 text-[10.5px] font-bold px-2.5 py-1 rounded-full shadow-sm">
-                {proj.year}
-              </div>
-
-              {/* Arrow button — top right, appears on hover */}
-              <div className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all duration-300">
-                <ArrowUpRight size={14} className="text-gray-800" />
-              </div>
-
-              {/* Bottom gradient + info */}
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pt-16 pb-4 px-4">
-                <div className="flex items-center gap-1 mb-1">
-                  <MapPin size={10} className="text-[#b08c1c] shrink-0" />
-                  <span className="text-[#d4a832] text-[10.5px] font-semibold">{proj.location}</span>
+                {/* Hover "View" badge */}
+                <div className="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                  <span className="bg-white text-gray-900 text-[11px] font-bold px-4 py-1.5 rounded-full shadow-md tracking-wide">
+                    View
+                  </span>
                 </div>
-                <h3 className="text-white font-bold text-[14px] leading-snug">{proj.title}</h3>
-
-                {/* "View Project" slides up on hover */}
-                <div className="mt-2.5 overflow-hidden h-6">
-                  <p className="text-white/70 text-[11px] font-medium translate-y-7 group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] flex items-center gap-1">
-                    View Project <ArrowUpRight size={10} />
-                  </p>
-                </div>
               </div>
 
-            </div>
-          </motion.div>
-        ))}
+              {/* Info below card */}
+              <div className="mt-3 sm:mt-4 px-1">
+                <p className="text-gray-400 text-[11px] sm:text-[12px] font-secondary mb-0.5">
+                  {proj.location}
+                </p>
+                <p className="text-gray-900 text-[13px] sm:text-[14.5px] font-bold leading-snug font-primary">
+                  {proj.title}
+                </p>
+                <p className="text-gray-400 text-[11px] sm:text-[12px] font-secondary mt-0.5">
+                  {proj.year}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
       </motion.div>
 
     </section>

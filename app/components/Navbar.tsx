@@ -91,23 +91,15 @@ export default function Navbar() {
             Contact
           </motion.a>
 
-          {/* Mobile: Contact pill + hamburger */}
-          <div className="md:hidden flex items-center gap-2">
-            <a
-              href="#contact"
-              className="px-4 py-1.5 rounded-full bg-[#e8612c] text-white text-[12px] font-semibold"
-            >
-              Contact
-            </a>
-            <button
-              type="button"
-              className="p-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
-            >
-              {menuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+          {/* Mobile: hamburger only */}
+          <button
+            type="button"
+            className="md:hidden p-2 text-gray-700 rounded-lg hover:bg-gray-100 transition-colors"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
 
         </div>
       </div>
@@ -122,7 +114,7 @@ export default function Navbar() {
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
-            <div className="px-4 sm:px-6 pt-2 pb-4">
+            <div className="px-4 sm:px-6 pt-2 pb-5">
               {navLinks.map((link) => {
                 const isActive = active === link.label;
                 return (
@@ -131,17 +123,21 @@ export default function Navbar() {
                     href={link.href}
                     onClick={() => { setActive(link.label); setMenuOpen(false); }}
                     className={`flex items-center gap-3 py-3.5 border-b border-gray-50 last:border-0 text-[14px] font-medium transition-colors duration-150 ${
-                      isActive ? "text-gray-900" : "text-gray-500 active:text-gray-900"
+                      isActive ? "text-gray-900" : "text-gray-500"
                     }`}
                   >
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#b08c1c] shrink-0" />
-                    )}
-                    {!isActive && <span className="w-1.5 h-1.5 shrink-0" />}
+                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isActive ? "bg-[#b08c1c]" : "bg-transparent"}`} />
                     {link.label}
                   </a>
                 );
               })}
+              <a
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                className="mt-4 flex items-center justify-center py-3 rounded-full bg-[#e8612c] text-white text-[14px] font-semibold hover:bg-[#d05525] transition-colors duration-200"
+              >
+                Contact Us
+              </a>
             </div>
           </motion.div>
         )}
