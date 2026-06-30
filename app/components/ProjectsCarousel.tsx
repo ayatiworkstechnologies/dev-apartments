@@ -23,7 +23,7 @@ const cardVariants = {
   hidden: { opacity: 0, y: 48, scale: 0.92, filter: "blur(8px)" },
   show: {
     opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 65, damping: 18, mass: 0.9 },
+    transition: { type: "spring" as const, stiffness: 65, damping: 18, mass: 0.9 },
   },
 };
 

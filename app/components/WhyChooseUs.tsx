@@ -14,7 +14,7 @@ const featureContainer = {
 };
 const featureItem = {
   hidden: { opacity: 0, y: 22, filter: "blur(5px)" },
-  show:   { opacity: 1, y: 0,  filter: "blur(0px)", transition: { type: "spring", stiffness: 65, damping: 17 } },
+  show:   { opacity: 1, y: 0,  filter: "blur(0px)", transition: { type: "spring" as const, stiffness: 65, damping: 17 } },
 };
 
 export default function WhyChooseUs() {

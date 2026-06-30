@@ -46,7 +46,7 @@ const avatarContainer = {
 };
 const avatarItem = {
   hidden: { scale: 0, opacity: 0 },
-  show:   { scale: 1, opacity: 1, transition: { type: "spring", stiffness: 260, damping: 20 } },
+  show:   { scale: 1, opacity: 1, transition: { type: "spring" as const, stiffness: 260, damping: 20 } },
   exit:   { scale: 0, opacity: 0, transition: { duration: 0.25 } },
 };
 
