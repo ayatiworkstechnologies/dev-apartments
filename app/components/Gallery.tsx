@@ -34,7 +34,7 @@ const trackB = [...rowB, ...rowB, ...rowB, ...rowB];
 
 function GalleryImage({ src, alt }: { src: string; alt: string }) {
   return (
-    <div className="relative group shrink-0 overflow-hidden rounded-2xl h-72 sm:h-80 lg:h-96 mr-4 shadow-[0_2px_20px_rgba(0,0,0,0.09)]">
+    <div className="relative group shrink-0 overflow-hidden rounded-2xl h-52 sm:h-64 md:h-72 lg:h-80 xl:h-96 mr-3 sm:mr-4 shadow-[0_2px_20px_rgba(0,0,0,0.09)]">
       <img
         src={src}
         alt={alt}

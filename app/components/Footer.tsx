@@ -12,15 +12,14 @@ const socials = [
 ];
 
 const navLinks = [
-  { label: "Home",             href: "#" },
-  { label: "About Us",         href: "#" },
-  { label: "Current projects", href: "#projects" },
-  { label: "Recent projects",  href: "#projects" },
+  { label: "Home",              href: "#" },
+  { label: "About Us",          href: "#" },
+  { label: "Current Projects",  href: "#projects" },
+  { label: "Recent Projects",   href: "#projects" },
   { label: "Complete Projects", href: "#completed" },
-  { label: "Contact us",       href: "#contact" },
+  { label: "Contact Us",        href: "#contact" },
 ];
 
-/* Stagger the three columns in */
 const gridVariants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.13, delayChildren: 0.05 } },
@@ -30,34 +29,33 @@ const colVariants = {
   show:   { opacity: 1, y: 0,  filter: "blur(0px)", transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 };
 
-
 export default function Footer() {
   return (
     <footer id="contact" className="bg-white border-t border-gray-100">
-      <div className="max-w-290 mx-auto px-4 sm:px-8">
+      <div className="max-w-290 mx-auto px-4 sm:px-6 lg:px-10">
 
-        {/* ── 3-column staggered grid ── */}
+        {/* ── Responsive grid: 1-col → 3-col ── */}
         <motion.div
           variants={gridVariants}
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.1 }}
-          className="grid grid-cols-1 lg:grid-cols-[2fr_1.4fr_1.6fr] gap-10 pt-12 pb-10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[2fr_1.4fr_1.6fr] gap-8 lg:gap-10 pt-10 sm:pt-12 pb-8 sm:pb-10"
         >
 
-          {/* Col 1: Brand */}
-          <motion.div variants={colVariants}>
+          {/* Col 1: Brand — full width on mobile, spans both sm cols, 1 col on lg */}
+          <motion.div variants={colVariants} className="sm:col-span-2 lg:col-span-1">
             <div className="mb-4">
-              <img src="/logo.png" alt="Dev Appartments" className="h-12 w-auto object-contain" draggable={false} />
+              <img src="/logo.png" alt="Dev Appartments" className="h-10 sm:h-12 w-auto object-contain" draggable={false} />
             </div>
-            <p className="text-gray-900 font-bold text-[14px] mb-3 font-primary">Dev Appartments.</p>
-            <p className="text-gray-500 text-[12.5px] leading-relaxed mb-5 max-w-65">
+            <p className="text-gray-900 font-bold text-[14px] mb-2 font-primary">Dev Appartments.</p>
+            <p className="text-gray-500 text-[12.5px] leading-relaxed mb-4 max-w-sm">
               We, at Dev Appartments aim to be the pillar of success and are unparalleled
               when it comes to the Real Estate business.
             </p>
-            <p className="text-gray-800 font-bold text-[12.5px] mb-1 font-primary">Mon-Fri, 09.00 AM-06.00 PM</p>
-            <p className="text-gray-800 font-bold text-[12.5px] mb-6 font-primary">Sunday Holiday</p>
-            <div className="flex items-center gap-4">
+            <p className="text-gray-800 font-bold text-[12.5px] mb-1 font-primary">Mon-Fri, 09.00 AM–06.00 PM</p>
+            <p className="text-gray-800 font-bold text-[12.5px] mb-5 font-primary">Sunday Holiday</p>
+            <div className="flex items-center gap-4 flex-wrap">
               {socials.map(({ label, d, fill }) => (
                 <motion.a
                   key={label}
@@ -65,9 +63,9 @@ export default function Footer() {
                   aria-label={label}
                   whileHover={{ scale: 1.2, opacity: 0.75 }}
                   whileTap={{ scale: 0.9 }}
-                  className="text-[#e8612c] transition-opacity duration-200"
+                  className="text-[#e8612c] transition-opacity duration-200 p-1"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24"
+                  <svg width="18" height="18" viewBox="0 0 24 24"
                     fill={fill ? "currentColor" : "none"}
                     stroke={fill ? "none" : "currentColor"}
                     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -83,7 +81,7 @@ export default function Footer() {
           {/* Col 2: Discover More */}
           <motion.div variants={colVariants}>
             <p className="font-bold text-gray-900 text-[15px] mb-5 font-primary">Discover More</p>
-            <ul className="space-y-3">
+            <ul className="space-y-3.5">
               {navLinks.map(({ label, href }) => (
                 <li key={label} className="flex items-center gap-2">
                   <span className="w-1.25 h-1.25 rounded-full bg-gray-400 shrink-0" />
@@ -99,30 +97,32 @@ export default function Footer() {
           </motion.div>
 
           {/* Col 3: Contact */}
-          <motion.div variants={colVariants} className="space-y-7">
+          <motion.div variants={colVariants} className="space-y-6">
             <div>
               <p className="flex items-center gap-2 font-bold text-gray-900 text-[15px] mb-2 font-primary">
-                <Building2 size={16} className="text-[#e8612c]" /> Office
+                <Building2 size={15} className="text-[#e8612c] shrink-0" /> Office
               </p>
               <p className="text-gray-500 text-[12.5px] leading-relaxed">
-                New No. 15/2, Old No. 7/2, First Main Road,<br />
-                Kasturibai Nagar Adyar Chennai -600020
+                New No. 15/2, Old No. 7/2, First Main Road,
+                Kasturibai Nagar, Adyar, Chennai — 600020
               </p>
             </div>
             <div>
               <p className="flex items-center gap-2 font-bold text-gray-900 text-[15px] mb-2 font-primary">
-                <Mail size={15} className="text-[#e8612c]" /> Email
+                <Mail size={15} className="text-[#e8612c] shrink-0" /> Email
               </p>
-              <a href="mailto:info@devappartments.com"
-                className="text-gray-500 text-[12.5px] hover:text-[#b08c1c] transition-colors duration-200">
+              <a
+                href="mailto:info@devappartments.com"
+                className="text-gray-500 text-[12.5px] hover:text-[#b08c1c] transition-colors duration-200 break-all"
+              >
                 info@devappartments.com
               </a>
             </div>
             <div>
               <p className="flex items-center gap-2 font-bold text-gray-900 text-[15px] mb-2 font-primary">
-                <Phone size={15} className="text-[#e8612c]" /> Mobile
+                <Phone size={15} className="text-[#e8612c] shrink-0" /> Mobile
               </p>
-              <p className="text-gray-500 text-[12.5px]">98400 37777 || 98403 33117</p>
+              <p className="text-gray-500 text-[12.5px]">98400 37777 &nbsp;|&nbsp; 98403 33117</p>
             </div>
           </motion.div>
 
@@ -134,10 +134,10 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: false, amount: 0.8 }}
           transition={{ duration: 0.5 }}
-          className="border-t border-gray-100 py-5 text-center"
+          className="border-t border-gray-100 py-4 sm:py-5 text-center"
         >
-          <p className="text-gray-400 text-[11.5px]">
-            © 2026 Dev Appartments. All rights reserved | Design &amp; Developed by Ayatiworks
+          <p className="text-gray-400 text-[11px] sm:text-[12px]">
+            © 2026 Dev Appartments. All rights reserved &nbsp;|&nbsp; Design &amp; Developed by Ayatiworks
           </p>
         </motion.div>
 

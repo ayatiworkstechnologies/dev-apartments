@@ -67,10 +67,10 @@ export default function ProjectsCarousel() {
           <motion.div
             key={proj.id}
             variants={cardVariants}
-            className="group shrink-0 cursor-pointer w-[clamp(240px,27vw,320px)]"
+            className="group shrink-0 cursor-pointer w-[clamp(220px,70vw,280px)] sm:w-[clamp(240px,40vw,300px)] lg:w-[clamp(260px,27vw,320px)]"
           >
             {/* Card */}
-            <div className="relative rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.10)] h-[clamp(300px,34vw,420px)]">
+            <div className="relative rounded-3xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.10)] h-[clamp(260px,60vw,320px)] sm:h-[clamp(280px,40vw,360px)] lg:h-[clamp(300px,34vw,420px)]">
 
               {/* Image */}
               <img

@@ -63,7 +63,7 @@ export default function StatsSection() {
             viewport={{ once: false, amount: 0.25 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="text-4xl sm:text-5xl font-black text-gray-900 leading-tight mb-1">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-tight mb-1">
               <CountUp target={10000} suffix=" +" />
               <br />
               <span className="text-gray-800">Satisfied Clients</span>

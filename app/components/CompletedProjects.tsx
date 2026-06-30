@@ -96,7 +96,7 @@ export default function CompletedProjects() {
                 whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.4 }}
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[30px] sm:text-[38px] lg:text-[48px] font-black text-gray-900 leading-[1.15] mb-6"
+                className="text-[22px] sm:text-[28px] md:text-[36px] lg:text-[48px] font-black text-gray-900 leading-[1.15] mb-4 lg:mb-6"
               >
                 Explore{" "}
                 <span className="text-[#b08c1c]">Our</span>
@@ -173,13 +173,13 @@ export default function CompletedProjects() {
 
                     {/* Floating info card */}
                     <div className="absolute bottom-5 left-5 right-5 bg-white/95 backdrop-blur-md rounded-2xl p-5 shadow-2xl">
-                      <div className="flex gap-4 items-start">
+                      <div className="flex gap-3 items-start">
 
                         {/* Thumbnail */}
                         <img
                           src={proj.thumb}
                           alt={proj.title}
-                          className="w-[72px] h-[72px] rounded-xl object-cover shrink-0"
+                          className="w-14 h-14 sm:w-18 sm:h-18 rounded-xl object-cover shrink-0"
                         />
 
                         {/* Info */}

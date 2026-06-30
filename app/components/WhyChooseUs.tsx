@@ -31,14 +31,14 @@ export default function WhyChooseUs() {
         >
 
           {/* ── Left: heading + features ── */}
-          <div className="flex-1 flex flex-col justify-between gap-10 px-10 py-12 sm:px-14 sm:py-14 lg:px-16 lg:py-16">
+          <div className="flex-1 flex flex-col justify-between gap-10 px-6 py-10 sm:px-10 sm:py-12 lg:px-16 lg:py-16">
 
             <motion.h2
               initial={{ opacity: 0, x: -24, filter: "blur(8px)" }}
               whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               viewport={{ once: false, amount: 0.4 }}
               transition={{ delay: 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[28px] sm:text-[34px] lg:text-[40px] font-black text-gray-900 leading-tight"
+              className="text-[22px] sm:text-[28px] md:text-[34px] lg:text-[40px] font-black text-gray-900 leading-tight"
             >
               Why{" "}
               <span className="text-[#b08c1c]">Homebuyers Choose</span>
@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
             </motion.h2>
 
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-3 gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
               variants={featureContainer}
               initial="hidden"
               whileInView="show"

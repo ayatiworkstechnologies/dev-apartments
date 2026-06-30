@@ -100,7 +100,7 @@ export default function Testimonials() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10"
         >
-          <h2 className="text-[26px] sm:text-[32px] lg:text-[38px] font-black text-gray-900 mb-3">
+          <h2 className="text-[22px] sm:text-[28px] md:text-[34px] lg:text-[38px] font-black text-gray-900 mb-3">
             Hear From{" "}
             <span className="text-[#b08c1c] italic">Customers</span>
           </h2>
@@ -129,7 +129,7 @@ export default function Testimonials() {
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-white rounded-2xl px-8 py-9 sm:px-10 sm:py-10 shadow-[0_2px_28px_rgba(0,0,0,0.07)]"
+                className="bg-white rounded-2xl px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10 shadow-[0_2px_28px_rgba(0,0,0,0.07)]"
               >
                 <p className="text-gray-500 text-[13.5px] sm:text-[14.5px] leading-[1.85] mb-8">
                   {t.text}
@@ -153,8 +153,8 @@ export default function Testimonials() {
                 type="button"
                 onClick={() => goTo(i)}
                 aria-label={`Go to testimonial ${i + 1}`}
-                className={`h-0.75 rounded-full transition-all duration-300 ${
-                  i === current ? "w-7 bg-[#b08c1c]" : "w-3 bg-gray-300 hover:bg-gray-400"
+                className={`h-2 rounded-full transition-all duration-300 min-w-3 ${
+                  i === current ? "w-8 bg-[#b08c1c]" : "w-4 bg-gray-300 hover:bg-gray-400"
                 }`}
               />
             ))}

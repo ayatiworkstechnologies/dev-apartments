@@ -75,7 +75,7 @@ export default function HeroSection() {
           max-[480px]:top-[20%] max-[480px]:text-[clamp(44px,15.5vw,80px)]
         "
       >
-        HOMELO
+        HOMEO
       </motion.h1>
 
       {/* ── Building — anchored bottom-center, rises on entrance ── */}
@@ -118,7 +118,7 @@ export default function HeroSection() {
           transition={{ delay: 0.75, duration: 0.6 }}
           className="text-[#3a2d1f] text-[clamp(11.5px,0.9vw,13.5px)] leading-[1.6] mb-[1.1rem] font-medium"
         >
-          start your journey towards<br />homeownership today!
+          start your journey towards homeownership today!
         </motion.p>
 
         <div className="flex items-center gap-[0.6rem]">
