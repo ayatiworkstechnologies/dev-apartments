@@ -11,18 +11,27 @@ const projects = [
   { id: 5, title: "Dev Heritage Homes",        location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=85&auto=format&fit=crop" },
   { id: 6, title: "Green Valley Villas",       location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=700&q=85&auto=format&fit=crop" },
   { id: 7, title: "Pearl Residences",          location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85&auto=format&fit=crop" },
+    { id: 8, title: "Villa, Pea Cock Enclave-4", location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=85&auto=format&fit=crop" },
+  { id: 9, title: "Dev Pristine Villa",        location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=85&auto=format&fit=crop" },
+  { id: 10, title: "Villa, Pushpa Ave",         location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=85&auto=format&fit=crop" },
+  { id: 11, title: "Dev Pristine Villa",        location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=700&q=85&auto=format&fit=crop" },
+  { id: 12, title: "Dev Heritage Homes",        location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=85&auto=format&fit=crop" },
+  { id: 13, title: "Green Valley Villas",       location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=700&q=85&auto=format&fit=crop" },
+  { id: 14, title: "Pearl Residences",          location: "Chennai", year: "2026", img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=85&auto=format&fit=crop" },
 ];
 
 export default function ProjectsCarousel() {
   const scrollRef  = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(2); // center card starts active
+  const [active, setActive] = useState(0);
 
   /* Update active index based on scroll position */
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
     const handler = () => {
-      const cardW = el.scrollWidth / projects.length;
+      const firstCard = el.firstElementChild as HTMLElement | null;
+      if (!firstCard) return;
+      const cardW = firstCard.getBoundingClientRect().width + 16; // width + gap
       const idx   = Math.round(el.scrollLeft / cardW);
       setActive(Math.min(Math.max(idx, 0), projects.length - 1));
     };
@@ -62,7 +71,7 @@ export default function ProjectsCarousel() {
         viewport={{ once: false, amount: 0.1 }}
         transition={{ duration: 0.6 }}
         className="flex gap-4 sm:gap-5 overflow-x-auto pb-8
-          px-[calc(50vw-110px)] sm:px-[calc(50vw-130px)] lg:px-[calc(50vw-160px)]
+          px-4 sm:px-8 lg:px-14
           scrollbar-none [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
           scroll-smooth"
         style={{ scrollSnapType: "x mandatory" }}
@@ -76,7 +85,9 @@ export default function ProjectsCarousel() {
                 setActive(i);
                 const el = scrollRef.current;
                 if (!el) return;
-                const cardW = el.scrollWidth / projects.length;
+                const firstCard = el.firstElementChild as HTMLElement | null;
+                if (!firstCard) return;
+                const cardW = firstCard.getBoundingClientRect().width + 16;
                 el.scrollTo({ left: cardW * i, behavior: "smooth" });
               }}
               animate={{
@@ -85,7 +96,7 @@ export default function ProjectsCarousel() {
               }}
               transition={{ type: "spring" as const, stiffness: 300, damping: 28 }}
               className="shrink-0 cursor-pointer"
-              style={{ scrollSnapAlign: "center" }}
+              style={{ scrollSnapAlign: "start" }}
             >
               {/* Image card */}
               <div
