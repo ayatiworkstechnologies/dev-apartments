@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* ── Local fonts ── */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Kaleko';
+  src: url('/fonts/KalekoBold.ttf') format('truetype');
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -8,19 +25,48 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Primary — Kaleko Bold (headings, nav, buttons, UI, brand text) */
+  --font-primary:   'Kaleko', ui-serif, serif;
+  /* Secondary — Satoshi Regular (paragraphs, descriptions, small text) */
+  --font-secondary: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+  --font-sans:      'Kaleko', ui-serif, serif;
+  --font-mono:      ui-monospace, 'Courier New', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ── Base styles ── */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-primary);   /* Kaleko Bold site-wide default */
+  scroll-behavior: smooth;
+}
+
+/* Headings stay on primary */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+}
+
+/* Paragraphs & long-form text use Satoshi for readability */
+p, li, td, blockquote {
+  font-family: var(--font-secondary);
+}
+
+/* ── Infinite gallery marquee — left (4× duplication → move 25%) ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-25%); }
+}
+
+/* Infinite gallery marquee — right / reverse */
+@keyframes marquee-reverse {
+  from { transform: translateX(-25%); }
+  to   { transform: translateX(0); }
+}
+
+/* Hide scrollbar for carousel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
 }
