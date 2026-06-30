@@ -100,11 +100,11 @@ export default function Testimonials() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10"
         >
-          <h2 className="text-[22px] sm:text-[28px] md:text-[34px] lg:text-[38px] font-black text-gray-900 mb-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-3">
             Hear From{" "}
             <span className="text-[#b08c1c] italic">Customers</span>
           </h2>
-          <p className="text-gray-400 text-[12.5px] sm:text-[13px] max-w-xs mx-auto leading-relaxed">
+          <p className="text-gray-400 text-sm sm:text-base max-w-xs mx-auto leading-relaxed">
             What our clients are saying Achieving client objectives, satisfaction and trust.
             Also support us and would willingly recommended.
           </p>
@@ -131,12 +131,12 @@ export default function Testimonials() {
                 transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
                 className="bg-white rounded-2xl px-5 py-7 sm:px-8 sm:py-9 lg:px-10 lg:py-10 shadow-[0_2px_28px_rgba(0,0,0,0.07)]"
               >
-                <p className="text-gray-500 text-[13.5px] sm:text-[14.5px] leading-[1.85] mb-8">
+                <p className="text-gray-500 text-sm sm:text-base leading-[1.85] mb-8">
                   {t.text}
                 </p>
                 <div className="flex items-center gap-3">
                   <PersonAvatar />
-                  <p className="text-gray-700 text-[13px] sm:text-[13.5px]">
+                  <p className="text-gray-700 text-sm sm:text-base">
                     <span className="font-bold text-gray-900">{t.source}</span>
                     {" "}-{" "}{t.name} ({t.role})
                   </p>

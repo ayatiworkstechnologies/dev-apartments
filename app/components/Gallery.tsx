@@ -43,7 +43,7 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
       />
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4 pointer-events-none">
-        <span className="inline-flex items-center gap-1.5 bg-white text-gray-900 text-[11.5px] font-semibold px-3.5 py-1.5 rounded-full shadow-lg translate-y-3 group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
+        <span className="inline-flex items-center gap-1.5 bg-white text-gray-900 text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-lg translate-y-3 group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
           <Eye size={11} /> View
         </span>
       </div>
@@ -63,11 +63,11 @@ export default function Gallery() {
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         className="text-center mb-12 px-4"
       >
-        <h2 className="text-[28px] sm:text-[34px] lg:text-[44px] font-black text-gray-900 mb-3">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-3">
           Luxury Living{" "}
           <span className="text-[#b08c1c] italic">Gallery</span>
         </h2>
-        <p className="text-gray-400 text-[13px] sm:text-[14px] max-w-md mx-auto leading-relaxed">
+        <p className="text-gray-400 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
           Experience the beauty, comfort, and quality of our development through carefully
           selected project photographs.
         </p>

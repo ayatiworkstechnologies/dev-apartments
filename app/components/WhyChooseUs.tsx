@@ -38,7 +38,7 @@ export default function WhyChooseUs() {
               whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               viewport={{ once: false, amount: 0.4 }}
               transition={{ delay: 0.1, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className="text-[22px] sm:text-[28px] md:text-[34px] lg:text-[40px] font-black text-gray-900 leading-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight"
             >
               Why{" "}
               <span className="text-[#b08c1c]">Homebuyers Choose</span>
@@ -55,9 +55,9 @@ export default function WhyChooseUs() {
             >
               {features.map((f) => (
                 <motion.div key={f.title} variants={featureItem}>
-                  <p className="font-black text-gray-900 text-[15px] leading-tight font-primary">{f.title}</p>
-                  <p className="font-black text-[#b08c1c] text-[15px] leading-tight mb-3 font-primary">{f.subtitle}</p>
-                  <p className="text-gray-400 text-[13px] leading-relaxed">{f.desc}</p>
+                  <p className="font-black text-gray-900 text-lg leading-tight font-primary">{f.title}</p>
+                  <p className="font-black text-[#b08c1c] text-lg leading-tight mb-3 font-primary">{f.subtitle}</p>
+                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed">{f.desc}</p>
                 </motion.div>
               ))}
             </motion.div>

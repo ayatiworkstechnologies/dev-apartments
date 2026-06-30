@@ -86,7 +86,7 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="text-white text-[11px] sm:text-[12.5px] lg:text-[13.5px] leading-relaxed mb-3 sm:mb-4 font-secondary font-medium"
+          className="text-white text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 font-secondary font-medium"
         >
           start your journey towards<br />homeownership today!
         </motion.p>
@@ -96,7 +96,7 @@ export default function HeroSection() {
             href="#projects"
             whileHover={{ scale: 1.04, backgroundColor: "#3a2d1f", color: "#fff" }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#3a2d1f] text-white text-[12px] sm:text-[13px] font-semibold no-underline whitespace-nowrap transition-colors duration-200"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#3a2d1f] text-white text-xs sm:text-sm font-semibold no-underline whitespace-nowrap transition-colors duration-200"
           >
             Get Started
             <ChevronRight size={14} strokeWidth={2.5} />
@@ -106,7 +106,7 @@ export default function HeroSection() {
             href="#completed"
             whileHover={{ color: "#b08c1c" }}
             whileTap={{ scale: 0.97 }}
-            className="text-[#4a3a28] text-[11.5px] sm:text-[12.5px] font-medium no-underline transition-colors duration-200 font-secondary"
+            className="text-[#4a3a28] text-xs sm:text-sm font-medium no-underline transition-colors duration-200 font-secondary"
           >
             View Projects
           </motion.a>

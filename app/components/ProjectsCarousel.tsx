@@ -41,14 +41,14 @@ export default function ProjectsCarousel() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="text-center px-4 mb-10 sm:mb-14"
       >
-        <h2 className="text-[24px] sm:text-[34px] lg:text-[44px] font-black text-gray-900 leading-tight mb-3">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight mb-3">
           Creative{" "}
           <span className="text-[#b08c1c] italic">Projects That</span>
           <br />
           <span className="text-[#b08c1c] italic">Define</span>{" "}
           Our Style
         </h2>
-        <p className="text-gray-400 text-[12.5px] sm:text-[13.5px] max-w-sm mx-auto leading-relaxed font-secondary">
+        <p className="text-gray-400 text-sm sm:text-base max-w-sm mx-auto leading-relaxed font-secondary">
           Our diverse portfolio represents decades of construction experience backed by a
           passion for quality, outstanding client service.
         </p>
@@ -106,7 +106,7 @@ export default function ProjectsCarousel() {
 
                 {/* Hover "View" badge */}
                 <div className="absolute inset-0 bg-black/10 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-                  <span className="bg-white text-gray-900 text-[11px] font-bold px-4 py-1.5 rounded-full shadow-md tracking-wide">
+                  <span className="bg-white text-gray-900 text-xs font-bold px-4 py-1.5 rounded-full shadow-md tracking-wide">
                     View
                   </span>
                 </div>
@@ -114,13 +114,13 @@ export default function ProjectsCarousel() {
 
               {/* Info below card */}
               <div className="mt-3 sm:mt-4 px-1">
-                <p className="text-gray-400 text-[11px] sm:text-[12px] font-secondary mb-0.5">
+                <p className="text-gray-400 text-xs sm:text-sm font-secondary mb-0.5">
                   {proj.location}
                 </p>
-                <p className="text-gray-900 text-[13px] sm:text-[14.5px] font-bold leading-snug font-primary">
+                <p className="text-gray-900 text-sm sm:text-base font-bold leading-snug font-primary">
                   {proj.title}
                 </p>
-                <p className="text-gray-400 text-[11px] sm:text-[12px] font-secondary mt-0.5">
+                <p className="text-gray-400 text-xs sm:text-sm font-secondary mt-0.5">
                   {proj.year}
                 </p>
               </div>

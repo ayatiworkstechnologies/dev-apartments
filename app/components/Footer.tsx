@@ -48,13 +48,13 @@ export default function Footer() {
             <div className="mb-4">
               <img src="/logo.png" alt="Dev Appartments" className="h-10 sm:h-12 w-auto object-contain" draggable={false} />
             </div>
-            <p className="text-gray-900 font-bold text-[14px] mb-2 font-primary">Dev Appartments.</p>
-            <p className="text-gray-500 text-[12.5px] leading-relaxed mb-4 max-w-sm">
+            <p className="text-gray-900 font-bold text-base mb-2 font-primary">Dev Appartments.</p>
+            <p className="text-gray-500 text-sm leading-relaxed mb-4 max-w-sm">
               We, at Dev Appartments aim to be the pillar of success and are unparalleled
               when it comes to the Real Estate business.
             </p>
-            <p className="text-gray-800 font-bold text-[12.5px] mb-1 font-primary">Mon-Fri, 09.00 AM–06.00 PM</p>
-            <p className="text-gray-800 font-bold text-[12.5px] mb-5 font-primary">Sunday Holiday</p>
+            <p className="text-gray-800 font-bold text-sm mb-1 font-primary">Mon-Fri, 09.00 AM–06.00 PM</p>
+            <p className="text-gray-800 font-bold text-sm mb-5 font-primary">Sunday Holiday</p>
             <div className="flex items-center gap-4 flex-wrap">
               {socials.map(({ label, d, fill }) => (
                 <motion.a
@@ -80,14 +80,14 @@ export default function Footer() {
 
           {/* Col 2: Discover More */}
           <motion.div variants={colVariants}>
-            <p className="font-bold text-gray-900 text-[15px] mb-5 font-primary">Discover More</p>
+            <p className="font-bold text-gray-900 text-base mb-5 font-primary">Discover More</p>
             <ul className="space-y-3.5">
               {navLinks.map(({ label, href }) => (
                 <li key={label} className="flex items-center gap-2">
                   <span className="w-1.25 h-1.25 rounded-full bg-gray-400 shrink-0" />
                   <a
                     href={href}
-                    className="text-gray-600 text-[13px] hover:text-[#b08c1c] transition-colors duration-200"
+                    className="text-gray-600 text-sm hover:text-[#b08c1c] transition-colors duration-200"
                   >
                     {label}
                   </a>
@@ -99,30 +99,30 @@ export default function Footer() {
           {/* Col 3: Contact */}
           <motion.div variants={colVariants} className="space-y-6">
             <div>
-              <p className="flex items-center gap-2 font-bold text-gray-900 text-[15px] mb-2 font-primary">
+              <p className="flex items-center gap-2 font-bold text-gray-900 text-base mb-2 font-primary">
                 <Building2 size={15} className="text-[#e8612c] shrink-0" /> Office
               </p>
-              <p className="text-gray-500 text-[12.5px] leading-relaxed">
+              <p className="text-gray-500 text-sm leading-relaxed">
                 New No. 15/2, Old No. 7/2, First Main Road,
                 Kasturibai Nagar, Adyar, Chennai — 600020
               </p>
             </div>
             <div>
-              <p className="flex items-center gap-2 font-bold text-gray-900 text-[15px] mb-2 font-primary">
+              <p className="flex items-center gap-2 font-bold text-gray-900 text-base mb-2 font-primary">
                 <Mail size={15} className="text-[#e8612c] shrink-0" /> Email
               </p>
               <a
                 href="mailto:info@devappartments.com"
-                className="text-gray-500 text-[12.5px] hover:text-[#b08c1c] transition-colors duration-200 break-all"
+                className="text-gray-500 text-sm hover:text-[#b08c1c] transition-colors duration-200 break-all"
               >
                 info@devappartments.com
               </a>
             </div>
             <div>
-              <p className="flex items-center gap-2 font-bold text-gray-900 text-[15px] mb-2 font-primary">
+              <p className="flex items-center gap-2 font-bold text-gray-900 text-base mb-2 font-primary">
                 <Phone size={15} className="text-[#e8612c] shrink-0" /> Mobile
               </p>
-              <p className="text-gray-500 text-[12.5px]">98400 37777 &nbsp;|&nbsp; 98403 33117</p>
+              <p className="text-gray-500 text-sm">98400 37777 &nbsp;|&nbsp; 98403 33117</p>
             </div>
           </motion.div>
 
@@ -136,7 +136,7 @@ export default function Footer() {
           transition={{ duration: 0.5 }}
           className="border-t border-gray-100 py-4 sm:py-5 text-center"
         >
-          <p className="text-gray-400 text-[11px] sm:text-[12px]">
+          <p className="text-gray-400 text-xs sm:text-sm">
             © 2026 Dev Appartments. All rights reserved &nbsp;|&nbsp; Design &amp; Developed by Ayatiworks
           </p>
         </motion.div>

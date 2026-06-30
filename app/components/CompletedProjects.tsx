@@ -96,7 +96,7 @@ export default function CompletedProjects() {
                 whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.4 }}
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[22px] sm:text-[28px] md:text-[36px] lg:text-[48px] font-black text-gray-900 leading-[1.15] mb-4 lg:mb-6"
+                className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-[1.15] mb-4 lg:mb-6"
               >
                 Explore{" "}
                 <span className="text-[#b08c1c]">Our</span>
@@ -113,7 +113,7 @@ export default function CompletedProjects() {
                 whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.4 }}
                 transition={{ delay: 0.12, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-                className="text-gray-400 text-[13px] sm:text-[14px] leading-relaxed mb-10 max-w-xs"
+                className="text-gray-400 text-sm sm:text-base leading-relaxed mb-10 max-w-xs"
               >
                 Discover beautifully completed communities that reflect innovative
                 design, superior construction, and Dev Appartments&apos; commitment
@@ -129,7 +129,7 @@ export default function CompletedProjects() {
                 className="flex items-center gap-5"
               >
                 {/* Animated slide counter */}
-                <span className="text-[13px] font-bold text-gray-400 tabular-nums w-12 shrink-0">
+                <span className="text-sm font-bold text-gray-400 tabular-nums w-12 shrink-0">
                   {counter}
                 </span>
 
@@ -184,19 +184,19 @@ export default function CompletedProjects() {
 
                         {/* Info */}
                         <div className="flex-1 min-w-0">
-                          <p className="font-black text-gray-900 text-[14.5px] leading-snug mb-0.5 font-primary">
+                          <p className="font-black text-gray-900 text-sm sm:text-base leading-snug mb-0.5 font-primary">
                             {proj.title}
                           </p>
                           <div className="flex items-center gap-1 mb-2">
                             <MapPin size={10} className="text-[#b08c1c] shrink-0" />
-                            <p className="text-[#b08c1c] text-[11.5px] font-semibold font-primary">{proj.location}</p>
+                            <p className="text-[#b08c1c] text-xs sm:text-sm font-semibold font-primary">{proj.location}</p>
                           </div>
-                          <p className="text-gray-500 text-[12px] leading-relaxed line-clamp-2">
+                          <p className="text-gray-500 text-xs sm:text-sm leading-relaxed line-clamp-2">
                             {proj.desc}
                           </p>
                           <button
                             type="button"
-                            className="mt-3 inline-flex items-center gap-1.5 text-[#b08c1c] text-[12px] font-bold hover:gap-2.5 transition-all duration-200"
+                            className="mt-3 inline-flex items-center gap-1.5 text-[#b08c1c] text-xs sm:text-sm font-bold hover:gap-2.5 transition-all duration-200"
                           >
                             Explore More <ArrowRight size={12} />
                           </button>

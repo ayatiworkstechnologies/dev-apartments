@@ -63,12 +63,12 @@ export default function StatsSection() {
             viewport={{ once: false, amount: 0.25 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-tight mb-1">
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-black text-gray-900 leading-tight mb-1">
               <CountUp target={10000} suffix=" +" />
               <br />
               <span className="text-gray-800">Satisfied Clients</span>
             </h2>
-            <p className="text-[#b08c1c] font-semibold text-lg mt-1 mb-6 font-primary">Trust by us</p>
+            <p className="text-[#b08c1c] font-semibold text-base sm:text-lg mt-1 mb-6 font-primary">Trust by us</p>
 
             {/* Staggered avatar row */}
             <motion.div
@@ -112,11 +112,11 @@ export default function StatsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: false, amount: 0.3 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-[#b08c1c] text-sm font-semibold tracking-widest uppercase mb-3 font-primary"
+              className="text-[#b08c1c] text-xs sm:text-sm font-semibold tracking-widest uppercase mb-3 font-primary"
             >
               Designing Spaces Creating Experience
             </motion.p>
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6">
+            <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-6">
               Dev Appartments was founded in 1985 under the stewardship of CEO and Managing Director,
               Mr. P.U. Developer with the guidance of Chairman, Mr. P.G. Murugesan — a leading light
               of the real estate industry in Chennai. Since its inception, Dev Appartments has set the
@@ -126,7 +126,7 @@ export default function StatsSection() {
               href="#about"
               whileHover={{ x: 5, color: "#b08c1c" }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 text-gray-800 font-semibold text-sm transition-colors"
+              className="inline-flex items-center gap-2 text-gray-800 font-semibold text-base transition-colors"
             >
               Get Started
               <span className="w-6 h-6 rounded-full border border-current flex items-center justify-center">
