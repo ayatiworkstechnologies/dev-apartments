@@ -18,7 +18,7 @@ export default function Home() {
         <ProjectsCarousel />
         <WhyChooseUs />
         <CompletedProjects />
-        <Gallery />
+        {/* <Gallery /> */}
         <Testimonials />
       </main>
       <Footer />
