@@ -144,9 +144,9 @@ export default function HeroSection() {
             ease,
           }}
           className="
-            font-secondary font-medium
+            font-secondary font-semibold
             tracking-[0.01em]
-            text-[#2f2923]
+            text-[#000000]
 
             text-[11px]
 

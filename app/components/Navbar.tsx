@@ -10,7 +10,7 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   {
     label: "Home",
-    href: "#",
+    href: "/",
   },
   {
     label: "About Us",
@@ -213,7 +213,7 @@ export default function Navbar() {
           >
             {/* Logo */}
             <motion.a
-              href="#"
+              href="/"
               whileHover={{
                 scale: 1.025,
               }}

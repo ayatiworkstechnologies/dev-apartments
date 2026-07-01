@@ -261,7 +261,7 @@ function BackgroundCurves() {
       />
 
       {/* Right vertical detail */}
-      <motion.g
+      {/* <motion.g
         className="hidden sm:block"
         initial={{
           opacity: 0,
@@ -300,7 +300,7 @@ function BackgroundCurves() {
           strokeWidth="3"
           vectorEffect="non-scaling-stroke"
         />
-      </motion.g>
+      </motion.g> */}
     </svg>
   );
 }
