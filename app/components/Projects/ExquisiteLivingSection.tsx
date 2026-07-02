@@ -144,9 +144,9 @@ export default function ExquisiteLivingSection() {
               xl:text-[50px]
             "
           >
-            Exquisite Living{" "}
+            Live Beautifully! {" "}
             <span className="text-[#b88d48]">
-              Redefined
+             Live Spaciously!
             </span>
           </motion.h2>
 
@@ -182,9 +182,7 @@ export default function ExquisiteLivingSection() {
               md:text-[14px]
             "
           >
-            Dev Appartments presents Divya Desam, a sanctuary
-            of peace and modern luxury nestled in Chennai&apos;s
-            most sought-after residential corridor.
+            At Divya Desam, every villa is crafted for space, comfort, and timeless living. 
           </motion.p>
 
           {/* Underline */}

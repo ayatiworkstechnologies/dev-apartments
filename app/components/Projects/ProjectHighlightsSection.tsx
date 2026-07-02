@@ -27,28 +27,28 @@ const highlights: HighlightItem[] = [
     id: 1,
     title: "Premium Amenities",
     description:
-      "Equipped with high-speed elevators, terrace gardens, and a modern gym.",
+      "Modern amenities thoughtfully planned for a comfortable lifestyle.",
     icon: Building2,
   },
   {
     id: 2,
     title: "Prime Location",
     description:
-      "Located within 10 minutes of the coastline and major IT hubs.",
+      "Strategically located with seamless access to schools, IT hubs, entertainment, and the coastline.",
     icon: MapPin,
   },
   {
     id: 3,
-    title: "Safety First",
+    title: "Safe & Secure Community",
     description:
-      "24/7 CCTV surveillance with an integrated video door phone system.",
+      "Designed with advanced security features for confident and comfortable living.",
     icon: ShieldCheck,
   },
   {
     id: 4,
-    title: "Power Backup",
+    title: "Reliable Power Backup",
     description:
-      "Full DG power backup for common areas and 500W per apartment.",
+      "Ensuring everyday convenience with dependable power support.",
     icon: Zap,
   },
 ];
@@ -200,7 +200,7 @@ export default function ProjectHighlightsSection() {
                 lg:text-[50px]
               "
             >
-              Key Project Highlights
+              Everything You Need, Right Here 
             </h2>
 
             <motion.div
@@ -392,29 +392,7 @@ export default function ProjectHighlightsSection() {
                         </p>
                       </div>
 
-                      <motion.span
-                        className="
-                          mt-0.5 flex h-8 w-8
-                          shrink-0 items-center
-                          justify-center rounded-full
-
-                          border border-transparent
-                          text-[#b88d48]
-
-                          opacity-0
-                          transition-all duration-400
-
-                          group-hover:translate-x-1
-                          group-hover:border-[#b88d48]/20
-                          group-hover:bg-[#b88d48]/10
-                          group-hover:opacity-100
-                        "
-                      >
-                        <ChevronRight
-                          size={15}
-                          strokeWidth={2}
-                        />
-                      </motion.span>
+                     
                     </div>
                   </div>
                 </motion.article>
@@ -531,7 +509,7 @@ export default function ProjectHighlightsSection() {
                 lg:text-[39px]
               "
             >
-              Master Site Plan
+               Explore Divya Desam
             </h2>
 
             <p
@@ -545,8 +523,7 @@ export default function ProjectHighlightsSection() {
                 md:text-[13px]
               "
             >
-              Discover a beautifully completed community
-              reflecting superior construction and excellence.
+              Download the brochure to discover villa layouts, amenities, specifications, and everything that makes Divya Desam a distinguished address.
             </p>
           </motion.div>
 

@@ -28,23 +28,23 @@ type FloorPlan = {
 const floorPlans: FloorPlan[] = [
   {
     id: 1,
-    title: "2BHK Variant A",
+    title: "Plot 12",
     area: "1,240 Sq.Ft",
-    image: "/images/2bhk-variant-a.png",
+    image: "/images/floor-a.png",
     href: "#",
   },
   {
     id: 2,
-    title: "3BHK Variant B",
+    title: "Plot 11",
     area: "1,850 Sq.Ft",
-    image: "/images/3bhk-variant-b.png",
+    image: "/images/floor-b.png",
     href: "#",
   },
   {
     id: 3,
-    title: "3BHK Penthouse",
+    title: "Plot 11",
     area: "2,400 Sq.Ft",
-    image: "/images/3bhk-penthouse.png",
+    image: "/images/floor.png",
     href: "#",
   },
 ];
@@ -238,7 +238,7 @@ export default function FloorPlans() {
                 lg:text-[54px]
               "
             >
-              Spacious Floor Plans
+              Thoughtfully Designed Layouts
             </h2>
 
             <motion.p
@@ -270,8 +270,7 @@ export default function FloorPlans() {
                 md:text-[13px]
               "
             >
-              Designed for growing families who value privacy and thoughtful
-              distribution of space.
+              Spacious villa plans crafted to maximize comfort, privacy, and everyday functionality
             </motion.p>
 
             <motion.span

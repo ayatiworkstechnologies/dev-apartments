@@ -21,7 +21,7 @@ export default function LocationSection() {
         <div className="mx-auto w-full overflow-hidden rounded-2xl border border-gray-200 shadow-[0_20px_60px_rgba(0,0,0,0.10)] md:w-[85%] lg:w-[70%]">
           <div className="relative aspect-[4/3] w-full sm:aspect-[16/9]">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d15549.755770299107!2d80.24085979904886!3d13.007696196973884!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e6!4m3!3m2!1d13.0187264!2d80.2455552!4m5!1s0x3a5267f476ab2515%3A0x766a294abedec609!2sDev%20Apartment%2C%20Subramaniam%20Colony%2C%20Thiruvanmiyur%2C%20Chennai%2C%20Tamil%20Nadu%20600041!3m2!1d12.9959182!2d80.258246!5e0!3m2!1sen!2sin!4v1782899684383!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25908.822089435347!2d80.2299377535103!3d13.007509636536266!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5267e062999005%3A0xd986fb71dc835b1d!2sDev%20apartment!5e0!3m2!1sen!2sin!4v1782985424149!5m2!1sen!2sin%22"
               title="Dev Apartment Location"
               className="absolute inset-0 h-full w-full border-0"
               loading="lazy"

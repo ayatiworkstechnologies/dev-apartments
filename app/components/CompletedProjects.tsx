@@ -22,14 +22,24 @@ type Project = {
 };
 
 const projects: Project[] = [
+   {
+    id: 5,
+    title: "Divya Desam",
+    location: "ECR",
+    desc: "Experience the beauty, comfort, and quality of our development through carefully selected project photographs.",
+    img: "/images/divya.png",
+    thumb:
+      "/images/divya.png",
+    href: "/pushpa-ave",
+  },
   {
     id: 1,
     title: "Villa, Pushpa Ave",
     location: "ECR",
     desc: "Experience contemporary villa living with thoughtfully planned spaces, premium finishes, and a prime location near the ECR coastline.",
-    img: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&q=90&auto=format&fit=crop",
+    img: "/images/Villa, Pushpa Ave.png",
     thumb:
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=300&q=80&auto=format&fit=crop",
+      "/images/Villa, Pushpa Ave.png",
 
     // Dedicated Pushpa Avenue project page
     href: "/pushpa-ave",
@@ -39,43 +49,35 @@ const projects: Project[] = [
     title: "Dev Pristine Villa",
     location: "Chennai",
     desc: "A signature project redefining residential luxury — every detail crafted for the discerning homebuyer.",
-    img: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1200&q=90&auto=format&fit=crop",
+    img: "/images/Dev Pristine Villa.png",
     thumb:
-      "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=300&q=80&auto=format&fit=crop",
+      "/images/Dev Pristine Villa.png",
 
     // Remaining projects open the enquiry form
-    href: "#form",
+    href: "/pushpa-ave",
   },
   {
     id: 3,
     title: "Villa, Pea Cock Enclave-4",
     location: "Chennai",
     desc: "Beautifully designed villas with modern amenities in one of Chennai's most sought-after residential enclaves.",
-    img: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=90&auto=format&fit=crop",
+    img: "/images/Villa, Pea Cock Enclave-4.png",
     thumb:
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=300&q=80&auto=format&fit=crop",
-    href: "#form",
+      "/images/Villa, Pea Cock Enclave-4.png",
+  
+    href: "/pushpa-ave",
   },
   {
     id: 4,
     title: "Dev Heritage Homes",
     location: "Chennai",
     desc: "Heritage-inspired architecture blended with modern comforts, set amidst lush green surroundings.",
-    img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=90&auto=format&fit=crop",
+    img: "/images/Dev Pristine Villa-1.png",
     thumb:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=300&q=80&auto=format&fit=crop",
-    href: "#form",
+      "/images/Dev Pristine Villa-1.png",
+    href: "/pushpa-ave",
   },
-  {
-    id: 5,
-    title: "Green Valley Villas",
-    location: "Chennai",
-    desc: "Serene residential villas surrounded by nature, offering a peaceful retreat from city life.",
-    img: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=1200&q=90&auto=format&fit=crop",
-    thumb:
-      "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=300&q=80&auto=format&fit=crop",
-    href: "#form",
-  },
+ 
 ];
 
 const TOTAL = projects.length;

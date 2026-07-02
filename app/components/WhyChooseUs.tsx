@@ -73,7 +73,7 @@ export default function WhyChooseUs() {
             className="shrink-0 h-64 lg:h-auto lg:w-[44%] overflow-hidden"
           >
             <img
-              src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=85&auto=format&fit=crop"
+              src="/images/why.png"
               alt="Dev Appartments building"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
             />

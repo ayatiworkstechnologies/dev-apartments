@@ -791,13 +791,13 @@ export default function PushpaAveHorizontalScroll() {
                 >
                   Where
                   <br />
-                  Elegant
+                  Life 
                   <br />
 
                   <span className="text-[#b78c12]">
-                    Living
+                    Feels
                     <br />
-                    Begins
+                    Complete
                   </span>
                 </h1>
 
@@ -817,12 +817,7 @@ export default function PushpaAveHorizontalScroll() {
                     lg:leading-[2]
                   "
                 >
-                  Discover a thoughtfully designed
-                  villa community combining
-                  sophisticated architecture,
-                  refined interiors and modern
-                  residential comfort near
-                  Chennai&apos;s ECR coastline.
+                  Wake up to spacious living, enjoy peaceful surroundings, and create lasting memories in a villa designed for modern family life. Comfort today, value for years to come. 
                 </p>
 
                 <div

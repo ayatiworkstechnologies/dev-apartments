@@ -33,10 +33,10 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
 }
 
 const avatars = [
-  "https://randomuser.me/api/portraits/men/32.jpg",
-  "https://randomuser.me/api/portraits/women/44.jpg",
-  "https://randomuser.me/api/portraits/men/55.jpg",
-  "https://randomuser.me/api/portraits/women/63.jpg",
+  "/images/male.png",
+  "/images/female.png",
+  "/images/male-1.png",
+  "/images/female-1.png",
 ];
 
 const avatarContainer = {

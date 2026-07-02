@@ -29,32 +29,32 @@ type AvatarStyle = {
 const testimonials: Testimonial[] = [
   {
     id: 1,
+    source: "99acres",
+    name: "Elias Kurian",
+    role: "Home Owner",
+    text: "A good society. Guarded. Not very expensive. Almost all basic amenities in the vicinity.",
+  },
+  {
+    id: 2,
     source: "MagicBricks",
     name: "Sashank",
     role: "Owner",
     text: "Just moved in with my family and loving this place. It is very good locality with good environment and close to beach. Neighbours are cooperative, very helpful and friendly too. Good sea breeze all through the interior.",
   },
   {
-    id: 2,
-    source: "99Acres",
-    name: "Priya Ramesh",
-    role: "Home Owner",
-    text: "Dev Appartments exceeded all our expectations. The build quality is outstanding and the team was incredibly supportive throughout our purchase journey. We could not be happier with our new home.",
-  },
-  {
     id: 3,
-    source: "Housing.com",
-    name: "Karthik Sundaram",
+    source: "99acres",
+    name: "Ashwin R",
     role: "Investor",
-    text: "I have invested in multiple properties over the years. Dev Appartments stands out for transparency, timely delivery and exceptional after-sales support. Highly recommended for every serious buyer.",
+    text: "Very nice homely place. Quite old and well known place around the area of Thiruvanmiyur",
   },
-  {
-    id: 4,
-    source: "NoBroker",
-    name: "Anitha Krishnan",
-    role: "Home Owner",
-    text: "The location is perfect and the community is wonderful. Every amenity promised has been delivered on time. The construction quality is solid and the team was always available to answer our questions.",
-  },
+  // {
+  //   id: 4,
+  //   source: "NoBroker",
+  //   name: "Anitha Krishnan",
+  //   role: "Home Owner",
+  //   text: "The location is perfect and the community is wonderful. Every amenity promised has been delivered on time. The construction quality is solid and the team was always available to answer our questions.",
+  // },
 ];
 
 const avatarStyles: AvatarStyle[] = [

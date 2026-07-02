@@ -5,22 +5,25 @@ import { Eye } from "lucide-react";
 
 /* Row A — exterior / architectural */
 const rowA = [
-  { src: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=900&q=85&auto=format&fit=crop", alt: "Villa exterior" },
-  { src: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=900&q=85&auto=format&fit=crop", alt: "Modern white villa" },
-  { src: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&q=85&auto=format&fit=crop", alt: "Poolside villa" },
-  { src: "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=900&q=85&auto=format&fit=crop", alt: "Green valley villa" },
-  { src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=85&auto=format&fit=crop", alt: "Pearl residence" },
-  { src: "https://images.unsplash.com/photo-1613977257363-707ba9348227?w=900&q=85&auto=format&fit=crop", alt: "Pristine villa" },
+  { src: "/images/gal-1.png", alt: "Villa exterior" },
+  { src: "/images/gal-2.png", alt: "Modern white villa" },
+  { src: "/images/gal-3.png", alt: "Poolside villa" },
+  { src: "/images/gal-4.png", alt: "Green valley villa" },
+  { src: "/images/gal-5.png", alt: "Pearl residence" },
+  { src: "/images/gal-6.png", alt: "Pristine villa" },
+  { src: "/images/gal-7.png", alt: "Luxury villa" },
 ];
 
 /* Row B — interior / lifestyle */
 const rowB = [
-  { src: "https://images.unsplash.com/photo-1615873968403-89e068629265?w=900&q=85&auto=format&fit=crop", alt: "Interior living space" },
-  { src: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=900&q=85&auto=format&fit=crop", alt: "Contemporary architecture" },
-  { src: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=900&q=85&auto=format&fit=crop", alt: "Open plan living" },
-  { src: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85&auto=format&fit=crop",  alt: "Modern kitchen" },
-  { src: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=85&auto=format&fit=crop", alt: "Pushpa Ave villa" },
-  { src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=85&auto=format&fit=crop", alt: "Dev pristine" },
+  { src: "/images/gal-8.png", alt: "Interior living space" },
+  { src: "/images/gal-9.png", alt: "Contemporary architecture" },
+  { src: "/images/gal-10.png", alt: "Open plan living" },
+  { src: "/images/gal-11.png", alt: "Modern kitchen" },
+  { src: "/images/gal-12.png", alt: "Pushpa Ave villa" },
+  { src: "/images/gal-13.png", alt: "Dev pristine" },
+  { src: "/images/gal-14.png", alt: "Luxury villa interior" },
+  { src: "/images/gal-15.png", alt: "Villa interior" },
 ];
 
 /*
@@ -42,11 +45,7 @@ function GalleryImage({ src, alt }: { src: string; alt: string }) {
         draggable={false}
       />
       {/* Hover overlay */}
-      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-start p-4 pointer-events-none">
-        <span className="inline-flex items-center gap-1.5 bg-white text-gray-900 text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-lg translate-y-3 group-hover:translate-y-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
-          <Eye size={11} /> View
-        </span>
-      </div>
+      
     </div>
   );
 }
@@ -64,12 +63,12 @@ export default function Gallery() {
         className="text-center mb-12 px-4"
       >
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-3">
-          Luxury Living{" "}
-          <span className="text-[#b08c1c] italic">Gallery</span>
+          A Glimpse of Life at {" "}
+          <span className="text-[#b08c1c] italic">Divya Desam
+</span>
         </h2>
         <p className="text-gray-400 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
-          Experience the beauty, comfort, and quality of our development through carefully
-          selected project photographs.
+          Experience beautifully designed spaces, thoughtful architecture, and modern villa living.
         </p>
       </motion.div>
 

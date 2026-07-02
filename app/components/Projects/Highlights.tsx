@@ -26,58 +26,58 @@ const IMAGE_PATH = "/images/project-highlights-banner.png";
 const highlights: HighlightItem[] = [
   {
     id: 1,
-    title: "Uncompromising Safety",
+    title: "Enhanced Security",
     description:
-      "24/7 security personnel, gated perimeters, modern CCTV surveillance. Controlled visitor entry ensures no unauthorized access.",
+      "24/7 surveillance and controlled access for a safe and secure living environment.",
     icon: ShieldCheck,
   },
   {
     id: 2,
-    title: "Traditional Architectural Style",
+    title: "Timeless Architecture",
     description:
-      "Thinnai entrance for receiving guests. Native sloped roof brings life and character to the community.",
+      "Traditional design elements thoughtfully blended with modern comfort and functionality.",
     icon: Armchair,
   },
   {
     id: 3,
-    title: "Clean & Green Surroundings",
+    title: "Green Surroundings",
     description:
-      "Native landscaped trees and plants along roads, pollution-free environment with eco-friendly rainwater harvesting.",
+      "Landscaped spaces and eco-conscious features that promote a healthier lifestyle.",
     icon: Leaf,
   },
   {
     id: 4,
-    title: "Well Connected Indoor Spaces",
+    title: "Smart Living Spaces",
     description:
-      "Thoughtfully designed open layouts that prioritize flow, light, and connectivity between living spaces.",
+      "Open, well-connected interiors designed for natural light, ventilation, and everyday comfort.",
     icon: Waypoints,
   },
   {
     id: 5,
     title: "Spacious Bedrooms",
     description:
-      "Generously sized bedrooms designed for comfort, privacy, and restful living.",
+      "Designed to offer comfort, privacy, and ample space for everyday living.",
     icon: BedDouble,
   },
   {
     id: 6,
     title: "Exclusive Land Ownership",
     description:
-      "No UDS model. Every villa comes with exclusive individual land area — full ownership, full freedom.",
+      "Enjoy complete ownership of your villa and the land it stands on.",
     icon: Map,
   },
   {
     id: 7,
     title: "Kids Play Area",
     description:
-      "Dedicated safe and fun play zones designed for children within the community.",
+      "A safe and engaging space where children can play and grow.",
     icon: Gamepad2,
   },
   {
     id: 8,
     title: "EV Charging Ready",
     description:
-      "Dedicated EV charging point provided for each villa, future-ready for electric vehicles.",
+      "Dedicated EV charging provision for a future-ready lifestyle.",
     icon: BatteryCharging,
   },
 ];
