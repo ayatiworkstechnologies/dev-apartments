@@ -373,14 +373,14 @@ export default function DynamicInnerBanner({
             {/* Dynamic heading */}
             <h1
               className="
-                max-w-[570px]
-                text-[30px] font-semibold
+                max-w-[670px]
+                text-[25px] font-semibold
                 leading-[1.06]
                 tracking-[-0.03em]
                 text-[#111111]
-                sm:text-[38px]
-                lg:text-[42px]
-                xl:text-[46px]
+                sm:text-[30px]
+                lg:text-[35px]
+                xl:text-[40px]
               "
               style={{
                 perspective: "800px",

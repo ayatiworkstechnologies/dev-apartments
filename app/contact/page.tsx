@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 
 import DynamicInnerBanner from "@/components/DynamicInnerBanner";
 import StartConversation from "@/components/Contact-us/StartConversation";
+import ContactConnectForm from "@/components/Contact-us/ContactConnectForm";
+import FindUsHereSection from "@/components/Contact-us/FindUsHereSection";
 
 export default function ContactPage() {
     return (
@@ -48,6 +50,13 @@ export default function ContactPage() {
 
                 {/* {start conversation section} */}
                 <StartConversation />
+
+                {/* {lets connection section} */}
+                <ContactConnectForm />
+
+                {/* {map section } */}
+                <FindUsHereSection />
+
 
 
             </main>

@@ -115,14 +115,14 @@ export default function OurHistory() {
                 lg:text-[44px]
               "
             >
-              our{" "}
+              Our{" "}
               <span className="text-[#AE8348]">
-                history
+                History
               </span>
             </h2>
 
             {/* Underline */}
-            <motion.span
+            {/* <motion.span
               initial={{
                 width: 0,
                 opacity: 0,
@@ -144,7 +144,7 @@ export default function OurHistory() {
                 mt-4 block h-[2px]
                 bg-[#AE8348]
               "
-            />
+            /> */}
           </motion.div>
 
           {/* Paragraphs */}
