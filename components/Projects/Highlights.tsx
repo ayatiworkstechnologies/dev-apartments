@@ -1,8 +1,20 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, type Variants } from "framer-motion";
 import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
+import {
+  ArrowUpRight,
   Armchair,
   BatteryCharging,
   BedDouble,
@@ -18,10 +30,9 @@ type HighlightItem = {
   id: number;
   title: string;
   description: string;
+  image: string;
   icon: LucideIcon;
 };
-
-const IMAGE_PATH = "/images/project-highlights-banner.png";
 
 const highlights: HighlightItem[] = [
   {
@@ -29,337 +40,734 @@ const highlights: HighlightItem[] = [
     title: "Enhanced Security",
     description:
       "24/7 surveillance and controlled access for a safe and secure living environment.",
+    image: "/images/security.png",
     icon: ShieldCheck,
   },
   {
     id: 2,
     title: "Timeless Architecture",
     description:
-      "Traditional design elements thoughtfully blended with modern comfort and functionality.",
+      "Traditional design elements thoughtfully blended with contemporary comfort.",
+    image: "/images/architecture.png",
     icon: Armchair,
   },
   {
     id: 3,
     title: "Green Surroundings",
     description:
-      "Landscaped spaces and eco-conscious features that promote a healthier lifestyle.",
+      "Landscaped spaces and eco-conscious features for healthier everyday living.",
+    image: "/images/green-surroundings.png",
     icon: Leaf,
   },
   {
     id: 4,
     title: "Smart Living Spaces",
     description:
-      "Open, well-connected interiors designed for natural light, ventilation, and everyday comfort.",
+      "Open interiors designed for natural light, ventilation and everyday comfort.",
+    image: "/images/smart-living.png",
     icon: Waypoints,
   },
   {
     id: 5,
     title: "Spacious Bedrooms",
     description:
-      "Designed to offer comfort, privacy, and ample space for everyday living.",
+      "Comfortable private spaces with thoughtful planning and generous proportions.",
+    image: "/images/bedroom.png",
     icon: BedDouble,
   },
   {
     id: 6,
     title: "Exclusive Land Ownership",
     description:
-      "Enjoy complete ownership of your villa and the land it stands on.",
+      "Complete ownership of your villa and the land on which it stands.",
+    image: "/images/land-ownership.png",
     icon: Map,
   },
   {
     id: 7,
     title: "Kids Play Area",
     description:
-      "A safe and engaging space where children can play and grow.",
+      "A safe and engaging environment where children can play, learn and grow.",
+    image: "/images/kids-play-area.png",
     icon: Gamepad2,
   },
   {
     id: 8,
     title: "EV Charging Ready",
     description:
-      "Dedicated EV charging provision for a future-ready lifestyle.",
+      "Dedicated EV charging provision for a convenient future-ready lifestyle.",
+    image: "/images/ev-charging.png",
     icon: BatteryCharging,
   },
 ];
 
-const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const AUTO_PLAY_DELAY = 3500;
 
-const cardEntryAnimations = [
-  { x: -55, y: 18, rotate: -1.5 },
-  { x: 55, y: 18, rotate: 1.5 },
-  { x: -35, y: 45, rotate: -1 },
-  { x: 35, y: -45, rotate: 1 },
-  { x: -60, y: 0, rotate: -1.5 },
-  { x: 60, y: 0, rotate: 1.5 },
-  { x: 0, y: 55, rotate: -0.8 },
-  { x: 0, y: 55, rotate: 0.8 },
+const ease: [number, number, number, number] = [
+  0.22, 1, 0.36, 1,
 ];
 
-function createCardVariants(index: number): Variants {
-  const animation =
-    cardEntryAnimations[index % cardEntryAnimations.length];
-
-  return {
-    hidden: {
-      opacity: 0,
-      x: animation.x,
-      y: animation.y,
-      rotate: animation.rotate,
-      scale: 0.94,
-      filter: "blur(8px)",
+const sectionVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
     },
+  },
+};
 
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      rotate: 0,
-      scale: 1,
-      filter: "blur(0px)",
-      transition: {
-        type: "spring",
-        stiffness: 105,
-        damping: 16,
-        mass: 0.8,
-        delay: index * 0.06,
-      },
+const fadeUpVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 28,
+    filter: "blur(7px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.7,
+      ease,
     },
-  };
-}
+  },
+};
 
 export default function Highlights() {
   const reduceMotion = useReducedMotion();
 
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  const desktopContainerRef =
+    useRef<HTMLDivElement | null>(null);
+
+  const mobileContainerRef =
+    useRef<HTMLDivElement | null>(null);
+
+  const desktopItemRefs = useRef<
+    Array<HTMLButtonElement | null>
+  >([]);
+
+  const mobileItemRefs = useRef<
+    Array<HTMLButtonElement | null>
+  >([]);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isSectionVisible, setIsSectionVisible] =
+    useState(false);
+  const [isDocumentVisible, setIsDocumentVisible] =
+    useState(true);
+
+  const activeHighlight = highlights[activeIndex];
+
+  /*
+   * Scroll only the internal menu containers.
+   * This prevents the entire webpage from jumping.
+   */
+  const scrollActiveItemInsideContainer = useCallback(
+    (index: number) => {
+      const desktopContainer =
+        desktopContainerRef.current;
+
+      const desktopItem =
+        desktopItemRefs.current[index];
+
+      if (desktopContainer && desktopItem) {
+        const itemTop = desktopItem.offsetTop;
+        const itemHeight = desktopItem.offsetHeight;
+        const containerHeight =
+          desktopContainer.clientHeight;
+
+        const targetTop =
+          itemTop -
+          containerHeight / 2 +
+          itemHeight / 2;
+
+        desktopContainer.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: reduceMotion ? "auto" : "smooth",
+        });
+      }
+
+      const mobileContainer =
+        mobileContainerRef.current;
+
+      const mobileItem =
+        mobileItemRefs.current[index];
+
+      if (mobileContainer && mobileItem) {
+        const itemLeft = mobileItem.offsetLeft;
+        const itemWidth = mobileItem.offsetWidth;
+        const containerWidth =
+          mobileContainer.clientWidth;
+
+        const targetLeft =
+          itemLeft -
+          containerWidth / 2 +
+          itemWidth / 2;
+
+        mobileContainer.scrollTo({
+          left: Math.max(0, targetLeft),
+          behavior: reduceMotion ? "auto" : "smooth",
+        });
+      }
+    },
+    [reduceMotion],
+  );
+
+  const changeHighlight = useCallback(
+    (nextIndex: number) => {
+      if (
+        nextIndex < 0 ||
+        nextIndex >= highlights.length ||
+        nextIndex === activeIndex
+      ) {
+        return;
+      }
+
+      const isForward =
+        nextIndex > activeIndex ||
+        (activeIndex === highlights.length - 1 &&
+          nextIndex === 0);
+
+      setDirection(isForward ? 1 : -1);
+      setActiveIndex(nextIndex);
+    },
+    [activeIndex],
+  );
+
+  /*
+   * Observe whether the section is actually visible.
+   * Autoplay stops when the user scrolls to another section.
+   */
+  useEffect(() => {
+    const sectionElement = sectionRef.current;
+
+    if (!sectionElement) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSectionVisible(
+          entry.isIntersecting &&
+            entry.intersectionRatio >= 0.25,
+        );
+      },
+      {
+        threshold: [0, 0.25, 0.5, 0.75],
+      },
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  /*
+   * Pause autoplay when the user changes browser tabs.
+   */
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsDocumentVisible(
+        document.visibilityState === "visible",
+      );
+    };
+
+    handleVisibilityChange();
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange,
+    );
+
+    return () => {
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange,
+      );
+    };
+  }, []);
+
+  /*
+   * Keep only the internal menu aligned with the active item.
+   * No window/page scrolling is performed.
+   */
+  useEffect(() => {
+    scrollActiveItemInsideContainer(activeIndex);
+  }, [
+    activeIndex,
+    scrollActiveItemInsideContainer,
+  ]);
+
+  /*
+   * Autoplay runs only when:
+   * 1. Reduced motion is disabled.
+   * 2. The section is visible.
+   * 3. The browser tab is visible.
+   * 4. The user is not hovering over the component.
+   */
+  useEffect(() => {
+    if (
+      reduceMotion ||
+      isPaused ||
+      !isSectionVisible ||
+      !isDocumentVisible
+    ) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setDirection(1);
+
+      setActiveIndex((currentIndex) =>
+        currentIndex === highlights.length - 1
+          ? 0
+          : currentIndex + 1,
+      );
+    }, AUTO_PLAY_DELAY);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [
+    isDocumentVisible,
+    isPaused,
+    isSectionVisible,
+    reduceMotion,
+  ]);
+
   return (
     <section
+      ref={sectionRef}
       id="project-highlights"
-      className="relative w-full overflow-hidden bg-white px-4 py-14 sm:px-6 sm:py-16 md:px-8 md:py-20 lg:px-12 lg:py-24 xl:px-16 xl:py-28"
+      className="relative overflow-hidden bg-[#f7f4ef] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
     >
-      {/* Decorative background */}
+      {/* Background decorations */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-[20%] h-[380px] w-[380px] rounded-full bg-[#bd9253]/[0.04] blur-3xl"
+        className="pointer-events-none absolute -left-40 top-20 h-[380px] w-[380px] rounded-full bg-[#b78949]/10 blur-[120px]"
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-40 bottom-[10%] h-[420px] w-[420px] rounded-full bg-[#bd9253]/[0.04] blur-3xl"
+        className="pointer-events-none absolute -right-40 bottom-0 h-[420px] w-[420px] rounded-full bg-[#d8c4a8]/20 blur-[130px]"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1450px]">
-        {/* Heading */}
+      <motion.div
+        variants={sectionVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{
+          once: true,
+          amount: 0.15,
+        }}
+        className="relative mx-auto max-w-[1450px]"
+      >
+        {/* Section heading */}
         <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : {
-                  opacity: 0,
-                  y: 35,
-                  scale: 0.96,
-                  filter: "blur(8px)",
-                }
-          }
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            filter: "blur(0px)",
-          }}
-          viewport={{
-            once: true,
-            amount: 0.4,
-          }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.8,
-            ease,
-          }}
-          className="text-center"
+          variants={fadeUpVariants}
+          className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between"
         >
-          <h2 className="font-serif text-[31px] font-semibold leading-[1.08] tracking-[-0.035em] text-[#172039] sm:text-[39px] md:text-[45px] lg:text-[51px]">
-            Project Highlights
-          </h2>
+          <div>
+            <div className="flex items-center gap-3">
+              <span className="h-px w-9 bg-[#b78949]" />
 
-          <motion.p
-            initial={
-              reduceMotion
-                ? false
-                : {
-                    opacity: 0,
-                    y: 12,
-                  }
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#9f733b] sm:text-[11px]">
+                Project Highlights
+              </p>
+            </div>
+
+            <h2 className="mt-3 max-w-2xl text-3xl font-semibold leading-[1.1] tracking-[-0.045em] text-[#382d22] sm:text-4xl lg:text-5xl">
+              Designed for a better way of living.
+            </h2>
+          </div>
+
+          <p className="max-w-md text-sm leading-7 text-[#7f776e]">
+            Explore the thoughtful features that make
+            Divya Desam distinctive, comfortable and
+            future-ready.
+          </p>
+        </motion.div>
+
+        {/* Main layout */}
+        <motion.div
+          variants={fadeUpVariants}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocusCapture={() => setIsPaused(true)}
+          onBlurCapture={(event) => {
+            const nextFocusedElement =
+              event.relatedTarget as Node | null;
+
+            if (
+              !nextFocusedElement ||
+              !event.currentTarget.contains(
+                nextFocusedElement,
+              )
+            ) {
+              setIsPaused(false);
             }
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.55,
-              delay: reduceMotion ? 0 : 0.18,
-              ease,
-            }}
-            className="mt-2 font-secondary text-[10px] leading-relaxed text-[#aaa6a1] sm:text-[11px] md:text-[12px]"
-          >
-            What makes Divya Desam truly special
-          </motion.p>
-
-          <motion.span
-            initial={{
-              scaleX: reduceMotion ? 1 : 0,
-            }}
-            whileInView={{
-              scaleX: 1,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.8,
-              delay: reduceMotion ? 0 : 0.28,
-              ease,
-            }}
-            className="mx-auto mt-3 block h-[2px] w-[46px] origin-center bg-[#b88d48] sm:w-[58px]"
-          />
-        </motion.div>
-
-        {/* Main banner image */}
-        <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : {
-                  opacity: 0,
-                  y: 45,
-                  scale: 0.97,
-                }
-          }
-          whileInView={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
           }}
-          viewport={{
-            once: true,
-            amount: 0.15,
-          }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.9,
-            delay: reduceMotion ? 0 : 0.08,
-            ease,
-          }}
-          className="group relative mt-10 h-[210px] w-full overflow-hidden rounded-[16px] bg-[#e9dfd2] shadow-[0_18px_55px_rgba(57,42,26,0.12)] sm:mt-12 sm:h-[280px] sm:rounded-[20px] md:h-[330px] lg:mt-14 lg:h-[360px] lg:rounded-[22px] xl:h-[390px]"
+          className="overflow-hidden rounded-[26px] border border-[#b78949]/15 bg-white p-2 shadow-[0_28px_85px_rgba(110,82,48,0.12)] sm:p-3 lg:p-4"
         >
-          <motion.div
-            initial={{
-              scale: reduceMotion ? 1 : 1.08,
-            }}
-            whileInView={{
-              scale: 1,
-            }}
-            viewport={{
-              once: true,
-            }}
-            transition={{
-              duration: reduceMotion ? 0 : 1.4,
-              ease,
-            }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={IMAGE_PATH}
-              alt="Divya Desam premium villa community"
-              fill
-              priority
-              unoptimized
-              draggable={false}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 1450px"
-              className="select-none object-cover object-center transition-transform duration-[1400ms] ease-out group-hover:scale-[1.025]"
-            />
-          </motion.div>
-
-          {/* Image overlay */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/[0.08] via-transparent to-[#e9a242]/[0.08]" />
-
-          {/* Light sweep */}
-          <div className="pointer-events-none absolute inset-y-0 -left-[45%] w-[35%] rotate-[10deg] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-[1100ms] group-hover:left-[115%]" />
-        </motion.div>
-
-        {/* Highlight cards */}
-        <motion.div
-          initial={reduceMotion ? false : "hidden"}
-          whileInView={reduceMotion ? undefined : "visible"}
-          viewport={{
-            once: true,
-            amount: 0.08,
-          }}
-          className="mt-9 grid grid-cols-1 gap-5 sm:mt-11 sm:gap-6 md:grid-cols-2 lg:mt-12 lg:gap-x-8 lg:gap-y-9 xl:gap-x-10"
-        >
-          {highlights.map((item, index) => {
-            const Icon = item.icon;
-
-            return (
-              <motion.article
-                key={item.id}
-                variants={
-                  reduceMotion ? undefined : createCardVariants(index)
-                }
-                whileHover={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        y: -9,
-                        scale: 1.012,
-                        boxShadow:
-                          "0 24px 60px rgba(43,38,30,0.11)",
-                      }
-                }
-                className="group relative min-h-[160px] overflow-hidden rounded-[18px] border border-[#eeeae4] bg-white px-5 py-6 shadow-[0_10px_35px_rgba(48,43,36,0.055)] sm:min-h-[170px] sm:px-6 sm:py-7 lg:min-h-[185px] lg:rounded-[20px] lg:px-7 lg:py-8"
+          <div className="grid gap-3 lg:grid-cols-[0.82fr_1.18fr] lg:gap-4">
+            {/* Left menu */}
+            <div className="order-2 min-w-0 lg:order-1">
+              {/* Desktop vertical menu */}
+              <div
+                ref={desktopContainerRef}
+                className="
+                  hidden h-[488px] overflow-y-auto
+                  overscroll-contain scroll-smooth pr-1
+                  lg:block
+                  [scrollbar-width:none]
+                  [&::-webkit-scrollbar]:hidden
+                "
               >
-                {/* Gold top border */}
-                <span className="absolute left-0 top-0 h-[3px] w-0 bg-[#b88d48] transition-all duration-500 group-hover:w-full" />
+                <div className="space-y-3">
+                  {highlights.map((item, index) => {
+                    const Icon = item.icon;
+                    const isActive =
+                      activeIndex === index;
 
-                {/* Soft hover background */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#b88d48]/[0.07] via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    return (
+                      <motion.button
+                        key={item.id}
+                        ref={(element) => {
+                          desktopItemRefs.current[index] =
+                            element;
+                        }}
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() =>
+                          changeHighlight(index)
+                        }
+                        whileHover={
+                          reduceMotion
+                            ? undefined
+                            : {
+                                x: 4,
+                              }
+                        }
+                        whileTap={{
+                          scale: 0.99,
+                        }}
+                        className={`group relative flex h-[113px] w-full shrink-0 items-center overflow-hidden rounded-[20px] border px-5 py-4 text-left transition-all duration-500 ${
+                          isActive
+                            ? "border-[#b78949] bg-[#b78949] shadow-[0_18px_45px_rgba(183,137,73,0.28)]"
+                            : "border-[#b78949]/15 bg-[#fbfaf7] hover:border-[#b78949]/45 hover:bg-white hover:shadow-[0_12px_30px_rgba(110,82,48,0.09)]"
+                        }`}
+                      >
+                        {/* Active progress */}
+                        {isActive &&
+                          !isPaused &&
+                          isSectionVisible &&
+                          isDocumentVisible &&
+                          !reduceMotion && (
+                            <motion.span
+                              key={`desktop-progress-${activeIndex}`}
+                              initial={{
+                                scaleX: 0,
+                              }}
+                              animate={{
+                                scaleX: 1,
+                              }}
+                              transition={{
+                                duration:
+                                  AUTO_PLAY_DELAY / 1000,
+                                ease: "linear",
+                              }}
+                              className="absolute inset-x-0 bottom-0 h-[3px] origin-left bg-white/80"
+                            />
+                          )}
 
-                <div className="relative z-10">
-                  {/* Icon */}
-                  <motion.div
-                    whileHover={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            rotate: [0, -7, 7, 0],
-                          }
-                    }
-                    transition={{
-                      duration: 0.5,
-                    }}
-                    className="flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#faf7f1] text-[#b88d48] transition-all duration-500 group-hover:scale-110 group-hover:bg-[#b88d48] group-hover:text-white group-hover:shadow-[0_10px_25px_rgba(184,141,72,0.28)] sm:h-12 sm:w-12 sm:rounded-[14px]"
-                  >
-                    <Icon size={20} strokeWidth={1.8} />
-                  </motion.div>
+                        {isActive && (
+                          <div
+                            aria-hidden="true"
+                            className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-white/10"
+                          />
+                        )}
 
-                  {/* Content */}
-                  <div className="mt-5">
-                    <h3 className="font-primary text-[14px] font-semibold leading-tight tracking-[-0.015em] text-[#172039] sm:text-[15px] lg:text-[17px]">
-                      {item.title}
-                    </h3>
+                        <div className="relative z-10 flex w-full items-center gap-4">
+                          <div
+                            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] transition-all duration-500 ${
+                              isActive
+                                ? "bg-white/15 text-white"
+                                : "bg-[#b78949]/10 text-[#b78949] group-hover:bg-[#b78949] group-hover:text-white"
+                            }`}
+                          >
+                            <Icon
+                              size={20}
+                              strokeWidth={1.8}
+                            />
+                          </div>
 
-                    <p className="mt-2 max-w-[650px] font-secondary text-[10px] leading-[1.6] text-[#9a9894] sm:text-[11px] lg:text-[12px] lg:leading-[1.7]">
-                      {item.description}
-                    </p>
-                  </div>
+                          <div className="min-w-0 flex-1">
+                            <h3
+                              className={`text-[15px] font-semibold leading-tight tracking-[-0.02em] transition-colors duration-300 xl:text-[16px] ${
+                                isActive
+                                  ? "text-white"
+                                  : "text-[#3d3329]"
+                              }`}
+                            >
+                              {item.title}
+                            </h3>
+
+                            <p
+                              className={`mt-1.5 line-clamp-2 text-[10px] leading-[1.55] transition-colors duration-300 xl:text-[11px] ${
+                                isActive
+                                  ? "text-white/70"
+                                  : "text-[#918980]"
+                              }`}
+                            >
+                              {item.description}
+                            </p>
+                          </div>
+
+                          <motion.span
+                            animate={{
+                              rotate: isActive ? 45 : 0,
+                            }}
+                            transition={{
+                              duration: 0.35,
+                              ease,
+                            }}
+                            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${
+                              isActive
+                                ? "bg-white text-[#b78949]"
+                                : "bg-[#b78949]/10 text-[#b78949]"
+                            }`}
+                          >
+                            <ArrowUpRight size={16} />
+                          </motion.span>
+                        </div>
+                      </motion.button>
+                    );
+                  })}
                 </div>
+              </div>
 
-                {/* Decorative corner */}
-                <span className="pointer-events-none absolute -bottom-10 -right-10 h-24 w-24 scale-0 rounded-full bg-[#b88d48]/[0.08] transition-transform duration-500 group-hover:scale-100" />
-              </motion.article>
-            );
-          })}
+              {/* Mobile horizontal menu */}
+              <div
+                ref={mobileContainerRef}
+                className="
+                  flex snap-x snap-mandatory gap-2
+                  overflow-x-auto overscroll-x-contain
+                  scroll-smooth pb-2 lg:hidden
+                  [scrollbar-width:none]
+                  [&::-webkit-scrollbar]:hidden
+                "
+              >
+                {highlights.map((item, index) => {
+                  const Icon = item.icon;
+                  const isActive =
+                    activeIndex === index;
+
+                  return (
+                    <button
+                      key={item.id}
+                      ref={(element) => {
+                        mobileItemRefs.current[index] =
+                          element;
+                      }}
+                      type="button"
+                      aria-pressed={isActive}
+                      onClick={() =>
+                        changeHighlight(index)
+                      }
+                      className={`flex min-w-[180px] snap-center items-center gap-3 rounded-2xl border p-3 text-left transition-all duration-300 ${
+                        isActive
+                          ? "border-[#b78949] bg-[#b78949] text-white shadow-[0_12px_28px_rgba(183,137,73,0.25)]"
+                          : "border-[#b78949]/15 bg-[#fbfaf7] text-[#3d3329]"
+                      }`}
+                    >
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
+                          isActive
+                            ? "bg-white/15 text-white"
+                            : "bg-[#b78949]/10 text-[#b78949]"
+                        }`}
+                      >
+                        <Icon
+                          size={18}
+                          strokeWidth={1.8}
+                        />
+                      </div>
+
+                      <span className="text-[11px] font-semibold leading-4">
+                        {item.title}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Right active image */}
+            <div className="order-1 min-w-0 lg:order-2">
+              <div className="relative h-[330px] overflow-hidden rounded-[22px] bg-[#eee8df] sm:h-[430px] lg:h-[488px]">
+                <AnimatePresence
+                  mode="popLayout"
+                  initial={false}
+                  custom={direction}
+                >
+                  <motion.div
+                    key={activeHighlight.id}
+                    custom={direction}
+                    initial={{
+                      opacity: 0,
+                      x:
+                        direction > 0
+                          ? 65
+                          : -65,
+                      scale: 1.04,
+                      filter: "blur(8px)",
+                    }}
+                    animate={{
+                      opacity: 1,
+                      x: 0,
+                      scale: 1,
+                      filter: "blur(0px)",
+                    }}
+                    exit={{
+                      opacity: 0,
+                      x:
+                        direction > 0
+                          ? -65
+                          : 65,
+                      scale: 0.985,
+                      filter: "blur(7px)",
+                    }}
+                    transition={{
+                      duration: reduceMotion
+                        ? 0
+                        : 0.75,
+                      ease,
+                    }}
+                    className="absolute inset-0"
+                  >
+                    <motion.div
+                      initial={{
+                        scale: reduceMotion
+                          ? 1
+                          : 1.07,
+                      }}
+                      animate={{
+                        scale: 1,
+                      }}
+                      transition={{
+                        duration: reduceMotion
+                          ? 0
+                          : 1.3,
+                        ease,
+                      }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={activeHighlight.image}
+                        alt={activeHighlight.title}
+                        fill
+                        priority={activeIndex === 0}
+                        unoptimized
+                        draggable={false}
+                        sizes="(max-width: 1024px) 100vw, 60vw"
+                        className="object-cover object-center"
+                      />
+                    </motion.div>
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#6f5234]/50 via-[#8d6a43]/10 to-transparent" />
+
+                    <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-8">
+                      <motion.div
+                        initial={{
+                          opacity: 0,
+                          y: 18,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                        }}
+                        transition={{
+                          delay: 0.18,
+                          duration: 0.55,
+                          ease,
+                        }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f1d7ad]">
+                            Project Highlight
+                          </span>
+
+                          <span className="h-px w-10 bg-[#f1d7ad]/70" />
+
+                          <span className="text-[10px] font-semibold text-white/70">
+                            {String(
+                              activeIndex + 1,
+                            ).padStart(2, "0")}
+                            /
+                            {String(
+                              highlights.length,
+                            ).padStart(2, "0")}
+                          </span>
+                        </div>
+
+                        <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-3xl lg:text-4xl">
+                          {activeHighlight.title}
+                        </h3>
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Image pagination */}
+                <div className="absolute right-4 top-4 z-20 flex items-center gap-1.5 rounded-full border border-white/30 bg-[#8a6742]/45 px-3 py-2 backdrop-blur-md sm:right-6 sm:top-6">
+                  {highlights.map((item, index) => {
+                    const isActive =
+                      activeIndex === index;
+
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        aria-label={`View ${item.title}`}
+                        aria-current={
+                          isActive
+                            ? "true"
+                            : undefined
+                        }
+                        onClick={() =>
+                          changeHighlight(index)
+                        }
+                        className="relative h-3 min-w-3 overflow-hidden rounded-full"
+                      >
+                        <motion.span
+                          animate={{
+                            width: isActive
+                              ? 24
+                              : 6,
+                            backgroundColor:
+                              isActive
+                                ? "#ffffff"
+                                : "rgba(255,255,255,0.5)",
+                          }}
+                          transition={{
+                            duration: 0.35,
+                            ease,
+                          }}
+                          className="mx-auto block h-1.5 rounded-full"
+                        />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }
