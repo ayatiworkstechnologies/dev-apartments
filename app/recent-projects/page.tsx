@@ -15,26 +15,24 @@ const recentProjectsHeader: DynamicProjectsHeader = {
   titleLines: [
     [
       {
-        text: "Creative ",
+        text: "Showcasing ",
       },
       {
-        text: "Projects That",
+        text: "Our Landmark ",
         highlight: true,
       },
     ],
     [
       {
-        text: "Define ",
-        highlight: true,
+        text: "Projects ",
+
       },
-      {
-        text: "Our Style",
-      },
+
     ],
   ],
 
   description:
-    "Our diverse portfolio represents decades of construction experience backed by a passion for quality, outstanding client service.",
+    "Take a look at our latest residential projects, where modern design meets superior construction. Each development showcases our dedication to creating comfortable, elegant, and future-ready homes.",
 };
 
 /* ======================================================
@@ -74,22 +72,25 @@ const recentProjects: DynamicProjectItem[] = [
         label: "4 BHK Villa",
       },
       {
-        label: "2,800 Sq. Ft.",
+        label: "Luxury Residences",
+      },
+      {
+        label: "2800+ Sq. Ft.",
+      },
+      {
+        label: "Private Garden",
+      },
+      {
+        label: "Premium Interiors",
+      },
+      {
+        label: "Covered Car Parking",
+      },
+      {
+        label: "Ready to Move",
       },
       {
         label: "CMDA Approved",
-      },
-      {
-        label: "Ready-to-Move Villa",
-      },
-      {
-        label: "Independent Villa",
-      },
-      {
-        label: "Premium Residential Living",
-      },
-      {
-        label: "Beach Nearby",
       },
     ],
 
@@ -153,22 +154,22 @@ const recentProjects: DynamicProjectItem[] = [
         label: "4 BHK Villa",
       },
       {
-        label: "2,800 Sq. Ft.",
+        label: "Exclusive Community",
       },
       {
-        label: "CMDA Approved",
+        label: "Elegant Design",
       },
       {
-        label: "Ready-to-Move Villa",
+        label: "Premium Finishes",
       },
       {
-        label: "Independent Villa",
+        label: "Smart Floor Plan",
       },
       {
-        label: "Premium Residential Living",
+        label: "Spacious Interiors",
       },
       {
-        label: "Beach Nearby",
+        label: "Trusted Since 1981",
       },
     ],
 

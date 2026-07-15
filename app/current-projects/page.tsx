@@ -15,26 +15,26 @@ const projectsHeader: DynamicProjectsHeader = {
   titleLines: [
     [
       {
-        text: "Creative ",
+        text: " Your  ",
       },
       {
-        text: "Projects That",
+        text: "Future Home ",
         highlight: true,
       },
     ],
     [
       {
-        text: "Define ",
+        text: " Is Taking ",
         highlight: true,
       },
       {
-        text: "Our Style",
+        text: "Shape",
       },
     ],
   ],
 
   description:
-    "Our diverse portfolio represents decades of construction experience backed by a passion for quality, outstanding client service.",
+    "Be among the first to discover our ongoing residential developments. Thoughtfully designed with premium features and quality construction, these homes are crafted for comfort, convenience, and long-term value.",
 };
 
 /* ======================================================
@@ -71,25 +71,26 @@ const projects: DynamicProjectItem[] = [
 
     tags: [
       {
-        label: "4 BHK Villa",
+        label: "2 BHK Apartments",
       },
       {
-        label: "2,800 Sq. Ft.",
+        label: "3 BHK Apartments",
       },
       {
-        label: "CMDA Approved",
+        label: "4 BHK Villas",
       },
       {
-        label: "Ready-to-Move Villa",
+        label: "Gated Community",
       },
       {
-        label: "Independent Villa",
+        label: "World-Class Quality",
       },
       {
-        label: "Premium Residential Living",
+        label: "Trusted Builder",
       },
+      
       {
-        label: "Beach Nearby",
+        label: "Quality Construction",
       },
     ],
 
@@ -148,32 +149,35 @@ const projects: DynamicProjectItem[] = [
 
     tags: [
       {
-        label: "4 BHK Villa",
+        label: "High-Quality Materials",
       },
       {
-        label: "2,800 Sq. Ft.",
+        label: "Community Living",
       },
       {
-        label: "CMDA Approved",
+        label: "Exclusive Community",
       },
       {
-        label: "Ready-to-Move Villa",
+        label: "CCTV Security",
       },
       {
-        label: "Independent Villa",
+        label: "24×7 Security",
       },
       {
-        label: "Premium Residential Living",
+        label: "Visitor Parking",
       },
       {
-        label: "Beach Nearby",
+        label: "Covered Parking",
+      },
+      {
+        label: "Power Backup",
       },
     ],
 
     buttons: [
       {
         label: "Learn More",
-        href: "/current-projects/divya-desam",
+        href: "/divya-desam",
         variant: "primary",
         showArrow: true,
       },

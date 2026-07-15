@@ -30,7 +30,7 @@ const projects: Project[] = [
     img: "/images/divya.png",
     thumb:
       "/images/divya.png",
-    href: "/pushpa-ave",
+    href: "/divya-desam",
   },
   {
     id: 1,
@@ -42,7 +42,7 @@ const projects: Project[] = [
       "/images/Villa, Pushpa Ave.png",
 
     // Dedicated Pushpa Avenue project page
-    href: "/pushpa-ave",
+    href: "/divya-desam",
   },
   {
     id: 2,
@@ -54,7 +54,7 @@ const projects: Project[] = [
       "/images/Dev Pristine Villa.png",
 
     // Remaining projects open the enquiry form
-    href: "/pushpa-ave",
+    href: "/divya-desam",
   },
   {
     id: 3,
@@ -65,7 +65,7 @@ const projects: Project[] = [
     thumb:
       "/images/Villa, Pea Cock Enclave-4.png",
   
-    href: "/pushpa-ave",
+    href: "/divya-desam",
   },
   {
     id: 4,
@@ -75,7 +75,7 @@ const projects: Project[] = [
     img: "/images/Dev Pristine Villa-1.png",
     thumb:
       "/images/Dev Pristine Villa-1.png",
-    href: "/pushpa-ave",
+    href: "/divya-desam",
   },
  
 ];

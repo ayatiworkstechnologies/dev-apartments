@@ -152,7 +152,7 @@ export default function VisionMission() {
               "
             >
               <Image
-                src="/images/vision-mission.png"
+                src="/images/vision-mission-1.png"
                 alt="Dev Appartments interior living space"
                 fill
                 priority

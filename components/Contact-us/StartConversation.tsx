@@ -80,9 +80,9 @@ interface StartConversationProps {
 }
 
 export default function StartConversation({
-  titleStart = "Start a",
-  titleHighlight = "Conversation",
-  description = "Have a question about our services or want to get started on your design project? We are here to help! Fill out the contact form below and one of our team members will get back to you within 24 hours. Alternatively, you can reach out to us via phone or email using the contact information provided below. We can’t wait to hear from you!",
+  titleStart = "Talk to ",
+  titleHighlight = "Our Experts",
+  description = "Have questions about our projects or need assistance in finding your dream home? Our team is here to help. Your perfect home is closer than you think. Reach out to Dev Appartments for project information, pricing, site visit bookings or our dedicated team is ready to assist . We will help you take the next step toward a home you love.",
 }: StartConversationProps) {
   const reduceMotion = useReducedMotion();
 

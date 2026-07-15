@@ -11,7 +11,7 @@ export default function CompletedProjectsPage() {
       <main className="flex-1">
         <DynamicInnerBanner
           eyebrow="Completed Projects"
-          image="/images/current-projects-banner.png"
+          image="/images/completed-projects-banner-1.png"
           imageAlt="Completed residential projects by Dev Appartments"
           description="Quality Homes Delivered, Trust Built."
           titleLines={[
