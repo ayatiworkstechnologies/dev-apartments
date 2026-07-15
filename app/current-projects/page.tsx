@@ -110,11 +110,11 @@ const projects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/luxury-villa-plots-1.png",
+        src: "/images/luxury-villa-plots-01.png",
         alt: "Luxury villa plots in Vettuvankeni",
       },
       {
-        src: "/images/luxury-villa-plots-2.png",
+        src: "/images/luxury-villa-plots-02.png",
         alt: "Premium villa development near ECR",
       },
     ],
@@ -190,11 +190,11 @@ const projects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/divya-desam-current-projects-banner.png",
+        src: "/images/divya-desam-current-projects-banner-01.png",
         alt: "Divya Desam premium villa",
       },
       {
-        src: "/images/divya-desam-residential-development.png",
+        src: "/images/divya-desam-residential-development-02.png",
         alt: "Divya Desam residential development",
       },
     ],
@@ -213,7 +213,7 @@ export default function CurrentProjectsPage() {
       <main className="flex-1">
         <DynamicInnerBanner
           eyebrow="Current Projects"
-          image="/images/currentprojects-banner.png"
+          image="/images/currentprojects-banner-1.png"
           imageAlt="Modern residential villas in Dev Appartments current projects"
           description="Discover Homes Designed for Tomorrow."
           titleLines={[

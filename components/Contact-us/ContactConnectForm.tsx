@@ -649,47 +649,7 @@ export default function ContactConnectForm() {
               />
             </motion.div>
 
-            <motion.div
-              variants={itemVariants}
-              className="mt-2.5"
-            >
-              <label
-                htmlFor="code"
-                className="
-                  mb-1.5 block
-                  text-[13px] font-semibold
-                  text-[#1A1A1A]
-                "
-              >
-                Input this code
-              </label>
-
-              <input
-                id="code"
-                name="code"
-                type="text"
-                value={formData.code}
-                onChange={handleChange}
-                placeholder="Code"
-                className="
-                  h-[38px] w-full
-                  rounded-[4px]
-                  border border-transparent
-                  bg-[#F5F5F5]
-                  px-3
-                  text-[12px]
-                  text-[#222222]
-                  outline-none
-                  transition-all duration-300
-
-                  placeholder:text-[#A5A5A5]
-
-                  focus:border-[#B88948]/50
-                  focus:bg-white
-                  focus:shadow-[0_0_0_3px_rgba(184,137,72,0.10)]
-                "
-              />
-            </motion.div>
+            
 
             <motion.div
               variants={itemVariants}
