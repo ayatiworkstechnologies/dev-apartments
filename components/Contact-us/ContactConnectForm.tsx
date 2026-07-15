@@ -2,15 +2,21 @@
 
 import Image from "next/image";
 import {
-  FormEvent,
   ChangeEvent,
+  FormEvent,
   useState,
 } from "react";
-import { motion, type Variants } from "framer-motion";
+import {
+  motion,
+  type Variants,
+} from "framer-motion";
 
-const smoothEase: [number, number, number, number] = [
-  0.22, 1, 0.36, 1,
-];
+const smoothEase: [
+  number,
+  number,
+  number,
+  number,
+] = [0.22, 1, 0.36, 1];
 
 const sectionVariants: Variants = {
   hidden: {
@@ -93,15 +99,24 @@ interface ContactFormData {
   email: string;
   phone: string;
   message: string;
-  code: string;
 }
+
+interface ApiResponse {
+  success?: boolean;
+  message?: string;
+  data?: unknown;
+}
+
+type SubmissionStatus =
+  | "idle"
+  | "success"
+  | "error";
 
 const initialFormData: ContactFormData = {
   name: "",
   email: "",
   phone: "",
   message: "",
-  code: "",
 };
 
 const contactDetails = [
@@ -139,29 +154,34 @@ const contactDetails = [
 const socialLinks = [
   {
     label: "Facebook",
-    href: "#",
+    href: "https://www.facebook.com/devappartmentss/",
     icon: "/icons/facebook.svg",
   },
   {
     label: "X",
-    href: "#",
+    href: "https://x.com/devappartments",
     icon: "/icons/x.svg",
   },
   {
     label: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/devappartments/",
     icon: "/icons/instagram.svg",
   },
   {
     label: "LinkedIn",
-    href: "#",
+    href: "https://www.linkedin.com/in/dev-appartments-2378151b0/",
     icon: "/icons/linkedin.svg",
   },
   {
     label: "YouTube",
-    href: "#",
+    href: "https://www.youtube.com/@devappartments6112",
     icon: "/icons/youtube.svg",
   },
+  // {
+  //   label: "Threads",
+  //   href: "https://www.threads.net/@devappartments",
+  //   icon: "/icons/threads.svg",
+  // },
 ];
 
 export default function ContactConnectForm() {
@@ -170,6 +190,12 @@ export default function ContactConnectForm() {
 
   const [isSubmitting, setIsSubmitting] =
     useState(false);
+
+  const [submissionStatus, setSubmissionStatus] =
+    useState<SubmissionStatus>("idle");
+
+  const [statusMessage, setStatusMessage] =
+    useState("");
 
   const handleChange = (
     event: ChangeEvent<
@@ -182,6 +208,11 @@ export default function ContactConnectForm() {
       ...previousData,
       [name]: value,
     }));
+
+    if (submissionStatus !== "idle") {
+      setSubmissionStatus("idle");
+      setStatusMessage("");
+    }
   };
 
   const handleSubmit = async (
@@ -189,29 +220,112 @@ export default function ContactConnectForm() {
   ) => {
     event.preventDefault();
 
+    if (isSubmitting) {
+      return;
+    }
+
+    const cleanedFormData = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      message: formData.message.trim(),
+    };
+
+    if (
+      !cleanedFormData.name ||
+      !cleanedFormData.email ||
+      !cleanedFormData.phone ||
+      !cleanedFormData.message
+    ) {
+      setSubmissionStatus("error");
+      setStatusMessage(
+        "Please fill in all required fields.",
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmissionStatus("idle");
+    setStatusMessage("");
+
     try {
-      setIsSubmitting(true);
+      const response = await fetch(
+        "/api/contact",
+        {
+          method: "POST",
 
-      console.log("Contact form data:", formData);
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
 
-      // Add your API request here.
-      // Example:
-      //
-      // const response = await fetch("/api/contact", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(formData),
-      // });
-      //
-      // if (!response.ok) {
-      //   throw new Error("Unable to submit form");
-      // }
+          body: JSON.stringify(
+            cleanedFormData,
+          ),
+        },
+      );
+
+      const responseText =
+        await response.text();
+
+      let result: ApiResponse = {};
+
+      if (responseText) {
+        try {
+          result = JSON.parse(
+            responseText,
+          ) as ApiResponse;
+        } catch {
+          result = {
+            success: false,
+            message:
+              responseText ||
+              "Invalid response received from the server.",
+          };
+        }
+      }
+
+      console.log(
+        "Contact form response:",
+        response.status,
+        result,
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          result.message ||
+            `Unable to submit. Error ${response.status}.`,
+        );
+      }
+
+      if (result.success === false) {
+        throw new Error(
+          result.message ||
+            "Unable to submit your enquiry.",
+        );
+      }
+
+      setSubmissionStatus("success");
+
+      setStatusMessage(
+        result.message ||
+          "Thank you! Your enquiry has been submitted successfully.",
+      );
 
       setFormData(initialFormData);
-    } catch (error) {
-      console.error("Form submission error:", error);
+    } catch (error: unknown) {
+      console.error(
+        "Form submission error:",
+        error,
+      );
+
+      setSubmissionStatus("error");
+
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -243,17 +357,14 @@ export default function ContactConnectForm() {
           rounded-[14px]
           bg-white
           shadow-[0_18px_48px_rgba(25,25,25,0.14)]
-
           lg:grid-cols-[0.86fr_1.14fr]
         "
       >
-        {/* Left contact section */}
         <motion.div
           variants={leftContentVariants}
           className="
             flex flex-col justify-center
             px-6 py-10
-
             sm:px-9 sm:py-12
             lg:px-10 lg:py-12
             xl:px-12
@@ -266,7 +377,6 @@ export default function ContactConnectForm() {
                 leading-[1.1]
                 tracking-[-0.035em]
                 text-[#090909]
-
                 sm:text-[32px]
                 lg:text-[34px]
               "
@@ -283,7 +393,6 @@ export default function ContactConnectForm() {
                 text-[12px] font-normal
                 leading-[1.65]
                 text-[#999999]
-
                 sm:text-[13px]
               "
             >
@@ -292,7 +401,6 @@ export default function ContactConnectForm() {
             </p>
           </motion.div>
 
-          {/* Contact details */}
           <div className="mt-8 space-y-6">
             {contactDetails.map((detail) => (
               <motion.div
@@ -331,23 +439,23 @@ export default function ContactConnectForm() {
                   </h3>
                 </div>
 
-                {detail.href && detail.content && (
-                  <a
-                    href={detail.href}
-                    className="
-                      mt-2 block pl-[28px]
-                      text-[11px]
-                      text-[#7F7F7F]
-                      transition-colors
-                      duration-300
-                      hover:text-[#B88948]
-
-                      sm:text-[12px]
-                    "
-                  >
-                    {detail.content}
-                  </a>
-                )}
+                {detail.href &&
+                  detail.content && (
+                    <a
+                      href={detail.href}
+                      className="
+                        mt-2 block pl-[28px]
+                        text-[11px]
+                        text-[#7F7F7F]
+                        transition-colors
+                        duration-300
+                        hover:text-[#B88948]
+                        sm:text-[12px]
+                      "
+                    >
+                      {detail.content}
+                    </a>
+                  )}
 
                 {detail.phoneNumbers && (
                   <div
@@ -357,7 +465,6 @@ export default function ContactConnectForm() {
                       pl-[28px]
                       text-[11px]
                       text-[#7F7F7F]
-
                       sm:text-[12px]
                     "
                   >
@@ -365,7 +472,10 @@ export default function ContactConnectForm() {
                       (phone, index) => (
                         <span
                           key={phone.href}
-                          className="inline-flex items-center gap-1"
+                          className="
+                            inline-flex
+                            items-center gap-1
+                          "
                         >
                           {index > 0 && (
                             <span aria-hidden="true">
@@ -398,7 +508,6 @@ export default function ContactConnectForm() {
                       not-italic
                       leading-[1.6]
                       text-[#7F7F7F]
-
                       sm:text-[12px]
                     "
                   >
@@ -409,7 +518,6 @@ export default function ContactConnectForm() {
             ))}
           </div>
 
-          {/* Social icons */}
           <motion.div
             variants={itemVariants}
             className="
@@ -454,13 +562,11 @@ export default function ContactConnectForm() {
           </motion.div>
         </motion.div>
 
-        {/* Right form section */}
         <div
           className="
             flex items-center justify-center
             bg-[#FAFAFA]
             p-4
-
             sm:p-6
             lg:bg-white lg:p-5
           "
@@ -468,12 +574,10 @@ export default function ContactConnectForm() {
           <motion.form
             variants={formVariants}
             onSubmit={handleSubmit}
+            noValidate
             className="
               w-full rounded-[12px]
-              
               bg-white p-5
-            
-
               sm:p-6
               lg:p-5
             "
@@ -494,10 +598,12 @@ export default function ContactConnectForm() {
                 id="name"
                 name="name"
                 type="text"
+                autoComplete="name"
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter Your Name"
                 required
+                disabled={isSubmitting}
                 className="
                   h-[38px] w-full
                   rounded-[4px]
@@ -508,12 +614,12 @@ export default function ContactConnectForm() {
                   text-[#222222]
                   outline-none
                   transition-all duration-300
-
                   placeholder:text-[#A5A5A5]
-
                   focus:border-[#B88948]/50
                   focus:bg-white
                   focus:shadow-[0_0_0_3px_rgba(184,137,72,0.10)]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-70
                 "
               />
             </motion.div>
@@ -537,10 +643,12 @@ export default function ContactConnectForm() {
                 id="email"
                 name="email"
                 type="email"
+                autoComplete="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter Your Email"
                 required
+                disabled={isSubmitting}
                 className="
                   h-[38px] w-full
                   rounded-[4px]
@@ -551,12 +659,12 @@ export default function ContactConnectForm() {
                   text-[#222222]
                   outline-none
                   transition-all duration-300
-
                   placeholder:text-[#A5A5A5]
-
                   focus:border-[#B88948]/50
                   focus:bg-white
                   focus:shadow-[0_0_0_3px_rgba(184,137,72,0.10)]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-70
                 "
               />
             </motion.div>
@@ -581,10 +689,12 @@ export default function ContactConnectForm() {
                 name="phone"
                 type="tel"
                 inputMode="tel"
+                autoComplete="tel"
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="Enter Your Phone No"
                 required
+                disabled={isSubmitting}
                 className="
                   h-[38px] w-full
                   rounded-[4px]
@@ -595,12 +705,12 @@ export default function ContactConnectForm() {
                   text-[#222222]
                   outline-none
                   transition-all duration-300
-
                   placeholder:text-[#A5A5A5]
-
                   focus:border-[#B88948]/50
                   focus:bg-white
                   focus:shadow-[0_0_0_3px_rgba(184,137,72,0.10)]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-70
                 "
               />
             </motion.div>
@@ -628,6 +738,7 @@ export default function ContactConnectForm() {
                 rows={4}
                 placeholder="Enter Your Message"
                 required
+                disabled={isSubmitting}
                 className="
                   min-h-[88px] w-full
                   resize-none
@@ -639,17 +750,48 @@ export default function ContactConnectForm() {
                   text-[#222222]
                   outline-none
                   transition-all duration-300
-
                   placeholder:text-[#A5A5A5]
-
                   focus:border-[#B88948]/50
                   focus:bg-white
                   focus:shadow-[0_0_0_3px_rgba(184,137,72,0.10)]
+                  disabled:cursor-not-allowed
+                  disabled:opacity-70
                 "
               />
             </motion.div>
 
-            
+            {statusMessage && (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 8,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                role={
+                  submissionStatus === "error"
+                    ? "alert"
+                    : "status"
+                }
+                aria-live="polite"
+                className={`
+                  mt-4 rounded-[6px]
+                  border px-3 py-2.5
+                  text-[12px] leading-[1.5]
+
+                  ${
+                    submissionStatus ===
+                    "success"
+                      ? "border-green-200 bg-green-50 text-green-700"
+                      : "border-red-200 bg-red-50 text-red-700"
+                  }
+                `}
+              >
+                {statusMessage}
+              </motion.div>
+            )}
 
             <motion.div
               variants={itemVariants}
@@ -682,6 +824,7 @@ export default function ContactConnectForm() {
                 }}
                 className="
                   inline-flex min-h-[39px]
+                  min-w-[110px]
                   items-center justify-center
                   rounded-full
                   bg-[#B88948]
@@ -690,19 +833,30 @@ export default function ContactConnectForm() {
                   text-white
                   outline-none
                   transition-colors duration-300
-
                   hover:bg-[#A87A3D]
-
                   focus-visible:ring-4
                   focus-visible:ring-[#B88948]/20
-
                   disabled:cursor-not-allowed
                   disabled:opacity-60
                 "
               >
-                {isSubmitting
-                  ? "Submitting..."
-                  : "Submit"}
+                {isSubmitting ? (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="
+                        mr-2 h-3.5 w-3.5
+                        animate-spin rounded-full
+                        border-2 border-white/40
+                        border-t-white
+                      "
+                    />
+
+                    Submitting...
+                  </>
+                ) : (
+                  "Submit"
+                )}
               </motion.button>
             </motion.div>
           </motion.form>

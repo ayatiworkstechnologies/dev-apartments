@@ -110,12 +110,12 @@ const recentProjects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/dev-pristine-villa-1.png",
+        src: "/images/dev-pristine-villa-01.png",
         alt: "Dev Pristine Villa in Neelankarai",
         objectPosition: "center",
       },
       {
-        src: "/images/dev-pristine-villa-2.png",
+        src: "/images/dev-pristine-villa-02.png",
         alt: "Dev Pristine Villa independent homes",
         objectPosition: "center",
       },
