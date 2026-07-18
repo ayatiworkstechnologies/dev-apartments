@@ -97,7 +97,7 @@ const recentProjects: DynamicProjectItem[] = [
     buttons: [
       {
         label: "Learn More",
-        href: "/recent-projects/dev-pristine-villa",
+        href: "#/recent-projects/dev-pristine-villa",
         variant: "primary",
         showArrow: true,
       },
@@ -176,7 +176,7 @@ const recentProjects: DynamicProjectItem[] = [
     buttons: [
       {
         label: "Learn More",
-        href: "/recent-projects/dev-peacock-enclave",
+        href: "#/recent-projects/dev-peacock-enclave",
         variant: "primary",
         showArrow: true,
       },

@@ -97,7 +97,7 @@ const projects: DynamicProjectItem[] = [
     buttons: [
       {
         label: "Learn More",
-        href: "/current-projects/luxury-villa-plots",
+        href: "#/current-projects/luxury-villa-plots",
         variant: "primary",
         showArrow: true,
       },
@@ -190,11 +190,11 @@ const projects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/divya-desam-current-projects-banner-01.png",
+        src: "/images/divya-desam-current-projects-banner-001.png",
         alt: "Divya Desam premium villa",
       },
       {
-        src: "/images/divya-desam-residential-development-02.png",
+        src: "/images/divya-desam-residential-development-002.png",
         alt: "Divya Desam residential development",
       },
     ],
