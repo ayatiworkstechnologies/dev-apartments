@@ -8,20 +8,19 @@ import {
   type FormEvent,
   type MouseEvent,
 } from "react";
-import {
-  MessageCircle,
-  Phone,
-  Send,
-  X,
-  type LucideProps,
-} from "lucide-react";
+import { Phone, Send, X } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 type ContactAction = {
   id: number;
   label: string;
   ariaLabel: string;
   href: string;
-  icon: ComponentType<LucideProps>;
+  icon: ComponentType<{
+    size?: number | string;
+    className?: string;
+    strokeWidth?: number;
+  }>;
   type: "link" | "enquiry";
 };
 
@@ -52,7 +51,7 @@ const contactActions: ContactAction[] = [
     id: 1,
     label: "Call",
     ariaLabel: "Call Dev Appartments",
-    href: "tel:+919840037777",
+    href: "tel:+919840333117",
     icon: Phone,
     type: "link",
   },
@@ -60,8 +59,8 @@ const contactActions: ContactAction[] = [
     id: 2,
     label: "WhatsApp",
     ariaLabel: "Chat with Dev Appartments on WhatsApp",
-    href: "https://wa.me/919840037777",
-    icon: MessageCircle,
+    href: "https://wa.me/919840333117",
+    icon: FaWhatsapp,
     type: "link",
   },
   {
