@@ -44,7 +44,7 @@ const heroSlides: HeroSlide[] = [
     tagline: "Transforming the future of home living",
     title: "Divya Desam",
     buttonText: "Get Started",
-    buttonLink: "#projects",
+    buttonLink: "/divya-desam",
     objectPosition: "center center",
     mobileObjectPosition: "52% center",
     nowrapTitle: true,

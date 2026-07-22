@@ -7,6 +7,7 @@ import CompletedProjects from "@/components/CompletedProjects";
 import Gallery from "@/components/Gallery";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import DivyaDesamFeature from "@/components/DivyaDesamFeature";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <StatsSection />
         <ProjectsCarousel />
         <WhyChooseUs />
+        <DivyaDesamFeature />
         <CompletedProjects />
         {/* <Gallery /> */}
         <Testimonials />

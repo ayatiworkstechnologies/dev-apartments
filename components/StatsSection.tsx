@@ -584,7 +584,7 @@ export default function StatsSection() {
                 className="mt-6 border-t border-black/[0.08] pt-5 sm:mt-7 sm:pt-6"
               >
                 <motion.a
-                  href="#about"
+                  href="/about-us"
                   whileHover="hover"
                   whileTap={{
                     scale: 0.97,

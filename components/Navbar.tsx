@@ -3,10 +3,29 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+} from "framer-motion";
+import {
+  ChevronDown,
+  Menu,
+  Phone,
+  X,
+} from "lucide-react";
 
-const navLinks = [
+type ProjectLink = {
+  label: string;
+  href: string;
+};
+
+type NavigationLink = {
+  label: string;
+  href: string;
+  children?: ProjectLink[];
+};
+
+const navLinks: NavigationLink[] = [
   {
     label: "Home",
     href: "/",
@@ -16,24 +35,45 @@ const navLinks = [
     href: "/about-us",
   },
   {
-    label: "Current Projects",
-    href: "/current-projects",
+    label: "Projects",
+    href: "/projects",
+    children: [
+      {
+        label: "Ongoing Projects",
+        href: "/projects/ongoing-projects",
+      },
+      {
+        label: "Recent Projects",
+        href: "/projects/recent-projects",
+      },
+      {
+        label: "Completed Projects",
+        href: "/projects/completed-projects",
+      },
+    ],
   },
   {
-    label: "Recent Projects",
-    href: "/recent-projects",
+    label: "Dream Destination",
+    href: "/dream-destination",
   },
   {
-    label: "Completed Projects",
-    href: "/completed-projects",
+    label: "Blog",
+    href: "/blog",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
   },
 ];
+
+const PHONE_NUMBER = "9840333117";
+const PHONE_LINK = `tel:+91${PHONE_NUMBER}`;
 
 const ease: [number, number, number, number] = [
   0.22, 1, 0.36, 1,
 ];
 
-function normalizePath(path: string) {
+function normalizePath(path: string): string {
   const normalizedPath = path.replace(/\/+$/, "");
 
   return normalizedPath || "/";
@@ -44,10 +84,12 @@ export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileProjectsOpen, setMobileProjectsOpen] =
+    useState(false);
 
   const currentPath = normalizePath(pathname || "/");
 
-  const isLinkActive = (href: string) => {
+  const isLinkActive = (href: string): boolean => {
     const targetPath = normalizePath(href);
 
     if (targetPath === "/") {
@@ -72,72 +114,65 @@ export default function Navbar() {
     });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener(
+        "scroll",
+        handleScroll,
+      );
     };
   }, []);
 
-  // Close mobile menu when route changes
   useEffect(() => {
     setMenuOpen(false);
+    setMobileProjectsOpen(false);
   }, [pathname]);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
-    if (!menuOpen) return;
-
-    const handleOutsideClick = (event: MouseEvent) => {
-      const header = document.getElementById("site-header");
-
-      if (
-        header &&
-        !header.contains(event.target as Node)
-      ) {
-        setMenuOpen(false);
-      }
-    };
-
-    document.addEventListener(
-      "mousedown",
-      handleOutsideClick,
-    );
+    document.body.style.overflow = menuOpen
+      ? "hidden"
+      : "";
 
     return () => {
-      document.removeEventListener(
-        "mousedown",
-        handleOutsideClick,
-      );
+      document.body.style.overflow = "";
     };
   }, [menuOpen]);
 
-  // Close mobile menu using Escape
   useEffect(() => {
     if (!menuOpen) return;
 
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleEscape = (
+      event: KeyboardEvent,
+    ) => {
       if (event.key === "Escape") {
         setMenuOpen(false);
+        setMobileProjectsOpen(false);
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener(
+      "keydown",
+      handleEscape,
+    );
 
     return () => {
       window.removeEventListener(
         "keydown",
-        handleKeyDown,
+        handleEscape,
       );
     };
   }, [menuOpen]);
 
-  // Close mobile menu when entering desktop width
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
         setMenuOpen(false);
+        setMobileProjectsOpen(false);
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener(
+      "resize",
+      handleResize,
+    );
 
     return () => {
       window.removeEventListener(
@@ -165,20 +200,25 @@ export default function Navbar() {
       className={`
         fixed inset-x-0 top-0 z-50
         transition-all duration-500
-        ${scrolled ? "py-2 sm:py-3" : "py-3 sm:py-4"}
+
+        ${
+          scrolled
+            ? "py-2 sm:py-3"
+            : "py-3 sm:py-4"
+        }
       `}
     >
       <div
         className="
-          mx-auto w-full max-w-[1440px]
-          px-3 sm:px-5 lg:px-8
+          mx-auto w-full max-w-[1500px]
+          px-3 sm:px-5 lg:px-7
         "
       >
         <motion.div
           animate={{
             backgroundColor: scrolled
-              ? "rgba(255,255,255,0.96)"
-              : "rgba(255,255,255,0.88)",
+              ? "rgba(255,255,255,0.97)"
+              : "rgba(255,255,255,0.90)",
             boxShadow: scrolled
               ? "0 16px 45px rgba(39,26,15,0.13)"
               : "0 8px 28px rgba(39,26,15,0.07)",
@@ -188,50 +228,48 @@ export default function Navbar() {
             ease,
           }}
           className="
-            relative overflow-hidden
+            relative
             rounded-[20px]
             border border-white/80
             backdrop-blur-xl
             lg:rounded-full
           "
         >
-          {/* Background glow */}
           <div
             className="
               pointer-events-none absolute
               left-[-70px] top-[-85px]
               h-[170px] w-[170px]
-              rounded-full bg-[#b88d48]/10
+              rounded-full
+              bg-[#b88d48]/10
               blur-3xl
             "
           />
 
-          {/* Navbar row */}
           <div
             className="
               relative flex h-[62px]
               items-center justify-between
               gap-4 px-4
               sm:h-[68px] sm:px-5
-              md:px-6
               lg:h-[72px] lg:px-7
-              xl:px-9
+              xl:px-8
             "
           >
             {/* Logo */}
             <Link
               href="/"
-              aria-label="Dev Appartments home"
+              aria-label="Dev Apartments home"
               className="
-                relative z-10 shrink-0
+                relative z-20 shrink-0
                 transition-transform duration-300
                 hover:scale-[1.025]
-                active:scale-[0.97]
+                active:scale-[0.98]
               "
             >
               <img
                 src="/logo.png"
-                alt="Dev Appartments"
+                alt="Dev Apartments"
                 draggable={false}
                 className="
                   h-9 w-auto
@@ -244,40 +282,177 @@ export default function Navbar() {
 
             {/* Desktop navigation */}
             <nav
+              aria-label="Primary navigation"
               className="
                 absolute left-1/2
                 hidden -translate-x-1/2
-                items-center gap-1
+                items-center gap-0.5
                 lg:flex
               "
-              aria-label="Primary navigation"
             >
               {navLinks.map((link) => {
-                const isActive = isLinkActive(link.href);
+                const active = isLinkActive(
+                  link.href,
+                );
+
+                if (link.children) {
+                  return (
+                    <div
+                      key={link.href}
+                      className="group relative"
+                    >
+                      <Link
+                        href={link.href}
+                        aria-current={
+                          active
+                            ? "page"
+                            : undefined
+                        }
+                        className={`
+                          relative flex h-10
+                          items-center justify-center
+                          gap-1 whitespace-nowrap
+                          rounded-full px-3
+                          text-[11px] font-medium
+                          transition-all duration-300
+                          hover:-translate-y-[1px]
+                          xl:px-4
+                          xl:text-[12px]
+
+                          ${
+                            active
+                              ? `
+                                border
+                                border-[#b88d48]/45
+                                bg-[#b88d48]/10
+                                text-[#201710]
+                              `
+                              : `
+                                border
+                                border-transparent
+                                text-[#716a63]
+                                hover:text-[#201710]
+                              `
+                          }
+                        `}
+                      >
+                        {link.label}
+
+                        <ChevronDown
+                          size={14}
+                          strokeWidth={1.8}
+                          className="
+                            transition-transform
+                            duration-300
+                            group-hover:rotate-180
+                          "
+                        />
+                      </Link>
+
+                      {/* Desktop dropdown */}
+                      <div
+                        className="
+                          invisible absolute
+                          left-1/2 top-full
+                          z-50 w-[235px]
+                          -translate-x-1/2
+                          pt-3 opacity-0
+                          transition-all duration-200
+                          group-hover:visible
+                          group-hover:opacity-100
+                        "
+                      >
+                        <div
+                          className="
+                            overflow-hidden
+                            rounded-[18px]
+                            border border-[#e8e0d7]
+                            bg-white/95 p-2
+                            shadow-[0_20px_50px_rgba(39,26,15,0.16)]
+                            backdrop-blur-xl
+                          "
+                        >
+                          {link.children.map(
+                            (child) => {
+                              const childActive =
+                                isLinkActive(
+                                  child.href,
+                                );
+
+                              return (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className={`
+                                    flex min-h-[48px]
+                                    items-center
+                                    rounded-[12px]
+                                    px-4
+                                    text-[13px]
+                                    font-medium
+                                    transition-all
+                                    duration-300
+
+                                    ${
+                                      childActive
+                                        ? `
+                                          bg-[#b88d48]/10
+                                          text-[#201710]
+                                        `
+                                        : `
+                                          text-[#716a63]
+                                          hover:bg-[#f8f4ef]
+                                          hover:pl-5
+                                          hover:text-[#201710]
+                                        `
+                                    }
+                                  `}
+                                >
+                                  {child.label}
+                                </Link>
+                              );
+                            },
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
 
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
                     aria-current={
-                      isActive ? "page" : undefined
+                      active
+                        ? "page"
+                        : undefined
                     }
                     className={`
                       relative flex h-10
                       items-center justify-center
-                      whitespace-nowrap rounded-full
-                      px-4
-                      text-[12px] font-medium
+                      whitespace-nowrap
+                      rounded-full px-3
+                      text-[11px] font-medium
                       transition-all duration-300
                       hover:-translate-y-[1px]
-                      active:scale-[0.96]
-                      xl:px-5
-                      xl:text-[13px]
+                      xl:px-4
+                      xl:text-[12px]
 
                       ${
-                        isActive
-                          ? "border border-[#b88d48]/45 bg-[#b88d48]/10 text-[#201710] shadow-[0_5px_16px_rgba(184,141,72,0.10)]"
-                          : "border border-transparent text-[#716a63] hover:text-[#201710]"
+                        active
+                          ? `
+                            border
+                            border-[#b88d48]/45
+                            bg-[#b88d48]/10
+                            text-[#201710]
+                          `
+                          : `
+                            border
+                            border-transparent
+                            text-[#716a63]
+                            hover:text-[#201710]
+                          `
                       }
                     `}
                   >
@@ -287,27 +462,37 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* Desktop contact button */}
-            <Link
-              href="/contact"
+            {/* Desktop phone */}
+            <a
+              href={PHONE_LINK}
+              aria-label={`Call ${PHONE_NUMBER}`}
               className="
-                hidden shrink-0 items-center
-                justify-center rounded-full
+                relative z-20 hidden
+                shrink-0 items-center
+                justify-center gap-2
+                rounded-full
                 bg-[#e8612c]
-                px-6 py-2.5
-                text-[13px] font-semibold
+                px-4 py-2.5
+                text-[12px] font-semibold
                 text-white
                 shadow-[0_10px_25px_rgba(232,97,44,0.28)]
                 transition-all duration-300
                 hover:-translate-y-[1px]
-                hover:scale-[1.04]
                 hover:bg-[#d65322]
                 active:scale-[0.97]
                 lg:inline-flex
+                xl:px-5
+                xl:text-[13px]
               "
             >
-              Contact
-            </Link>
+              <Phone
+                size={15}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+
+              <span>{PHONE_NUMBER}</span>
+            </a>
 
             {/* Mobile menu button */}
             <motion.button
@@ -315,25 +500,28 @@ export default function Navbar() {
               whileTap={{
                 scale: 0.9,
               }}
-              onClick={() =>
-                setMenuOpen((previous) => !previous)
-              }
+              onClick={() => {
+                setMenuOpen(
+                  (previous) => !previous,
+                );
+              }}
               aria-label={
                 menuOpen
                   ? "Close navigation menu"
                   : "Open navigation menu"
               }
               aria-expanded={menuOpen}
-              aria-controls="responsive-navigation"
+              aria-controls="mobile-navigation"
               className="
-                relative z-10 flex
+                relative z-20 flex
                 h-10 w-10 items-center
                 justify-center rounded-full
                 border border-[#ded6cd]
-                bg-white/85 text-[#2a2018]
-                shadow-[0_6px_18px_rgba(0,0,0,0.06)]
+                bg-white/90
+                text-[#2a2018]
+                shadow-sm
                 transition-all duration-300
-                hover:border-[#b88d48]/60
+                hover:border-[#b88d48]/50
                 hover:bg-[#b88d48]/10
                 lg:hidden
               "
@@ -345,13 +533,13 @@ export default function Navbar() {
                 <motion.span
                   key={
                     menuOpen
-                      ? "close-icon"
-                      : "menu-icon"
+                      ? "close"
+                      : "menu"
                   }
                   initial={{
                     opacity: 0,
                     rotate: -90,
-                    scale: 0.6,
+                    scale: 0.7,
                   }}
                   animate={{
                     opacity: 1,
@@ -361,27 +549,27 @@ export default function Navbar() {
                   exit={{
                     opacity: 0,
                     rotate: 90,
-                    scale: 0.6,
+                    scale: 0.7,
                   }}
                   transition={{
                     duration: 0.2,
                   }}
                 >
                   {menuOpen ? (
-                    <X size={20} strokeWidth={1.9} />
+                    <X size={20} />
                   ) : (
-                    <Menu size={20} strokeWidth={1.9} />
+                    <Menu size={20} />
                   )}
                 </motion.span>
               </AnimatePresence>
             </motion.button>
           </div>
 
-          {/* Mobile and tablet navigation */}
+          {/* Mobile navigation */}
           <AnimatePresence initial={false}>
             {menuOpen && (
               <motion.div
-                id="responsive-navigation"
+                id="mobile-navigation"
                 initial={{
                   opacity: 0,
                   height: 0,
@@ -405,100 +593,363 @@ export default function Navbar() {
                   lg:hidden
                 "
               >
-                <div className="px-3 pb-4 pt-3 sm:px-4 sm:pb-5">
+                <div className="px-3 pb-4 pt-3 sm:px-4">
                   <nav
                     className="flex flex-col gap-1"
-                    aria-label="Responsive navigation"
+                    aria-label="Mobile navigation"
                   >
-                    {navLinks.map((link, index) => {
-                      const isActive =
-                        isLinkActive(link.href);
+                    {navLinks.map(
+                      (link, index) => {
+                        const active =
+                          isLinkActive(link.href);
 
-                      return (
-                        <motion.div
-                          key={link.href}
-                          initial={{
-                            opacity: 0,
-                            x: -18,
-                          }}
-                          animate={{
-                            opacity: 1,
-                            x: 0,
-                          }}
-                          transition={{
-                            duration: 0.3,
-                            delay: index * 0.045,
-                            ease,
-                          }}
-                        >
-                          <Link
-                            href={link.href}
-                            onClick={() =>
-                              setMenuOpen(false)
-                            }
-                            aria-current={
-                              isActive
-                                ? "page"
-                                : undefined
-                            }
-                            className={`
-                              flex min-h-[50px]
-                              items-center
-                              rounded-[14px]
-                              px-4
-                              text-[14px] font-medium
-                              transition-all duration-300
+                        if (link.children) {
+                          return (
+                            <motion.div
+                              key={link.href}
+                              initial={{
+                                opacity: 0,
+                                x: -15,
+                              }}
+                              animate={{
+                                opacity: 1,
+                                x: 0,
+                              }}
+                              transition={{
+                                duration: 0.3,
+                                delay:
+                                  index * 0.04,
+                                ease,
+                              }}
+                            >
+                              {/* Mobile Projects button */}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setMobileProjectsOpen(
+                                    (
+                                      previous,
+                                    ) =>
+                                      !previous,
+                                  );
+                                }}
+                                aria-label={
+                                  mobileProjectsOpen
+                                    ? "Close Projects menu"
+                                    : "Open Projects menu"
+                                }
+                                aria-expanded={
+                                  mobileProjectsOpen
+                                }
+                                className={`
+                                  flex min-h-[52px]
+                                  w-full items-center
+                                  justify-between
+                                  rounded-[14px]
+                                  border px-4
+                                  text-left
+                                  text-[14px]
+                                  font-medium
+                                  transition-all
+                                  duration-300
 
-                              ${
-                                isActive
-                                  ? "border border-[#b88d48]/25 bg-[#b88d48]/10 text-[#241a12]"
-                                  : "border border-transparent text-[#746d66] hover:bg-[#f8f5f1] hover:text-[#241a12]"
-                              }
-                            `}
+                                  ${
+                                    active
+                                      ? `
+                                        border-[#b88d48]/25
+                                        bg-[#b88d48]/10
+                                        text-[#241a12]
+                                      `
+                                      : `
+                                        border-transparent
+                                        text-[#746d66]
+                                        hover:bg-[#f8f5f1]
+                                        hover:text-[#241a12]
+                                      `
+                                  }
+                                `}
+                              >
+                                <span>
+                                  {link.label}
+                                </span>
+
+                                <span
+                                  className="
+                                    flex h-9 w-9
+                                    shrink-0 items-center
+                                    justify-center
+                                    rounded-full
+                                    bg-white/70
+                                  "
+                                >
+                                  <ChevronDown
+                                    size={18}
+                                    strokeWidth={1.9}
+                                    className={`
+                                      transition-transform
+                                      duration-300
+
+                                      ${
+                                        mobileProjectsOpen
+                                          ? "rotate-180"
+                                          : ""
+                                      }
+                                    `}
+                                  />
+                                </span>
+                              </button>
+
+                              {/* Mobile Projects submenu */}
+                              <AnimatePresence
+                                initial={false}
+                              >
+                                {mobileProjectsOpen && (
+                                  <motion.div
+                                    initial={{
+                                      opacity: 0,
+                                      height: 0,
+                                      y: -5,
+                                    }}
+                                    animate={{
+                                      opacity: 1,
+                                      height:
+                                        "auto",
+                                      y: 0,
+                                    }}
+                                    exit={{
+                                      opacity: 0,
+                                      height: 0,
+                                      y: -5,
+                                    }}
+                                    transition={{
+                                      duration: 0.25,
+                                      ease,
+                                    }}
+                                    className="overflow-hidden"
+                                  >
+                                    <div
+                                      className="
+                                        ml-4 mt-2
+                                        flex flex-col gap-1
+                                        border-l
+                                        border-[#ded6cd]
+                                        pb-1 pl-3
+                                      "
+                                    >
+                                      {/* Main Projects page */}
+                                      <Link
+                                        href={
+                                          link.href
+                                        }
+                                        onClick={() => {
+                                          setMenuOpen(
+                                            false,
+                                          );
+                                          setMobileProjectsOpen(
+                                            false,
+                                          );
+                                        }}
+                                        aria-current={
+                                          currentPath ===
+                                          link.href
+                                            ? "page"
+                                            : undefined
+                                        }
+                                        className={`
+                                          flex
+                                          min-h-[44px]
+                                          items-center
+                                          rounded-[12px]
+                                          px-4
+                                          text-[13px]
+                                          font-semibold
+                                          transition-all
+                                          duration-300
+
+                                          ${
+                                            currentPath ===
+                                            link.href
+                                              ? `
+                                                bg-[#b88d48]/10
+                                                text-[#241a12]
+                                              `
+                                              : `
+                                                text-[#e8612c]
+                                                hover:bg-[#f8f5f1]
+                                              `
+                                          }
+                                        `}
+                                      >
+                                        View All Projects
+                                      </Link>
+
+                                      {/* Inner project pages */}
+                                      {link.children.map(
+                                        (
+                                          child,
+                                        ) => {
+                                          const childActive =
+                                            isLinkActive(
+                                              child.href,
+                                            );
+
+                                          return (
+                                            <Link
+                                              key={
+                                                child.href
+                                              }
+                                              href={
+                                                child.href
+                                              }
+                                              onClick={() => {
+                                                setMenuOpen(
+                                                  false,
+                                                );
+                                                setMobileProjectsOpen(
+                                                  false,
+                                                );
+                                              }}
+                                              aria-current={
+                                                childActive
+                                                  ? "page"
+                                                  : undefined
+                                              }
+                                              className={`
+                                                flex
+                                                min-h-[44px]
+                                                items-center
+                                                rounded-[12px]
+                                                px-4
+                                                text-[13px]
+                                                font-medium
+                                                transition-all
+                                                duration-300
+
+                                                ${
+                                                  childActive
+                                                    ? `
+                                                      bg-[#b88d48]/10
+                                                      text-[#241a12]
+                                                    `
+                                                    : `
+                                                      text-[#746d66]
+                                                      hover:bg-[#f8f5f1]
+                                                      hover:text-[#241a12]
+                                                    `
+                                                }
+                                              `}
+                                            >
+                                              {
+                                                child.label
+                                              }
+                                            </Link>
+                                          );
+                                        },
+                                      )}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </motion.div>
+                          );
+                        }
+
+                        return (
+                          <motion.div
+                            key={link.href}
+                            initial={{
+                              opacity: 0,
+                              x: -15,
+                            }}
+                            animate={{
+                              opacity: 1,
+                              x: 0,
+                            }}
+                            transition={{
+                              duration: 0.3,
+                              delay:
+                                index * 0.04,
+                              ease,
+                            }}
                           >
-                            {link.label}
-                          </Link>
-                        </motion.div>
-                      );
-                    })}
+                            <Link
+                              href={link.href}
+                              onClick={() => {
+                                setMenuOpen(
+                                  false,
+                                );
+                                setMobileProjectsOpen(
+                                  false,
+                                );
+                              }}
+                              aria-current={
+                                active
+                                  ? "page"
+                                  : undefined
+                              }
+                              className={`
+                                flex min-h-[50px]
+                                items-center
+                                rounded-[14px]
+                                border px-4
+                                text-[14px]
+                                font-medium
+                                transition-all
+                                duration-300
+
+                                ${
+                                  active
+                                    ? `
+                                      border-[#b88d48]/25
+                                      bg-[#b88d48]/10
+                                      text-[#241a12]
+                                    `
+                                    : `
+                                      border-transparent
+                                      text-[#746d66]
+                                      hover:bg-[#f8f5f1]
+                                      hover:text-[#241a12]
+                                    `
+                                }
+                              `}
+                            >
+                              {link.label}
+                            </Link>
+                          </motion.div>
+                        );
+                      },
+                    )}
                   </nav>
 
-                  {/* Mobile contact */}
-                  <motion.div
-                    initial={{
-                      opacity: 0,
-                      y: 14,
+                  {/* Mobile phone button */}
+                  <a
+                    href={PHONE_LINK}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      setMobileProjectsOpen(false);
                     }}
-                    animate={{
-                      opacity: 1,
-                      y: 0,
-                    }}
-                    transition={{
-                      duration: 0.35,
-                      delay: 0.2,
-                      ease,
-                    }}
+                    aria-label={`Call ${PHONE_NUMBER}`}
+                    className="
+                      mt-3 flex h-[50px]
+                      items-center justify-center
+                      gap-2 rounded-full
+                      bg-[#e8612c]
+                      text-[14px] font-semibold
+                      text-white
+                      shadow-[0_9px_24px_rgba(232,97,44,0.25)]
+                      transition-all duration-300
+                      hover:bg-[#d65322]
+                      active:scale-[0.98]
+                    "
                   >
-                    <Link
-                      href="/contact"
-                      onClick={() =>
-                        setMenuOpen(false)
-                      }
-                      className="
-                        mt-3 flex h-[50px]
-                        items-center justify-center
-                        rounded-full
-                        bg-[#e8612c]
-                        text-[14px] font-semibold
-                        text-white
-                        shadow-[0_9px_24px_rgba(232,97,44,0.25)]
-                        transition-colors duration-300
-                        hover:bg-[#d65322]
-                      "
-                    >
-                      Contact Us
-                    </Link>
-                  </motion.div>
+                    <Phone
+                      size={17}
+                      strokeWidth={2}
+                      aria-hidden="true"
+                    />
+
+                    Call {PHONE_NUMBER}
+                  </a>
                 </div>
               </motion.div>
             )}

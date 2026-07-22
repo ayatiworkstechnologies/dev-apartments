@@ -6,18 +6,32 @@ const features = [
   {
     title: "Innovative",
     subtitle: "Design",
-    description: "Smart layouts inspired by modern family lifestyles.",
+    description:
+      "Smart layouts inspired by modern family lifestyles.",
   },
   {
     title: "Exceptional",
     subtitle: "Service",
-    description: "Personalized support from inquiry to possession.",
+    description:
+      "Personalized support from inquiry to possession.",
   },
   {
     title: "Quality",
     subtitle: "Craftsmanship",
     description:
       "Precision-built homes with lasting structural excellence.",
+  },
+  {
+    title: "Timely",
+    subtitle: "Delivery",
+    description:
+      "Delivering homes on schedule without compromising quality.",
+  },
+  {
+    title: "Assured",
+    subtitle: "Handover",
+    description:
+      "A smooth and transparent journey from booking to possession.",
   },
 ];
 
@@ -60,7 +74,7 @@ const cardsContainerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.12,
+      staggerChildren: 0.1,
       delayChildren: 0.2,
     },
   },
@@ -103,11 +117,11 @@ export default function WhyChooseUs() {
         py-10
         sm:px-6
         sm:py-11
-        lg:min-h-[222px]
-        lg:px-[6.3%]
-        lg:py-[38px]
-        xl:min-h-[350px]
-        xl:px-[6.45%]
+        lg:min-h-[260px]
+        lg:px-[5%]
+        lg:py-[42px]
+        xl:min-h-[360px]
+        xl:px-[5.5%]
         xl:py-[58px]
       "
     >
@@ -125,24 +139,23 @@ export default function WhyChooseUs() {
           mx-auto
           flex
           w-full
-          max-w-[1220px]
+          max-w-[1380px]
           flex-col
-          rounded-[12px]
+          rounded-[14px]
           bg-white
-          px-7
+          px-6
           py-8
           shadow-[0_14px_38px_rgba(64,40,12,0.17)]
           sm:px-8
-          lg:min-h-[148px]
+          lg:min-h-[175px]
           lg:flex-row
           lg:items-center
-          lg:justify-between
           lg:gap-8
           lg:px-8
           lg:py-7
-          xl:min-h-[222px]
+          xl:min-h-[235px]
           xl:rounded-[18px]
-          xl:px-12
+          xl:px-11
           xl:py-9
         "
       >
@@ -153,8 +166,8 @@ export default function WhyChooseUs() {
             mb-8
             shrink-0
             lg:mb-0
-            lg:w-[39%]
-            xl:w-[40%]
+            lg:w-[28%]
+            xl:w-[29%]
           "
         >
           <h2
@@ -167,8 +180,8 @@ export default function WhyChooseUs() {
               text-[#111111]
               sm:text-[30px]
               lg:text-[27px]
-              xl:max-w-[500px]
-              xl:text-[40px]
+              xl:max-w-[420px]
+              xl:text-[39px]
             "
           >
             Why{" "}
@@ -196,19 +209,18 @@ export default function WhyChooseUs() {
           whileInView="visible"
           viewport={{
             once: true,
-            amount: 0.25,
+            amount: 0.2,
           }}
           className="
             grid
             w-full
             grid-cols-1
             gap-4
-            sm:grid-cols-3
-            lg:w-[59%]
-            lg:max-w-[460px]
-            lg:gap-[18px]
-            xl:max-w-[730px]
-            xl:gap-6
+            sm:grid-cols-2
+            lg:w-[72%]
+            lg:grid-cols-5
+            lg:gap-3
+            xl:gap-4
           "
         >
           {features.map((feature) => (
@@ -228,26 +240,26 @@ export default function WhyChooseUs() {
                 flex
                 min-h-[145px]
                 overflow-hidden
-                rounded-[8px]
+                rounded-[10px]
                 border
                 border-[#eadcca]
                 bg-white
                 px-4
                 py-[18px]
                 text-center
-                shadow-[0_9px_22px_rgba(67,46,21,0.15)]
+                shadow-[0_9px_22px_rgba(67,46,21,0.13)]
                 transition-all
                 duration-300
                 hover:border-[#d8ba8d]
-                hover:shadow-[0_15px_30px_rgba(67,46,21,0.21)]
-                sm:min-h-[140px]
-                lg:min-h-[90px]
+                hover:shadow-[0_15px_30px_rgba(67,46,21,0.19)]
+                sm:min-h-[150px]
+                lg:min-h-[150px]
                 lg:px-3
-                lg:py-[13px]
+                lg:py-4
                 xl:min-h-[172px]
                 xl:rounded-[12px]
-                xl:px-5
-                xl:py-6
+                xl:px-4
+                xl:py-5
               "
             >
               {/* Top-left pale hover shape */}
@@ -312,7 +324,7 @@ export default function WhyChooseUs() {
                     transition-colors
                     duration-300
                     lg:text-[12px]
-                    xl:text-[17px]
+                    xl:text-[16px]
                   "
                 >
                   {feature.title}
@@ -320,15 +332,14 @@ export default function WhyChooseUs() {
 
                 <p
                   className="
-                    mt-[2px]
+                    mt-[3px]
                     text-[15px]
                     font-bold
                     leading-none
                     tracking-[-0.025em]
                     text-[#b98b46]
                     lg:text-[12px]
-                    xl:mt-1
-                    xl:text-[17px]
+                    xl:text-[16px]
                   "
                 >
                   {feature.subtitle}
@@ -353,16 +364,16 @@ export default function WhyChooseUs() {
 
                 <p
                   className="
-                    max-w-[150px]
+                    max-w-[165px]
                     text-[11px]
-                    leading-[1.42]
+                    leading-[1.45]
                     text-[#5c5c5c]
-                    lg:max-w-[118px]
-                    lg:text-[8px]
-                    lg:leading-[1.45]
-                    xl:max-w-[190px]
-                    xl:text-[13px]
-                    xl:leading-[1.55]
+                    lg:max-w-[128px]
+                    lg:text-[9px]
+                    lg:leading-[1.5]
+                    xl:max-w-[170px]
+                    xl:text-[12px]
+                    xl:leading-[1.5]
                   "
                 >
                   {feature.description}

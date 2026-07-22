@@ -120,85 +120,7 @@ const projects: DynamicProjectItem[] = [
     ],
   },
 
-  {
-    id: "divya-desam",
-
-    title: [
-      {
-        text: "Divya ",
-      },
-      {
-        text: "Desam",
-        highlight: true,
-      },
-    ],
-
-    description:
-      "Wake up to spacious living, enjoy peaceful surroundings, and create lasting memories in a villa designed for modern family life. Comfort today, value for years to come.",
-
-    details: [
-      {
-        label: "Location",
-        value: "ECR, Chennai",
-      },
-      {
-        label: "Project Type",
-        value: "Villa",
-      },
-    ],
-
-    tags: [
-      {
-        label: "High-Quality Materials",
-      },
-      {
-        label: "Community Living",
-      },
-      {
-        label: "Exclusive Community",
-      },
-      {
-        label: "CCTV Security",
-      },
-      {
-        label: "24×7 Security",
-      },
-      {
-        label: "Visitor Parking",
-      },
-      {
-        label: "Covered Parking",
-      },
-      {
-        label: "Power Backup",
-      },
-    ],
-
-    buttons: [
-      {
-        label: "Learn More",
-        href: "/divya-desam",
-        variant: "primary",
-        showArrow: true,
-      },
-      {
-        label: "Book Now",
-        href: "/contact",
-        variant: "outline",
-      },
-    ],
-
-    images: [
-      {
-        src: "/images/divya-desam-current-projects-banner-001.png",
-        alt: "Divya Desam premium villa",
-      },
-      {
-        src: "/images/divya-desam-residential-development-002.png",
-        alt: "Divya Desam residential development",
-      },
-    ],
-  },
+ 
 ];
 
 /* ======================================================
@@ -212,7 +134,7 @@ export default function CurrentProjectsPage() {
 
       <main className="flex-1">
         <DynamicInnerBanner
-          eyebrow="Current Projects"
+          eyebrow="Dream Destination"
           image="/images/currentprojects-banner-1.png"
           imageAlt="Modern residential villas in Dev Appartments current projects"
           description="Discover Homes Designed for Tomorrow."
@@ -242,7 +164,7 @@ export default function CurrentProjectsPage() {
               href: "/",
             },
             {
-              label: "Current Projects",
+              label: "Dream Destination",
             },
           ]}
         />

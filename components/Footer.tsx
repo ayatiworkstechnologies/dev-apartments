@@ -1,47 +1,47 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
-  AtSign,
   Building2,
   Mail,
   Phone,
 } from "lucide-react";
 
-const socials = [
+const socialLinks = [
   {
     label: "Facebook",
     href: "https://www.facebook.com/devappartmentss/",
-    d: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z",
-    fill: false,
+    icon: "/icons/facebook.svg",
   },
   {
     label: "X",
     href: "https://x.com/devappartments",
-    d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
-    fill: true,
+    icon: "/icons/x.svg",
   },
   {
     label: "Instagram",
     href: "https://www.instagram.com/devappartments/",
-    d: "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2z",
-    fill: false,
+    icon: "/icons/instagram.svg",
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/dev-appartments-2378151b0/",
-    d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z",
-    fill: false,
+    icon: "/icons/linkedin.svg",
   },
   {
     label: "YouTube",
     href: "https://www.youtube.com/@devappartments6112",
-    d: "M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20.06 12 20.06 12 20.06s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58zM9.75 15.02l5.75-3.02-5.75-3.02v6.04z",
-    fill: false,
+    icon: "/icons/youtube.svg",
+  },
+  {
+    label: "Threads",
+    href: "https://www.threads.net/@devappartments",
+    icon: "/icons/threads.svg",
   },
 ];
 
-const navLinks = [
+const discoverLinks = [
   {
     label: "Home",
     href: "/",
@@ -51,16 +51,28 @@ const navLinks = [
     href: "/about-us",
   },
   {
-    label: "Current Projects",
-    href: "/current-projects",
+    label: "Projects",
+    href: "/projects",
   },
+  // {
+  //   label: "Ongoing Projects",
+  //   href: "/projects/ongoing-projects",
+  // },
+  // {
+  //   label: "Recent Projects",
+  //   href: "/projects/recent-projects",
+  // },
+  // {
+  //   label: "Completed Projects",
+  //   href: "/projects/completed-projects",
+  // },
+  // {
+  //   label: "Dream Destination",
+  //   href: "/dream-destination",
+  // },
   {
-    label: "Recent Projects",
-    href: "/recent-projects",
-  },
-  {
-    label: "Completed Projects",
-    href: "/completed-projects",
+    label: "Blog",
+    href: "/blog",
   },
   {
     label: "Contact Us",
@@ -70,29 +82,24 @@ const navLinks = [
 
 const gridVariants = {
   hidden: {},
-
   show: {
     transition: {
-      staggerChildren: 0.13,
+      staggerChildren: 0.12,
       delayChildren: 0.05,
     },
   },
 };
 
-const colVariants = {
+const columnVariants = {
   hidden: {
     opacity: 0,
-    y: 28,
-    filter: "blur(8px)",
+    y: 24,
   },
-
   show: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-
     transition: {
-      duration: 0.65,
+      duration: 0.6,
       ease: [0.22, 1, 0.36, 1] as [
         number,
         number,
@@ -107,391 +114,365 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="border-t border-gray-100 bg-white"
+      className="
+        border-t border-[#eee8e2]
+        bg-white
+      "
     >
-      <div className="mx-auto max-w-[1160px] px-4 sm:px-6 lg:px-10">
+      <div
+        className="
+          mx-auto w-full max-w-[1240px]
+          px-5 sm:px-7 lg:px-10
+        "
+      >
         <motion.div
           variants={gridVariants}
           initial="hidden"
           whileInView="show"
           viewport={{
-            once: false,
+            once: true,
             amount: 0.1,
           }}
           className="
             grid grid-cols-1
-            gap-8 pb-8 pt-10
-
+            gap-10 py-12
             sm:grid-cols-2
-            sm:pb-10 sm:pt-12
-
-            lg:grid-cols-[2fr_1.4fr_1.6fr]
-            lg:gap-10
+            lg:grid-cols-[1.6fr_1fr_1.3fr]
+            lg:gap-14 lg:py-16
           "
         >
-          {/* Brand column */}
+          {/* Brand */}
           <motion.div
-            variants={colVariants}
+            variants={columnVariants}
             className="
               sm:col-span-2
               lg:col-span-1
             "
           >
-            <div className="mb-4">
+            <Link
+              href="/"
+              aria-label="Dev Appartments home"
+              className="inline-block"
+            >
               <img
                 src="/logo.png"
                 alt="Dev Appartments"
+                draggable={false}
                 className="
-                  h-10 w-auto
+                  h-11 w-auto
                   object-contain
-
                   sm:h-12
                 "
-                draggable={false}
               />
+            </Link>
+
+            <h2
+              className="
+                mt-5 text-lg
+                font-semibold
+                text-[#29221d]
+              "
+            >
+              Dev Appartments
+            </h2>
+
+            <p
+              className="
+                mt-3 max-w-sm
+                text-[14px] leading-7
+                text-[#78716b]
+              "
+            >
+              Creating thoughtfully planned residential
+              spaces with quality construction, modern
+              comfort and trusted delivery.
+            </p>
+
+            <div
+              className="
+                mt-5 space-y-1
+                text-[13px] font-medium
+                text-[#4e4741]
+              "
+            >
+              <p>Monday–Saturday: 09:00 AM–06:00 PM</p>
+              <p>Sunday: Holiday</p>
             </div>
 
-            <p
+            {/* Social icons */}
+            <div
               className="
-                mb-2 font-primary
-                text-base font-bold
-                text-gray-900
+                mt-6 flex flex-wrap
+                items-center gap-3
               "
             >
-              Dev Appartments.
-            </p>
-
-            <p
-              className="
-                mb-4 max-w-sm
-                text-sm leading-relaxed
-                text-gray-500
-              "
-            >
-              We, at Dev Appartments aim to be the pillar
-              of success and are unparalleled when it
-              comes to the real estate business.
-            </p>
-
-            <p
-              className="
-                mb-1 font-primary
-                text-sm font-bold
-                text-gray-800
-              "
-            >
-              Mon–Fri, 09:00 AM–06:00 PM
-            </p>
-
-            <p
-              className="
-                mb-5 font-primary
-                text-sm font-bold
-                text-gray-800
-              "
-            >
-              Sunday Holiday
-            </p>
-
-            {/* Social media */}
-            <div className="flex flex-wrap items-center gap-4">
-              {socials.map(
-                ({
-                  label,
-                  href,
-                  d,
-                  fill,
-                }) => (
-                  <motion.a
-                    key={label}
-                    href={href}
-                    aria-label={`Visit Dev Appartments on ${label}`}
-                    title={label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{
-                      scale: 1.2,
-                      opacity: 0.75,
-                      y: -2,
-                    }}
-                    whileTap={{
-                      scale: 0.9,
-                    }}
+              {socialLinks.map((social) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit Dev Appartments on ${social.label}`}
+                  title={social.label}
+                  whileHover={{
+                    y: -3,
+                    scale: 1.06,
+                  }}
+                  whileTap={{
+                    scale: 0.94,
+                  }}
+                  className="
+                    flex h-10 w-10
+                    items-center justify-center
+                    rounded-full
+                    border border-[#e7dfd7]
+                    bg-[#faf8f5]
+                    transition-all duration-300
+                    hover:border-[#e8612c]/30
+                    hover:bg-[#fff2ec]
+                    hover:shadow-[0_8px_20px_rgba(232,97,44,0.12)]
+                  "
+                >
+                  <img
+                    src={social.icon}
+                    alt=""
+                    aria-hidden="true"
                     className="
-                      rounded-full p-1
-                      text-[#e8612c]
-                      transition-opacity
-                      duration-200
-
-                      focus-visible:outline-none
-                      focus-visible:ring-2
-                      focus-visible:ring-[#e8612c]/30
+                      h-[22px] w-[22px]
+                      object-contain
                     "
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill={
-                        fill
-                          ? "currentColor"
-                          : "none"
-                      }
-                      stroke={
-                        fill
-                          ? "none"
-                          : "currentColor"
-                      }
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d={d} />
-                    </svg>
-                  </motion.a>
-                ),
-              )}
-
-              {/* Threads */}
-              <motion.a
-                href="https://www.threads.net/@devappartments"
-                aria-label="Visit Dev Appartments on Threads"
-                title="Threads"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{
-                  scale: 1.2,
-                  opacity: 0.75,
-                  y: -2,
-                }}
-                whileTap={{
-                  scale: 0.9,
-                }}
-                className="
-                  rounded-full p-1
-                  text-[#e8612c]
-                  transition-opacity
-                  duration-200
-
-                  focus-visible:outline-none
-                  focus-visible:ring-2
-                  focus-visible:ring-[#e8612c]/30
-                "
-              >
-                <AtSign
-                  size={18}
-                  strokeWidth={2}
-                  aria-hidden="true"
-                />
-              </motion.a>
+                  />
+                </motion.a>
+              ))}
             </div>
           </motion.div>
 
           {/* Discover More */}
-          <motion.div variants={colVariants}>
-            <p
+          <motion.div variants={columnVariants}>
+            <h3
               className="
-                mb-5 font-primary
-                text-base font-bold
-                text-gray-900
+                text-[17px] font-semibold
+                text-[#29221d]
               "
             >
               Discover More
-            </p>
+            </h3>
 
-            <ul className="space-y-3.5">
-              {navLinks.map(
-                ({ label, href }) => (
-                  <li
-                    key={label}
-                    className="flex items-center gap-2"
+            <div className="mt-3 h-px w-10 bg-[#b88d48]" />
+
+            <ul className="mt-6 space-y-3">
+              {discoverLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="
+                      group inline-flex
+                      items-center gap-3
+                      text-[14px]
+                      text-[#706962]
+                      transition-colors
+                      duration-300
+                      hover:text-[#e8612c]
+                    "
                   >
                     <span
                       className="
                         h-[5px] w-[5px]
                         shrink-0 rounded-full
-                        bg-gray-400
+                        bg-[#b8aca1]
+                        transition-all duration-300
+                        group-hover:bg-[#e8612c]
+                        group-hover:scale-125
                       "
                     />
 
-                    <a
-                      href={href}
-                      className="
-                        text-sm text-gray-600
-                        transition-colors
-                        duration-200
-
-                        hover:text-[#b08c1c]
-                      "
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ),
-              )}
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </motion.div>
 
           {/* Contact */}
           <motion.div
-            variants={colVariants}
-            className="space-y-6"
+            variants={columnVariants}
+            className="space-y-7"
           >
             <div>
-              <p
+              <h3
+                className="
+                  text-[17px] font-semibold
+                  text-[#29221d]
+                "
+              >
+                Contact Us
+              </h3>
+
+              <div className="mt-3 h-px w-10 bg-[#b88d48]" />
+            </div>
+
+            {/* Office */}
+            <div>
+              <div
                 className="
                   mb-2 flex items-center
-                  gap-2 font-primary
-                  text-base font-bold
-                  text-gray-900
+                  gap-2 text-[14px]
+                  font-semibold
+                  text-[#39312b]
                 "
               >
                 <Building2
-                  size={15}
-                  className="
-                    shrink-0 text-[#e8612c]
-                  "
+                  size={16}
+                  strokeWidth={1.8}
+                  className="text-[#e8612c]"
                 />
 
                 Office
-              </p>
+              </div>
 
               <a
-                href="https://www.google.com/maps/search/?api=1&query=New+No+15%2F2+Old+No+7%2F2+First+Main+Road+Kasturibai+Nagar+Adyar+Chennai+600020"
+                href="https://maps.app.goo.gl/sQxBRaRcr5MwHMGH9"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  block text-sm
-                  leading-relaxed
-                  text-gray-500
-                  transition-colors
-                  duration-200
-
-                  hover:text-[#b08c1c]
+                  block max-w-sm
+                  text-[14px] leading-7
+                  text-[#78716b]
+                  transition-colors duration-300
+                  hover:text-[#b88d48]
                 "
               >
-                New No. 15/2, Old No. 7/2, First Main
-                Road, Kasturibai Nagar, Adyar, Chennai –
-                600020
+                New No. 15/2, Old No. 7/2, First Main Road,
+                Kasturibai Nagar, Adyar, Chennai – 600020
               </a>
             </div>
 
+            {/* Email */}
             <div>
-              <p
+              <div
                 className="
                   mb-2 flex items-center
-                  gap-2 font-primary
-                  text-base font-bold
-                  text-gray-900
+                  gap-2 text-[14px]
+                  font-semibold
+                  text-[#39312b]
                 "
               >
                 <Mail
-                  size={15}
-                  className="
-                    shrink-0 text-[#e8612c]
-                  "
+                  size={16}
+                  strokeWidth={1.8}
+                  className="text-[#e8612c]"
                 />
 
                 Email
-              </p>
+              </div>
 
               <a
                 href="mailto:info@devappartments.com"
                 className="
-                  break-all text-sm
-                  text-gray-500
-                  transition-colors
-                  duration-200
-
-                  hover:text-[#b08c1c]
+                  break-all text-[14px]
+                  text-[#78716b]
+                  transition-colors duration-300
+                  hover:text-[#b88d48]
                 "
               >
                 info@devappartments.com
               </a>
             </div>
 
+            {/* Phone numbers */}
             <div>
-              <p
+              <div
                 className="
-                  mb-2 flex items-center
-                  gap-2 font-primary
-                  text-base font-bold
-                  text-gray-900
+                  mb-3 flex items-center
+                  gap-2 text-[14px]
+                  font-semibold
+                  text-[#39312b]
                 "
               >
                 <Phone
-                  size={15}
-                  className="
-                    shrink-0 text-[#e8612c]
-                  "
+                  size={16}
+                  strokeWidth={1.8}
+                  className="text-[#e8612c]"
                 />
 
                 Mobile
-              </p>
+              </div>
 
-              <a
-                href="tel:+919840037777"
+              <div
                 className="
-                  text-sm text-gray-500
-                  transition-colors
-                  duration-200
-
-                  hover:text-[#b08c1c]
+                  flex flex-wrap
+                  items-center gap-x-3 gap-y-2
+                  text-[14px]
                 "
               >
-                +91 98400 37777
-              </a>
+                <a
+                  href="tel:+919840037777"
+                  className="
+                    font-medium
+                    text-[#78716b]
+                    transition-colors duration-300
+                    hover:text-[#e8612c]
+                  "
+                >
+                  +91 98400 37777
+                </a>
+
+                <span
+                  aria-hidden="true"
+                  className="
+                    hidden h-4 w-px
+                    bg-[#d8d0c8]
+                    sm:block
+                  "
+                />
+
+                <a
+                  href="tel:+919840333117"
+                  className="
+                    font-medium
+                    text-[#78716b]
+                    transition-colors duration-300
+                    hover:text-[#e8612c]
+                  "
+                >
+                  +91 98403 33117
+                </a>
+              </div>
             </div>
           </motion.div>
         </motion.div>
 
         {/* Copyright */}
-        <motion.div
-          initial={{
-            opacity: 0,
-          }}
-          whileInView={{
-            opacity: 1,
-          }}
-          viewport={{
-            once: false,
-            amount: 0.8,
-          }}
-          transition={{
-            duration: 0.5,
-          }}
+        <div
           className="
-            border-t border-gray-100
-            py-4 text-center
-
-            sm:py-5
+            border-t border-[#eee8e2]
+            py-5 text-center
           "
         >
           <p
             className="
-              text-xs text-gray-400
-
-              sm:text-sm
+              text-[12px] leading-6
+              text-[#9a938c]
+              sm:text-[13px]
             "
           >
             © 2026 Dev Appartments. All rights reserved
-            &nbsp;|&nbsp; Design &amp; Developed by{" "}
+            <span className="mx-2">|</span>
+            Design &amp; Developed by{" "}
             <a
               href="https://ayatiworks.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="
-                transition-colors
-                duration-200
-
-                hover:text-[#b08c1c]
+                font-medium text-[#7b736d]
+                transition-colors duration-300
+                hover:text-[#e8612c]
               "
             >
               Ayatiworks
             </a>
           </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

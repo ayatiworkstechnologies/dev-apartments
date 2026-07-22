@@ -177,11 +177,11 @@ const socialLinks = [
     href: "https://www.youtube.com/@devappartments6112",
     icon: "/icons/youtube.svg",
   },
-  // {
-  //   label: "Threads",
-  //   href: "https://www.threads.net/@devappartments",
-  //   icon: "/icons/threads.svg",
-  // },
+  {
+    label: "Threads",
+    href: "https://www.threads.net/@devappartments",
+    icon: "/icons/threads.svg",
+  }, 
 ];
 
 export default function ContactConnectForm() {
