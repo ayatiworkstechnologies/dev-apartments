@@ -17,16 +17,16 @@ const projectStats: ProjectStat[] = [
     value: "22 Premium Homes",
   },
   {
-    label: "Typical Floor Area",
-    value: "1,850 - 2,400 sq.ft",
+    label: "Build Up Area",
+    value: "1,849 - 3,360 sq.ft",
   },
   {
     label: "Structure",
-    value: "Stilt + 5 Floors",
+    value: "Ground + 1 Floor",
   },
   {
     label: "Villa",
-    value: "T2",
+    value: "12",
   },
 ];
 

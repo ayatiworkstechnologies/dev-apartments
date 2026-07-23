@@ -118,7 +118,7 @@ const projects: DynamicProjectItem[] = [
         alt: "Divya Desam premium villa",
       },
       {
-        src: "/images/divya-desam-residential-development-2.png",
+        src: "/images/divya-desam-residential-development--2.png",
         alt: "Divya Desam residential development",
       },
     ],
@@ -137,7 +137,7 @@ export default function OngoingProjectsPage() {
       <main className="flex-1">
         <DynamicInnerBanner
           eyebrow="Ongoing Projects"
-          image="/images/ongoing-projects-banner-1.png"
+          image="/images/ongoing-projects-banner-01.png"
           imageAlt="Modern residential villas in Dev Appartments ongoing projects"
           description="Discover Homes Designed for Tomorrow."
           titleLines={[
