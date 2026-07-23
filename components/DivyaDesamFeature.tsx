@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 
 type ImagePanel = {
@@ -12,22 +13,22 @@ type ImagePanel = {
 const imagePanels: ImagePanel[] = [
   {
     id: 1,
-    image: "/images/divya-desam-1.png",
+    image: "/images/divya-desam-01.png",
     direction: "top",
   },
   {
     id: 2,
-    image: "/images/divya-desam-1.png",
+    image: "/images/divya-desam-02.png",
     direction: "bottom",
   },
   {
     id: 3,
-    image: "/images/divya-desam-1.png",
+    image: "/images/divya-desam-03.png",
     direction: "top",
   },
   {
     id: 4,
-    image: "/images/divya-desam-1.png",
+    image: "/images/divya-desam-04.png",
     direction: "bottom",
   },
 ];
@@ -164,9 +165,8 @@ export default function DivyaDesamFeature() {
                   sm:rounded-[11px]
                   lg:rounded-[12px]
 
-                  ${
-                    raised
-                      ? `
+                  ${raised
+                    ? `
                         h-[235px]
                         -translate-y-5
                         sm:h-[310px]
@@ -175,7 +175,7 @@ export default function DivyaDesamFeature() {
                         lg:-translate-y-9
                         xl:h-[410px]
                       `
-                      : `
+                    : `
                         h-[275px]
                         translate-y-5
                         sm:h-[355px]
@@ -233,15 +233,15 @@ export default function DivyaDesamFeature() {
             lg:text-left
           "
         >
-          <p
-            className="
-              text-[11px] font-semibold
-              uppercase tracking-[0.2em]
-              text-[#a77d42]
-            "
-          >
-            Divya Desam
-          </p>
+          <div className="relative h-[42px] w-[180px] sm:h-[48px] sm:w-[140px]">
+            <Image
+              src="/icons/divya-desam-icon.svg"
+              alt="Divya Desam"
+              fill
+              sizes="(max-width: 640px) 180px, 140px"
+              className="object-contain object-center"
+            />
+          </div>
 
           <h2
             className="

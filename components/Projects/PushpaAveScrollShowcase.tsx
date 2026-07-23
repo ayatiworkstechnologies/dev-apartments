@@ -33,33 +33,51 @@ type GalleryImage = {
 const galleryImages: GalleryImage[] = [
   {
     id: 1,
-    image: "/images/pushpa-1.png",
+    image: "/images/pushpa-01.png",
     alt: "Pushpa Avenue villa exterior",
     reveal: "left",
   },
   {
     id: 2,
-    image: "/images/pushpa-2.png",
+    image: "/images/pushpa-02.png",
     alt: "Pushpa Avenue contemporary architecture",
     reveal: "top",
   },
   {
     id: 3,
-    image: "/images/pushpa-3.png",
+    image: "/images/pushpa-03.png",
     alt: "Pushpa Avenue premium interior",
     reveal: "circle",
   },
   {
     id: 4,
-    image: "/images/pushpa-4.png",
+    image: "/images/pushpa-04.png",
     alt: "Pushpa Avenue luxury bedroom",
     reveal: "bottom",
   },
   {
     id: 5,
-    image: "/images/pushpa-5.png",
+    image: "/images/pushpa-05.png",
     alt: "Pushpa Avenue residential lifestyle",
     reveal: "diagonal",
+  },
+  {
+    id: 6,
+    image: "/images/pushpa-06.png",
+    alt: "Pushpa Avenue spacious villa living area",
+    reveal: "left",
+  },
+  {
+    id: 7,
+    image: "/images/pushpa-07.png",
+    alt: "Pushpa Avenue modern family lifestyle",
+    reveal: "circle",
+  },
+  {
+    id: 8,
+    image: "/images/pushpa-08.png",
+    alt: "Pushpa Avenue premium outdoor space",
+    reveal: "bottom",
   },
 ];
 

@@ -56,7 +56,7 @@ const blogList = [
     category: "Villa Buying Guide",
     date: "2026-07-22",
     author: "Dev Appartments",
-    image: "/images/blogs/villa-buyers-guide.jpg",
+    image: "/images/blogs/villa-buyers-guides.png",
     heroLabel: "Smart Villa Investment",
     heroText:
       "The right questions today can lead to the right home and a secure investment for generations.",

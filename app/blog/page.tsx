@@ -20,6 +20,7 @@ import {
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import DynamicInnerBanner from "@/components/DynamicInnerBanner";
 
 const BLOGS_PER_PAGE = 6;
 
@@ -35,6 +36,7 @@ export default function BlogPage() {
     useRef<HTMLElement>(null);
 
   const [page, setPage] = useState(1);
+
   const [
     activeCategory,
     setActiveCategory,
@@ -65,19 +67,20 @@ export default function BlogPage() {
     page * BLOGS_PER_PAGE,
   );
 
-  const scrollToBlogs = () => {
-    const element =
+  const scrollToBlogSection = () => {
+    const section =
       blogSectionRef.current;
 
-    if (!element) return;
+    if (!section) return;
 
     const headerOffset = 110;
-    const elementPosition =
-      element.getBoundingClientRect().top +
+
+    const sectionTop =
+      section.getBoundingClientRect().top +
       window.scrollY;
 
     window.scrollTo({
-      top: elementPosition - headerOffset,
+      top: sectionTop - headerOffset,
       behavior: "smooth",
     });
   };
@@ -88,283 +91,107 @@ export default function BlogPage() {
     setActiveCategory(categorySlug);
     setPage(1);
 
-    window.requestAnimationFrame(
-      scrollToBlogs,
-    );
+    window.requestAnimationFrame(() => {
+      scrollToBlogSection();
+    });
   };
 
   const goToPage = (
     pageNumber: number,
   ) => {
-    const safePage = Math.min(
+    const nextPage = Math.min(
       Math.max(pageNumber, 1),
       totalPages,
     );
 
-    setPage(safePage);
+    setPage(nextPage);
 
-    window.requestAnimationFrame(
-      scrollToBlogs,
-    );
+    window.requestAnimationFrame(() => {
+      scrollToBlogSection();
+    });
   };
 
   return (
     <>
       <Navbar />
 
-      <main className="min-h-screen overflow-hidden bg-[#f8f6f3]">
-        {/* Blog hero */}
-        <section
-          className="
-            relative
-            px-5 pb-14 pt-32
-            sm:px-8 sm:pb-16 sm:pt-36
-            lg:px-12 lg:pb-20 lg:pt-44
-          "
-        >
-          {/* Background glow */}
-          <div
-            aria-hidden="true"
-            className="
-              pointer-events-none
-              absolute -right-40 top-10
-              h-[420px] w-[420px]
-              rounded-full
-              bg-[#b88d48]/10
-              blur-3xl
-            "
-          />
+      <main className="min-h-screen overflow-hidden bg-white">
+        <DynamicInnerBanner
+          eyebrow="Our Blog"
+          image="/images/blog-banner.png"
+          imageAlt="Dev Appartments property insights"
+          description="Property insights, villa-buying guidance and practical advice for confident homebuyers."
+          titleLines={[
+            [
+              {
+                text: "Ideas for ",
+              },
+              {
+                text: "Smarter",
+                highlight: true,
+              },
+            ],
+            [
+              {
+                text: "Property ",
+                highlight: true,
+              },
+              {
+                text: "Decisions.",
+              },
+            ],
+          ]}
+          breadcrumbs={[
+            {
+              label: "Home",
+              href: "/",
+            },
+            {
+              label: "Blog",
+            },
+          ]}
+        />
 
-          <div
-            aria-hidden="true"
-            className="
-              pointer-events-none
-              absolute -left-44 bottom-0
-              h-[340px] w-[340px]
-              rounded-full
-              bg-[#e8612c]/[0.05]
-              blur-3xl
-            "
-          />
-
-          <div
-            className="
-              relative mx-auto
-              grid max-w-7xl
-              items-center gap-10
-              lg:grid-cols-[0.88fr_1.12fr]
-              lg:gap-16
-            "
-          >
-            {/* Hero content */}
-            <motion.div
-              initial={{
-                opacity: 0,
-                x: -30,
-                filter: "blur(8px)",
-              }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                filter: "blur(0px)",
-              }}
-              transition={{
-                duration: 0.85,
-                ease: smoothEase,
-              }}
-            >
-              <span
-                className="
-                  inline-flex rounded-full
-                  border border-[#b88d48]/20
-                  bg-white px-4 py-2
-                  text-[10px] font-semibold
-                  uppercase tracking-[0.22em]
-                  text-[#9a7440]
-                  shadow-sm
-                "
-              >
-                Dev Appartments Blog
-              </span>
-
-              <h1
-                className="
-                  mt-6 max-w-3xl
-                  font-primary
-                  text-[38px] font-black
-                  leading-[1.06]
-                  tracking-[-0.04em]
-                  text-[#28211c]
-                  sm:text-5xl
-                  lg:text-[58px]
-                "
-              >
-                Ideas for smarter
-                <span className="block text-[#b88d48]">
-                  home investments
-                </span>
-              </h1>
-
-              <p
-                className="
-                  mt-5 max-w-2xl
-                  font-secondary
-                  text-[14px] leading-7
-                  text-[#756e68]
-                  sm:text-[15px]
-                  sm:leading-8
-                "
-              >
-                Explore villa-buying guidance,
-                real estate insights, construction
-                advice and practical information
-                created to help you make confident
-                property decisions.
-              </p>
-
-              <button
-                type="button"
-                onClick={scrollToBlogs}
-                className="
-                  group mt-7 inline-flex
-                  min-h-[46px]
-                  items-center justify-center
-                  gap-2 rounded-full
-                  bg-[#e8612c]
-                  px-6
-                  text-[13px] font-semibold
-                  text-white
-                  shadow-[0_12px_28px_rgba(232,97,44,0.22)]
-                  transition-all duration-300
-                  hover:-translate-y-1
-                  hover:bg-[#d65322]
-                "
-              >
-                Explore Articles
-
-                <ArrowRight
-                  size={16}
-                  className="
-                    transition-transform
-                    duration-300
-                    group-hover:translate-x-1
-                  "
-                />
-              </button>
-            </motion.div>
-
-            {/* Hero image */}
-            <motion.div
-              initial={{
-                opacity: 0,
-                x: 35,
-                scale: 0.97,
-                filter: "blur(10px)",
-              }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                scale: 1,
-                filter: "blur(0px)",
-              }}
-              transition={{
-                duration: 1,
-                delay: 0.1,
-                ease: smoothEase,
-              }}
-              className="
-                relative h-[300px]
-                overflow-hidden
-                rounded-[24px]
-                bg-[#e9e2da]
-                shadow-[0_22px_65px_rgba(39,26,15,0.12)]
-                sm:h-[390px]
-                sm:rounded-[30px]
-                lg:h-[470px]
-              "
-            >
-              <Image
-                src="/images/blogs/villa-buyers-guide.jpg"
-                alt="Dev Appartments villa buying guide"
-                fill
-                priority
-                sizes="
-                  (max-width: 1024px) 100vw,
-                  55vw
-                "
-                className="
-                  object-cover object-center
-                "
-              />
-
-              <div
-                aria-hidden="true"
-                className="
-                  absolute inset-0
-                  bg-gradient-to-t
-                  from-black/55
-                  via-black/[0.08]
-                  to-transparent
-                "
-              />
-
-              <div
-                className="
-                  absolute bottom-5
-                  left-5 right-5
-                  rounded-[18px]
-                  border border-white/30
-                  bg-white/90 p-5
-                  shadow-xl
-                  backdrop-blur-xl
-                  sm:bottom-7
-                  sm:left-7 sm:right-7
-                  sm:p-6
-                "
-              >
-                <p
-                  className="
-                    text-[10px]
-                    font-semibold uppercase
-                    tracking-[0.18em]
-                    text-[#a47b45]
-                  "
-                >
-                  Featured Guide
-                </p>
-
-                <p
-                  className="
-                    mt-2 max-w-xl
-                    text-[18px] font-semibold
-                    leading-[1.3]
-                    text-[#302922]
-                    sm:text-[23px]
-                  "
-                >
-                  The Smart Buyer&apos;s Guide
-                  to Buying a Villa
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Blog listing */}
         <section
           ref={blogSectionRef}
           className="
-            relative px-5 pb-24
-            sm:px-8
-            lg:px-12 lg:pb-32
+            relative bg-[#f8f6f3]
+            px-4 py-14
+            sm:px-7 sm:py-18
+            lg:px-10 lg:py-20
+            xl:px-12 xl:py-24
           "
         >
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none
+              absolute -left-44 top-20
+              h-[380px] w-[380px]
+              rounded-full
+              bg-[#b88d48]/[0.055]
+              blur-3xl
+            "
+          />
+
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none
+              absolute -right-44 bottom-20
+              h-[360px] w-[360px]
+              rounded-full
+              bg-[#e8612c]/[0.035]
+              blur-3xl
+            "
+          />
+
           <div className="relative mx-auto max-w-7xl">
-            {/* Section heading */}
+            {/* Heading */}
             <motion.div
               initial={{
                 opacity: 0,
-                y: 25,
+                y: 24,
                 filter: "blur(7px)",
               }}
               whileInView={{
@@ -372,18 +199,15 @@ export default function BlogPage() {
                 y: 0,
                 filter: "blur(0px)",
               }}
+              viewport={{
+                once: true,
+                amount: 0.25,
+              }}
               transition={{
                 duration: 0.8,
                 ease: smoothEase,
               }}
-              viewport={{
-                once: true,
-                amount: 0.3,
-              }}
-              className="
-                mb-10 max-w-4xl
-                sm:mb-12
-              "
+              className="mb-10 max-w-4xl sm:mb-12"
             >
               <p
                 className="
@@ -395,20 +219,19 @@ export default function BlogPage() {
                 Knowledge &amp; Guidance
               </p>
 
-              <h2
+              <h1
                 className="
-                  mt-4
-                  font-primary
-                  text-[30px] font-black
-                  leading-[1.12]
-                  tracking-[-0.035em]
+                  mt-4 font-primary
+                  text-[32px] font-black
+                  leading-[1.08]
+                  tracking-[-0.04em]
                   text-[#28211c]
-                  sm:text-[40px]
-                  lg:text-[48px]
+                  sm:text-[42px]
+                  lg:text-[50px]
                 "
               >
                 Latest property insights
-              </h2>
+              </h1>
 
               <p
                 className="
@@ -420,9 +243,9 @@ export default function BlogPage() {
                 "
               >
                 Helpful articles covering villa
-                ownership, legal verification,
-                builder credibility, construction
-                quality and long-term property value.
+                ownership, legal verification, builder
+                credibility, construction quality and
+                long-term property value.
               </p>
             </motion.div>
 
@@ -430,12 +253,12 @@ export default function BlogPage() {
               className="
                 grid grid-cols-1
                 items-start gap-10
-                lg:grid-cols-[1fr_300px]
+                lg:grid-cols-[minmax(0,1fr)_300px]
                 xl:gap-12
               "
             >
-              {/* Blog content */}
-              <div>
+              {/* Blog list */}
+              <div className="min-w-0">
                 {visibleBlogs.length > 0 ? (
                   <motion.div
                     key={`${activeCategory}-${page}`}
@@ -461,9 +284,9 @@ export default function BlogPage() {
                           variants={{
                             hidden: {
                               opacity: 0,
-                              y: 30,
+                              y: 28,
                               filter:
-                                "blur(8px)",
+                                "blur(7px)",
                             },
                             show: {
                               opacity: 1,
@@ -477,16 +300,20 @@ export default function BlogPage() {
                               },
                             },
                           }}
-                          className="group"
+                          className="
+                            group min-w-0
+                          "
                         >
                           <Link
                             href={`/blog/${blog.categorySlug}/${blog.slug}`}
                             className="
-                              block h-full
+                              flex h-full
+                              min-w-0 flex-col
                               overflow-hidden
                               rounded-[26px]
                               border border-[#e6ded6]
                               bg-white
+                              p-3
                               shadow-[0_14px_45px_rgba(39,26,15,0.055)]
                               transition-all duration-500
                               hover:-translate-y-2
@@ -494,84 +321,92 @@ export default function BlogPage() {
                               hover:shadow-[0_25px_65px_rgba(39,26,15,0.11)]
                             "
                           >
-                            {/* Card image */}
+                            {/* Exact 850 × 520 image ratio */}
                             <div
                               className="
-                                relative m-3
-                                h-[240px]
+                                relative w-full
                                 overflow-hidden
                                 rounded-[20px]
                                 bg-[#eee9e3]
-                                sm:h-[280px]
                               "
                             >
                               <Image
                                 src={blog.image}
                                 alt={blog.title}
-                                fill
+                                width={850}
+                                height={520}
+                                priority={
+                                  blog.id ===
+                                  visibleBlogs[0]?.id
+                                }
                                 sizes="
-                                  (max-width: 768px)
-                                  100vw,
-                                  50vw
+                                  (max-width: 767px) 100vw,
+                                  (max-width: 1023px) 50vw,
+                                  35vw
                                 "
                                 className="
-                                  object-cover
-                                  object-center
+                                  block h-auto w-full
+                                  object-contain
                                   transition-transform
                                   duration-[900ms]
                                   ease-out
-                                  group-hover:scale-105
+                                  group-hover:scale-[1.015]
                                 "
                               />
 
-                              <div
-                                aria-hidden="true"
-                                className="
-                                  absolute inset-0
-                                  bg-gradient-to-t
-                                  from-black/65
-                                  via-black/[0.05]
-                                  to-transparent
-                                "
-                              />
-
+                              {/* Category on right */}
                               <div
                                 className="
-                                  absolute left-4
-                                  top-4
+                                  absolute right-3
+                                  top-3 z-10
+                                  max-w-[calc(100%-24px)]
                                   rounded-full
-                                  border border-white/40
-                                  bg-white/90
+                                  border border-white/50
+                                  bg-white/95
                                   px-3.5 py-2
+                                  shadow-[0_8px_22px_rgba(0,0,0,0.08)]
                                   backdrop-blur-md
+                                  sm:right-4
+                                  sm:top-4
+                                  sm:px-4
+                                  sm:py-2.5
                                 "
                               >
                                 <span
                                   className="
-                                    text-[9px]
+                                    block truncate
+                                    text-[8px]
                                     font-semibold
                                     uppercase
-                                    tracking-[0.16em]
+                                    tracking-[0.15em]
                                     text-[#a47b45]
+                                    sm:text-[9px]
                                   "
                                 >
                                   {blog.category}
                                 </span>
                               </div>
+                            </div>
 
+                            {/* Content */}
+                            <div
+                              className="
+                                flex flex-1
+                                flex-col
+                                px-3 pb-3 pt-6
+                                sm:px-4 sm:pb-4
+                              "
+                            >
                               <div
                                 className="
-                                  absolute bottom-4
-                                  left-4 right-4
+                                  flex flex-wrap
+                                  items-center gap-2
+                                  text-[11px]
+                                  font-medium
+                                  text-[#958d85]
                                 "
                               >
-                                <p
-                                  className="
-                                    text-[11px]
-                                    font-medium
-                                    text-white/85
-                                  "
-                                >
+                                <span>
                                   {new Date(
                                     blog.date,
                                   ).toLocaleDateString(
@@ -583,44 +418,38 @@ export default function BlogPage() {
                                       year: "numeric",
                                     },
                                   )}
+                                </span>
 
-                                  <span className="mx-2 text-[#d7b37a]">
-                                    •
-                                  </span>
+                                <span className="text-[#c5a66f]">
+                                  •
+                                </span>
 
+                                <span>
                                   {blog.author}
-                                </p>
+                                </span>
                               </div>
-                            </div>
 
-                            {/* Card content */}
-                            <div
-                              className="
-                                flex h-[calc(100%-264px)]
-                                flex-col
-                                px-6 pb-6 pt-3
-                              "
-                            >
-                              <h3
+                              <h2
                                 className="
+                                  mt-3 line-clamp-3
                                   font-primary
-                                  text-[21px]
+                                  text-[20px]
                                   font-bold
-                                  leading-[1.28]
+                                  leading-[1.3]
                                   tracking-[-0.02em]
                                   text-[#302922]
                                   transition-colors
                                   duration-300
                                   group-hover:text-[#a47b45]
+                                  sm:text-[21px]
                                 "
                               >
                                 {blog.title}
-                              </h3>
+                              </h2>
 
                               <p
                                 className="
-                                  mt-4
-                                  line-clamp-3
+                                  mt-4 line-clamp-3
                                   font-secondary
                                   text-[14px]
                                   leading-7
@@ -632,7 +461,7 @@ export default function BlogPage() {
 
                               <div
                                 className="
-                                  mt-auto flex
+                                  mt-6 flex
                                   items-center
                                   justify-between
                                   border-t
@@ -655,7 +484,7 @@ export default function BlogPage() {
                                 <span
                                   className="
                                     flex h-9 w-9
-                                    items-center
+                                    shrink-0 items-center
                                     justify-center
                                     rounded-full
                                     bg-[#f5efe8]
@@ -682,29 +511,17 @@ export default function BlogPage() {
                     className="
                       rounded-[26px]
                       border border-[#e6ded6]
-                      bg-white
-                      px-6 py-16
+                      bg-white px-6 py-16
                       text-center
                     "
                   >
-                    <h3
-                      className="
-                        text-2xl font-semibold
-                        text-[#302922]
-                      "
-                    >
+                    <h2 className="text-2xl font-semibold text-[#302922]">
                       No articles found
-                    </h3>
+                    </h2>
 
-                    <p
-                      className="
-                        mt-3 text-[14px]
-                        text-[#756e68]
-                      "
-                    >
-                      There are currently no
-                      articles available in this
-                      category.
+                    <p className="mt-3 text-[14px] text-[#756e68]">
+                      No articles are currently available
+                      in this category.
                     </p>
 
                     <button
@@ -719,8 +536,9 @@ export default function BlogPage() {
                         bg-[#e8612c]
                         px-6 py-3
                         text-[13px]
-                        font-semibold
-                        text-white
+                        font-semibold text-white
+                        transition-colors
+                        hover:bg-[#d65322]
                       "
                     >
                       View All Articles
@@ -749,12 +567,10 @@ export default function BlogPage() {
                         items-center
                         justify-center
                         rounded-full
-                        border
-                        border-[#ddd5cd]
+                        border border-[#ddd5cd]
                         bg-white
                         text-[#514941]
-                        transition-all
-                        duration-300
+                        transition-all duration-300
                         hover:border-[#b88d48]
                         hover:text-[#b88d48]
                         disabled:cursor-not-allowed
@@ -791,8 +607,7 @@ export default function BlogPage() {
                             flex h-10 w-10
                             items-center
                             justify-center
-                            rounded-full
-                            border
+                            rounded-full border
                             text-[13px]
                             font-semibold
                             transition-all
@@ -834,21 +649,17 @@ export default function BlogPage() {
                         items-center
                         justify-center
                         rounded-full
-                        border
-                        border-[#ddd5cd]
+                        border border-[#ddd5cd]
                         bg-white
                         text-[#514941]
-                        transition-all
-                        duration-300
+                        transition-all duration-300
                         hover:border-[#b88d48]
                         hover:text-[#b88d48]
                         disabled:cursor-not-allowed
                         disabled:opacity-40
                       "
                     >
-                      <ArrowRight
-                        size={16}
-                      />
+                      <ArrowRight size={16} />
                     </button>
                   </div>
                 )}
@@ -897,10 +708,8 @@ export default function BlogPage() {
 
                 <h2
                   className="
-                    mt-3
-                    font-primary
-                    text-[27px]
-                    font-bold
+                    mt-3 font-primary
+                    text-[27px] font-bold
                     tracking-[-0.025em]
                     text-[#302922]
                   "
@@ -1009,13 +818,14 @@ export default function BlogPage() {
                             }
                           `}
                         >
-                          <span>
+                          <span className="min-w-0 truncate pr-3">
                             {category.name}
                           </span>
 
                           <span
                             className={`
                               flex min-w-7
+                              shrink-0
                               items-center
                               justify-center
                               rounded-full
@@ -1062,8 +872,7 @@ export default function BlogPage() {
                       leading-[1.35]
                     "
                   >
-                    Explore Divya Desam
-                    villas.
+                    Explore Divya Desam villas.
                   </p>
 
                   <Link
@@ -1074,15 +883,13 @@ export default function BlogPage() {
                       text-[12px]
                       font-semibold
                       text-[#d7b37a]
-                      transition
+                      transition-colors
                       hover:text-white
                     "
                   >
                     View Project
 
-                    <ArrowRight
-                      size={14}
-                    />
+                    <ArrowRight size={14} />
                   </Link>
                 </div>
               </motion.aside>

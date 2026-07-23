@@ -5,25 +5,24 @@ import { Eye } from "lucide-react";
 
 /* Row A — exterior / architectural */
 const rowA = [
-  { src: "/images/gal-1.png", alt: "Villa exterior" },
-  { src: "/images/gal-2.png", alt: "Modern white villa" },
-  { src: "/images/gal-3.png", alt: "Poolside villa" },
-  { src: "/images/gal-4.png", alt: "Green valley villa" },
-  { src: "/images/gal-5.png", alt: "Pearl residence" },
-  { src: "/images/gal-6.png", alt: "Pristine villa" },
-  { src: "/images/gal-7.png", alt: "Luxury villa" },
+  { src: "/images/gallery-1.png", alt: "Villa exterior" },
+  { src: "/images/gallery-2.png", alt: "Modern white villa" },
+  { src: "/images/gallery-3.png", alt: "Poolside villa" },
+  { src: "/images/gallery-4.png", alt: "Green valley villa" },
+  { src: "/images/gallery-5.png", alt: "Pearl residence" },
+  { src: "/images/gallery-6.png", alt: "Pristine villa" },
+  { src: "/images/gallery-7.png", alt: "Luxury villa" },
 ];
 
 /* Row B — interior / lifestyle */
 const rowB = [
-  { src: "/images/gal-8.png", alt: "Interior living space" },
-  { src: "/images/gal-9.png", alt: "Contemporary architecture" },
-  { src: "/images/gal-10.png", alt: "Open plan living" },
-  { src: "/images/gal-11.png", alt: "Modern kitchen" },
-  { src: "/images/gal-12.png", alt: "Pushpa Ave villa" },
-  { src: "/images/gal-13.png", alt: "Dev pristine" },
-  { src: "/images/gal-14.png", alt: "Luxury villa interior" },
-  { src: "/images/gal-15.png", alt: "Villa interior" },
+  { src: "/images/gallery-8.png", alt: "Interior living space" },
+  { src: "/images/gallery-9.png", alt: "Contemporary architecture" },
+  { src: "/images/gallery-10.png", alt: "Open plan living" },
+  { src: "/images/gallery-11.png", alt: "Modern kitchen" },
+  { src: "/images/gallery-12.png", alt: "Pushpa Ave villa" },
+  { src: "/images/gallery-13.png", alt: "Dev pristine" },
+  { src: "/images/gallery-14.png", alt: "Luxury villa interior" },
 ];
 
 /*

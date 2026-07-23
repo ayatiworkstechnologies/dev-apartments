@@ -14,11 +14,11 @@ const socialLinks = [
     href: "https://www.facebook.com/devappartmentss/",
     icon: "/icons/facebook.svg",
   },
-  {
-    label: "X",
-    href: "https://x.com/devappartments",
-    icon: "/icons/x.svg",
-  },
+  // {
+  //   label: "X",
+  //   href: "https://x.com/devappartments",
+  //   icon: "/icons/x.svg",
+  // },
   {
     label: "Instagram",
     href: "https://www.instagram.com/devappartments/",

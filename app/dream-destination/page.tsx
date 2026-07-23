@@ -15,26 +15,26 @@ const projectsHeader: DynamicProjectsHeader = {
   titleLines: [
     [
       {
-        text: " Your  ",
+        text: "Your ",
       },
       {
-        text: "Future Home ",
+        text: "Dream Address",
         highlight: true,
       },
     ],
     [
       {
-        text: " Is Taking ",
+        text: "Begins ",
         highlight: true,
       },
       {
-        text: "Shape",
+        text: "Here",
       },
     ],
   ],
 
   description:
-    "Be among the first to discover our ongoing residential developments. Thoughtfully designed with premium features and quality construction, these homes are crafted for comfort, convenience, and long-term value.",
+    "Discover premium villa plots in Vettuvankeni, where excellent connectivity, peaceful surroundings, and future-ready development come together to create the perfect setting for your dream home.",
 };
 
 /* ======================================================
@@ -88,7 +88,6 @@ const projects: DynamicProjectItem[] = [
       {
         label: "Trusted Builder",
       },
-      
       {
         label: "Quality Construction",
       },
@@ -96,8 +95,8 @@ const projects: DynamicProjectItem[] = [
 
     buttons: [
       {
-        label: "Learn More",
-        href: "#/current-projects/luxury-villa-plots",
+        label: "",
+        href: "/current-projects/luxury-villa-plots",
         variant: "primary",
         showArrow: true,
       },
@@ -119,9 +118,27 @@ const projects: DynamicProjectItem[] = [
       },
     ],
   },
-
- 
 ];
+
+/* ======================================================
+   REMOVE EMPTY BUTTONS
+
+   These will be hidden completely:
+
+   label: ""
+   label: " "
+   label: "     "
+====================================================== */
+
+const filteredProjects: DynamicProjectItem[] =
+  projects.map((project) => ({
+    ...project,
+
+    buttons: project.buttons?.filter(
+      (button) =>
+        button.label.trim().length > 0,
+    ),
+  }));
 
 /* ======================================================
    PAGE
@@ -135,7 +152,7 @@ export default function CurrentProjectsPage() {
       <main className="flex-1">
         <DynamicInnerBanner
           eyebrow="Dream Destination"
-          image="/images/currentprojects-banner-1.png"
+          image="/images/dream-destination-banner-1.png"
           imageAlt="Modern residential villas in Dev Appartments current projects"
           description="Discover Homes Designed for Tomorrow."
           titleLines={[
@@ -171,7 +188,7 @@ export default function CurrentProjectsPage() {
 
         <DynamicProjectsSection
           header={projectsHeader}
-          projects={projects}
+          projects={filteredProjects}
           accentColor="#B98A49"
           backgroundColor="#F8F8F8"
           cardColor="#FFFFFF"

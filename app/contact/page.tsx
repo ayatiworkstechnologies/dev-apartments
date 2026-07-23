@@ -16,7 +16,7 @@ export default function ContactPage() {
 
                 <DynamicInnerBanner
                     eyebrow="Contact Us"
-                    image="/images/contact-banner.png"
+                    image="/images/contact-banner-1.png"
                     imageAlt="Contact Dev Appartments"
                     description="Reach Out. Find Your Home."
                     titleLines={[

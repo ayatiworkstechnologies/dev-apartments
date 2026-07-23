@@ -25,9 +25,7 @@ const recentProjectsHeader: DynamicProjectsHeader = {
     [
       {
         text: "Projects ",
-
       },
-
     ],
   ],
 
@@ -96,8 +94,8 @@ const recentProjects: DynamicProjectItem[] = [
 
     buttons: [
       {
-        label: "Learn More",
-        href: "#/recent-projects/dev-pristine-villa",
+        label: "",
+        href: "/recent-projects/dev-pristine-villa",
         variant: "primary",
         showArrow: true,
       },
@@ -110,12 +108,12 @@ const recentProjects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/dev-pristine-villa-01.png",
+        src: "/images/dev-pristine-villa1.png",
         alt: "Dev Pristine Villa in Neelankarai",
         objectPosition: "center",
       },
       {
-        src: "/images/dev-pristine-villa-02.png",
+        src: "/images/dev-pristine-villa2.png",
         alt: "Dev Pristine Villa independent homes",
         objectPosition: "center",
       },
@@ -175,8 +173,12 @@ const recentProjects: DynamicProjectItem[] = [
 
     buttons: [
       {
-        label: "Learn More",
-        href: "#/recent-projects/dev-peacock-enclave",
+        /*
+         * When the label is empty, the complete button
+         * will be removed before rendering.
+         */
+        label: "",
+        href: "/recent-projects/dev-peacock-enclave",
         variant: "primary",
         showArrow: true,
       },
@@ -189,18 +191,37 @@ const recentProjects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/dev-peacock-enclave-1.png",
+        src: "/images/dev-peacock-enclave1.png",
         alt: "Dev Peacock Enclave luxury villas",
         objectPosition: "center",
       },
       {
-        src: "/images/dev-peacock-enclave-2.png",
+        src: "/images/dev-peacock-enclave2.png",
         alt: "Dev Peacock Enclave residential development",
         objectPosition: "center",
       },
     ],
   },
 ];
+
+/* ======================================================
+   REMOVE BUTTONS WITH EMPTY LABELS
+
+   Examples removed:
+   label: ""
+   label: " "
+   label: "     "
+====================================================== */
+
+const filteredRecentProjects: DynamicProjectItem[] =
+  recentProjects.map((project) => ({
+    ...project,
+
+    buttons: project.buttons?.filter(
+      (button) =>
+        button.label.trim().length > 0,
+    ),
+  }));
 
 /* ======================================================
    RECENT PROJECTS PAGE
@@ -248,7 +269,7 @@ export default function RecentProjectsPage() {
         {/* Dynamic recent projects */}
         <DynamicProjectsSection
           header={recentProjectsHeader}
-          projects={recentProjects}
+          projects={filteredRecentProjects}
           accentColor="#B98A49"
           backgroundColor="#F8F8F8"
           cardColor="#FFFFFF"

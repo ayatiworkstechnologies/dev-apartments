@@ -26,7 +26,7 @@ const projects: Project[] = [
     title: "Villa, Pushpa Ave",
     location: "ECR",
     desc: "Experience contemporary villa living with thoughtfully planned spaces, premium finishes, and a prime location near the ECR coastline.",
-    img: "/images/Villa, Pushpa Ave.png",
+    img: "/images/completed-villa-1.png",
     thumb: "/images/Villa, Pushpa Ave.png",
   },
   {
@@ -34,7 +34,7 @@ const projects: Project[] = [
     title: "Dev Pristine Villa",
     location: "Chennai",
     desc: "A signature project redefining residential luxury — every detail crafted for the discerning homebuyer.",
-    img: "/images/Dev Pristine Villa.png",
+    img: "/images/completed-villa-2.png",
     thumb: "/images/Dev Pristine Villa.png",
   },
   {
@@ -42,7 +42,7 @@ const projects: Project[] = [
     title: "Villa, Pea Cock Enclave-4",
     location: "Chennai",
     desc: "Beautifully designed villas with modern amenities in one of Chennai's most sought-after residential enclaves.",
-    img: "/images/Villa, Pea Cock Enclave-4.png",
+    img: "/images/completed-villa-3.png",
     thumb: "/images/Villa, Pea Cock Enclave-4.png",
   },
   {
@@ -50,13 +50,13 @@ const projects: Project[] = [
     title: "Dev Heritage Homes",
     location: "Chennai",
     desc: "Heritage-inspired architecture blended with modern comforts, set amidst lush green surroundings.",
-    img: "/images/Dev Pristine Villa-1.png",
+    img: "/images/completed-villa-4.png",
     thumb: "/images/Dev Pristine Villa-1.png",
   },
 ];
 
 const TOTAL = projects.length;
-const AUTO_SLIDE_DELAY = 4500;
+const AUTO_SLIDE_DELAY = 4000;
 
 const ease: [number, number, number, number] = [
   0.22, 1, 0.36, 1,

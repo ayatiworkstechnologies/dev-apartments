@@ -30,56 +30,56 @@ const projects: Project[] = [
     title: "Villa, Pea Cock Enclave-4",
     location: "Chennai",
     year: "2026",
-    img: "/images/Villa, Pea Cock Enclave-4.png",
+    img: "/images/villa-01.png",
   },
   {
     id: 2,
     title: "Villa, Pushpa Ave",
     location: "Chennai",
     year: "2026",
-    img: "/images/Villa, Pushpa Ave.png",
+    img: "/images/villa-02.png",
   },
   {
     id: 3,
     title: "Dev Pristine Villa",
     location: "Chennai",
     year: "2026",
-    img: "/images/Dev Pristine Villa.png",
+    img: "/images/villa-03.png",
   },
   {
     id: 4,
     title: "Villa, Pea Cock Enclave",
     location: "Chennai",
     year: "2026",
-    img: "/images/Villa, Pea Cock Enclave.png",
+    img: "/images/villa-04.png",
   },
   {
     id: 5,
     title: "Dev Pristine Villa-1",
     location: "Chennai",
     year: "2026",
-    img: "/images/Dev Pristine Villa-1.png",
+    img: "/images/villa-05.png",
   },
   {
     id: 6,
     title: "Adyar",
     location: "Chennai",
     year: "2026",
-    img: "/images/Adyar.png",
+    img: "/images/villa-06.png",
   },
   {
     id: 7,
     title: "3Star Hotel",
     location: "Chennai",
     year: "2026",
-    img: "/images/3Star Hotel.png",
+    img: "/images/villa-07.png",
   },
   {
     id: 8,
     title: "Villa, Pea Cock Enclave-3",
     location: "Chennai",
     year: "2026",
-    img: "/images/Villa Pea Cock Enclave-3.png",
+    img: "/images/villa-08.png",
   },
 
 ];
@@ -721,7 +721,7 @@ export default function ProjectsCarousel() {
             damping: 15,
           }}
           className="
-            group flex h-11 w-11 items-center
+            group flex h-11 w-11 items-center cursor-pointer
             justify-center rounded-full
             border border-[#dddddd] bg-white
             text-[#171717]
@@ -741,7 +741,7 @@ export default function ProjectsCarousel() {
           <ChevronLeft
             size={20}
             strokeWidth={1.8}
-            className="transition-transform duration-300 group-hover:-translate-x-0.5"
+            className="transition-transform duration-300  group-hover:-translate-x-0.5"
           />
         </motion.button>
 
@@ -808,7 +808,7 @@ export default function ProjectsCarousel() {
             damping: 15,
           }}
           className="
-            group flex h-11 w-11 items-center
+            group flex h-11 w-11 items-center cursor-pointer
             justify-center rounded-full
             border border-[#dddddd] bg-white
             text-[#171717]

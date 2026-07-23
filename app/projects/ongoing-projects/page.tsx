@@ -114,11 +114,11 @@ const projects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/divya-desam-current-projects-banner-001.png",
+        src: "/images/divya-desam-ongoing-projects-banner-01.png",
         alt: "Divya Desam premium villa",
       },
       {
-        src: "/images/divya-desam-residential-development-002.png",
+        src: "/images/divya-desam-residential-development-2.png",
         alt: "Divya Desam residential development",
       },
     ],
@@ -129,16 +129,16 @@ const projects: DynamicProjectItem[] = [
    PAGE
 ====================================================== */
 
-export default function CurrentProjectsPage() {
+export default function OngoingProjectsPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
 
       <main className="flex-1">
         <DynamicInnerBanner
-          eyebrow="Current Projects"
-          image="/images/currentprojects-banner-1.png"
-          imageAlt="Modern residential villas in Dev Appartments current projects"
+          eyebrow="Ongoing Projects"
+          image="/images/ongoing-projects-banner-1.png"
+          imageAlt="Modern residential villas in Dev Appartments ongoing projects"
           description="Discover Homes Designed for Tomorrow."
           titleLines={[
             [
@@ -166,7 +166,7 @@ export default function CurrentProjectsPage() {
               href: "/",
             },
             {
-              label: "Current Projects",
+              label: "Ongoing Projects",
             },
           ]}
         />

@@ -392,7 +392,7 @@ export default function ExquisiteLivingSection() {
             className="absolute inset-0"
           >
             <Image
-              src="/images/desam-about.png"
+              src="/images/desam-about-1.png"
               alt="Divya Desam premium residential villas"
               fill
               priority
