@@ -529,8 +529,8 @@ export default function ProjectHighlightsSection() {
 
           {/* Download button */}
           <motion.a
-            href="/documents/master-site-plan.pdf"
-            download
+            href="#"
+            // download
             initial={
               reduceMotion
                 ? false

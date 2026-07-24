@@ -7,6 +7,7 @@ import ProjectHighlightsSection from "@/components/Projects/ProjectHighlightsSec
 import Highlights from "@/components/Projects/Highlights";
 import FloorPlans from "@/components/Projects/FloorPlans";
 import LocationSection from "@/components/Projects/LocationSection";
+import PremiumSpecifications from "@/components/Projects/PremiumSpecifications";
 
 export default function PushpaAvePage() {
   return (
@@ -22,6 +23,7 @@ export default function PushpaAvePage() {
         <ProjectHighlightsSection />
 
         <Highlights />
+        <PremiumSpecifications />
 
         <FloorPlans />
 
