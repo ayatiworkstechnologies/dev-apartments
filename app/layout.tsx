@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: "Dev Appartments — Premium Real Estate",
   description:
     "Discover beautifully crafted residential projects by Dev Appartments, Chennai.",
+
+  // Google Search Console verification
+  verification: {
+    google: "unfPWd_sHzTrsc6oUHWvmUTe7DDHUzm767OkmShhFf8",
+  },
 };
 
 export default function RootLayout({
@@ -41,7 +46,23 @@ export default function RootLayout({
       </head>
 
       <body className="min-h-full flex flex-col font-sans">
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-TNB4SWFW"
+            height="0"
+            width="0"
+            title="Google Tag Manager"
+            style={{
+              display: "none",
+              visibility: "hidden",
+            }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
+
         {children}
+
         <FloatingContactActions />
       </body>
     </html>
