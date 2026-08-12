@@ -412,3 +412,30 @@ export const smartBuyersGuideContent: BlogContentBlock[] = [
       "When you choose your next home, do not just compare prices. Compare quality, transparency, location and the developer's track record. The right questions today can lead to the right investment for generations to come.",
   },
 ];
+export const smartBuyersGuideSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": "https://www.devappartments.com/",
+  },
+  headline:
+    "The Smart Buyer's Guide to Buying a Villa: Questions Every Homebuyer Should Ask Before Investing",
+  image:
+    "https://www.devappartments.com/_next/image?url=%2Fimages%2Fblogs%2Fvilla-buyers-guides.png&w=1920&q=75",
+  author: {
+    "@type": "Organization",
+    name: "Karthick raja",
+    url: "https://www.ayatiworks.com/assets/teams/karthik.jpeg",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Ayatiworks",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://www.ayatiworks.com/ayatiworks_logo.svg",
+    },
+  },
+  datePublished: "2026-08-13",
+  dateModified: "2026-08-12",
+};
