@@ -161,7 +161,7 @@ export const smartBuyersGuideContent: BlogContentBlock[] = [
 
   {
     type: "image",
-    src: "/images/blogs/villa-buyers-guide-2.png",
+    src: "/images/blogs/villa-buyers-guide.png",
     alt: "Premium villa construction and exterior design",
   },
 

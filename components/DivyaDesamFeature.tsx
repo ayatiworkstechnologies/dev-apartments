@@ -13,22 +13,22 @@ type ImagePanel = {
 const imagePanels: ImagePanel[] = [
   {
     id: 1,
-    image: "/images/divya-desam-01.png",
+    image: "/images/dd-01.png",
     direction: "top",
   },
   {
     id: 2,
-    image: "/images/divya-desam-02.png",
+    image: "/images/dd-02.png",
     direction: "bottom",
   },
   {
     id: 3,
-    image: "/images/divya-desam-03.png",
+    image: "/images/dd-03.png",
     direction: "top",
   },
   {
     id: 4,
-    image: "/images/divya-desam-04.png",
+    image: "/images/dd-04.png",
     direction: "bottom",
   },
 ];

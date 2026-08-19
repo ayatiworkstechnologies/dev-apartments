@@ -49,10 +49,10 @@ const heroSlides: HeroSlide[] = [
   {
     id: 1,
 
-    image: "/images/hero-banner-01.png",
+    image: "/images/hb-01.png",
 
     mobileImage:
-      "/images/hero-banner-1-mobile.png",
+      "/images/hb-mobile-o1.png",
 
     imageAlt:
       "Divya Desam luxury residential community",
@@ -80,10 +80,10 @@ const heroSlides: HeroSlide[] = [
   {
     id: 2,
 
-    image: "/images/hero-banner-02.png",
+    image: "/images/hb-02.png",
 
     mobileImage:
-      "/images/hero-banner-2-mobile.png",
+      "/images/hb-mobile-o2.png",
 
     imageAlt:
       "Divya Desam traditional luxury villa",
@@ -111,10 +111,10 @@ const heroSlides: HeroSlide[] = [
   {
     id: 3,
 
-    image: "/images/hero-banner-03.png",
+    image: "/images/hb-03.png",
 
     mobileImage:
-      "/images/hero-banner-3-mobile.png",
+      "/images/hb-mobile-o3.png",
 
     imageAlt:
       "Divya Desam premium villa community",
@@ -142,10 +142,10 @@ const heroSlides: HeroSlide[] = [
   {
     id: 4,
 
-    image: "/images/hero-banner-04.png",
+    image: "/images/hb-04.png",
 
     mobileImage:
-      "/images/hero-banner-4-mobile.png",
+      "/images/hb-mobile-o4.png",
 
     imageAlt:
       "Divya Desam peaceful residential destination",

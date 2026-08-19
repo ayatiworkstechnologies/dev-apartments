@@ -16,7 +16,7 @@ export default function PushpaAvePage() {
 
       <main >
         {/* Pushpa Avenue page content */}
-        <PushpaAveScrollShowcase /> 
+        <PushpaAveScrollShowcase />  
 
         <ExquisiteLivingSection />
 

@@ -33,13 +33,13 @@ type GalleryImage = {
 const galleryImages: GalleryImage[] = [
   {
     id: 1,
-    image: "/images/pushpa-01.png",
+    image: "/images/divyadesam-1.png",
     alt: "Pushpa Avenue villa exterior",
     reveal: "left",
   },
   {
     id: 2,
-    image: "/images/pushpa-02.png",
+    image: "/images/divyadesam-02.png",
     alt: "Pushpa Avenue contemporary architecture",
     reveal: "top",
   },

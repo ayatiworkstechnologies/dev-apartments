@@ -69,6 +69,10 @@ const projects: DynamicProjectItem[] = [
         label: "Project Type",
         value: "Villa",
       },
+      {
+        label: "Starting Price",
+        value: "1.63 crores",
+      },
     ],
 
     tags: [
@@ -114,11 +118,11 @@ const projects: DynamicProjectItem[] = [
 
     images: [
       {
-        src: "/images/divya-desam-ongoing-projects-banner-01.png",
+        src: "/images/divya-desam-ongoing-banner-1.png",
         alt: "Divya Desam premium villa",
       },
       {
-        src: "/images/divya-desam-residential-development--2.png",
+        src: "/images/divya-desam--development-2.png",
         alt: "Divya Desam residential development",
       },
     ],
@@ -137,7 +141,7 @@ export default function OngoingProjectsPage() {
       <main className="flex-1">
         <DynamicInnerBanner
           eyebrow="Ongoing Projects"
-          image="/images/ongoing-projects-banner-01.png"
+          image="/images/ongoing-projects-main-1.png"
           imageAlt="Modern residential villas in Dev Appartments ongoing projects"
           description="Discover Homes Designed for Tomorrow."
           titleLines={[
