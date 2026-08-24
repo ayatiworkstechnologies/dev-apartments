@@ -78,7 +78,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam luxury residential community",
 
     tagline:
-      "Where Divine Heritage Meets Coastal Serenity",
+      "Where timeless spiritual heritage meets serene, sophisticated living at the beautiful shores of ECR, Thiruvidanthai",
 
     title: "Divya Desam",
 
@@ -109,7 +109,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam traditional luxury villa",
 
     tagline:
-      "Where Faith, Peace & Heritage Come Together",
+      "More than a home, it is a peaceful sanctuary where heritage, harmony and modern living come together to create a truly divine lifestyle at ECR",
 
     title: "Divya Desam",
 
@@ -140,7 +140,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam premium villa community",
 
     tagline:
-      "Where Ancient Blessings Meet Modern Tranquility",
+      "Experience the rare harmony of divine surroundings, peaceful living and modern elegance in one of ECR’s most promising destinations",
 
     title: "Divya Desam",
 
@@ -171,7 +171,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam peaceful residential destination",
 
     tagline:
-      "A Sacred Abode of Timeless Spirituality",
+      "Come home to a thoughtfully crafted lifestyle where divine grace, natural serenity and contemporary comforts meet at Thiruvidanthai, ECR",
 
     title: "Divya Desam",
 
@@ -935,44 +935,6 @@ export default function HeroSection() {
               items-center
             "
           >
-            {/* Tagline */}
-            <motion.p
-              variants={taglineVariants}
-              initial={
-                reduceMotion
-                  ? false
-                  : "hidden"
-              }
-              animate="visible"
-              style={{
-                color:
-                  activeSlide.taglineColor ??
-                  "#FFFFFF",
-              }}
-              className="
-                max-w-[310px]
-
-                font-secondary
-                text-[11px]
-                font-semibold
-                leading-5
-                tracking-[0.02em]
-
-                drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]
-
-                sm:max-w-none
-                sm:text-[13px]
-
-                md:text-[14px]
-
-                lg:text-[15px]
-
-                xl:text-[16px]
-              "
-            >
-              {activeSlide.tagline}
-            </motion.p>
-
             {/* Main title */}
             <motion.h1
               variants={titleVariants}
@@ -988,7 +950,7 @@ export default function HeroSection() {
                   "#FFFFFF",
               }}
               className={`
-                mt-3
+                mt-3 pb-5
                 max-w-[94vw]
                 select-none
 
@@ -1018,6 +980,47 @@ export default function HeroSection() {
             >
               {activeSlide.title}
             </motion.h1>
+
+
+            {/* Tagline */}
+            <motion.p
+              variants={taglineVariants}
+              initial={
+                reduceMotion
+                  ? false
+                  : "hidden"
+              }
+              animate="visible"
+              style={{
+                color:
+                  activeSlide.taglineColor ??
+                  "#FFFFFF",
+              }}
+              className="
+                max-w-[310px]
+
+                font-secondary
+                text-[11px]
+                font-semibold
+                leading-5
+                tracking-[0.02em] pb-5
+
+                drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]
+
+                sm:max-w-none
+                sm:text-[13px]
+
+                md:text-[14px]
+
+                lg:text-[15px]
+
+                xl:text-[19px]
+              "
+            >
+              {activeSlide.tagline}
+            </motion.p>
+
+            
 
             {/* CTA buttons */}
             <div
