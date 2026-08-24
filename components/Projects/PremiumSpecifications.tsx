@@ -92,7 +92,7 @@ const specifications: SpecificationItem[] = [
   {
     number: "08",
     title: "Landscaping",
-    image: "/images/landscaping-01.png",
+    image: "/images/landscaping-02.png",
     points: [
       "External hard and soft landscape with Native species of trees and plants.",
     ],
@@ -100,7 +100,7 @@ const specifications: SpecificationItem[] = [
   {
     number: "09",
     title: "Other features",
-    image: "/images/other-features.png",
+    image: "/images/other-features-01.png",
     points: [
       "Underground sump with Metro water connection in future.",
       "Septic tank - Soak pit connection to sewage system for future.",
