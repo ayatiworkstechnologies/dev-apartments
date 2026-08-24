@@ -18,7 +18,8 @@ import {
   MapPin,
   ShieldCheck,
   Zap,
-  Send,
+  Download,
+  FileText,
   X,
   type LucideIcon,
 } from "lucide-react";
@@ -34,11 +35,10 @@ type HighlightItem = {
   icon: LucideIcon;
 };
 
-type ContactFormData = {
+type BrochureFormData = {
   name: string;
   email: string;
   phone: string;
-  message: string;
 };
 
 type SubmissionStatus = "idle" | "success" | "error";
@@ -83,11 +83,15 @@ const highlights: HighlightItem[] = [
   },
 ];
 
-const initialFormData: ContactFormData = {
+/* Brochure PDF served from the public folder (adjust the path to your file) */
+
+const BROCHURE_FILE_URL = "/pdf/brochure.pdf";
+const BROCHURE_FILE_NAME = "Divya-Desam-Brochure.pdf";
+
+const initialFormData: BrochureFormData = {
   name: "",
   email: "",
   phone: "",
-  message: "",
 };
 
 const ease: [number, number, number, number] = [
@@ -173,14 +177,14 @@ export default function ProjectHighlightsSection() {
   const reduceMotion = useReducedMotion();
 
   /* =========================================================
-     ENQUIRY MODAL STATE
+     DOWNLOAD BROCHURE MODAL STATE
   ========================================================= */
 
-  const [isEnquiryOpen, setIsEnquiryOpen] =
+  const [isBrochureOpen, setIsBrochureOpen] =
     useState(false);
 
   const [formData, setFormData] =
-    useState<ContactFormData>(initialFormData);
+    useState<BrochureFormData>(initialFormData);
 
   const [isSubmitting, setIsSubmitting] =
     useState(false);
@@ -195,8 +199,8 @@ export default function ProjectHighlightsSection() {
      OPEN MODAL
   ========================================================= */
 
-  const openEnquiry = () => {
-    setIsEnquiryOpen(true);
+  const openBrochureForm = () => {
+    setIsBrochureOpen(true);
 
     setSubmissionStatus("idle");
     setStatusMessage("");
@@ -206,10 +210,10 @@ export default function ProjectHighlightsSection() {
      CLOSE MODAL
   ========================================================= */
 
-  const closeEnquiry = () => {
+  const closeBrochureForm = () => {
     if (isSubmitting) return;
 
-    setIsEnquiryOpen(false);
+    setIsBrochureOpen(false);
 
     setSubmissionStatus("idle");
     setStatusMessage("");
@@ -220,9 +224,7 @@ export default function ProjectHighlightsSection() {
   ========================================================= */
 
   const handleChange = (
-    event: ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement
-    >,
+    event: ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target;
 
@@ -235,6 +237,21 @@ export default function ProjectHighlightsSection() {
       setSubmissionStatus("idle");
       setStatusMessage("");
     }
+  };
+
+  /* =========================================================
+     TRIGGER FILE DOWNLOAD
+  ========================================================= */
+
+  const triggerBrochureDownload = () => {
+    const link = document.createElement("a");
+
+    link.href = BROCHURE_FILE_URL;
+    link.download = BROCHURE_FILE_NAME;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   /* =========================================================
@@ -252,7 +269,6 @@ export default function ProjectHighlightsSection() {
       name: formData.name.trim(),
       email: formData.email.trim(),
       phone: formData.phone.trim(),
-      message: formData.message.trim(),
     };
 
     /* Required validation */
@@ -260,8 +276,7 @@ export default function ProjectHighlightsSection() {
     if (
       !cleanedFormData.name ||
       !cleanedFormData.email ||
-      !cleanedFormData.phone ||
-      !cleanedFormData.message
+      !cleanedFormData.phone
     ) {
       setSubmissionStatus("error");
 
@@ -312,7 +327,7 @@ export default function ProjectHighlightsSection() {
 
     try {
       const response = await fetch(
-        "/api/contact",
+        "/api/download-brochure",
         {
           method: "POST",
 
@@ -333,14 +348,14 @@ export default function ProjectHighlightsSection() {
       if (!response.ok) {
         throw new Error(
           result.message ||
-            "Unable to submit your enquiry.",
+            "Unable to submit your request.",
         );
       }
 
       if (result.success === false) {
         throw new Error(
           result.message ||
-            "Unable to submit your enquiry.",
+            "Unable to submit your request.",
         );
       }
 
@@ -348,15 +363,19 @@ export default function ProjectHighlightsSection() {
 
       setStatusMessage(
         result.message ||
-          "Thank you! Your enquiry has been submitted successfully.",
+          "Thank you! Your brochure is downloading now.",
       );
+
+      /* Trigger the actual PDF download */
+
+      triggerBrochureDownload();
 
       /* Clear form */
 
       setFormData(initialFormData);
     } catch (error: unknown) {
       console.error(
-        "Enquiry submission error:",
+        "Brochure download submission error:",
         error,
       );
 
@@ -377,7 +396,7 @@ export default function ProjectHighlightsSection() {
   ========================================================= */
 
   useEffect(() => {
-    if (!isEnquiryOpen) return;
+    if (!isBrochureOpen) return;
 
     const previousOverflow =
       document.body.style.overflow;
@@ -392,7 +411,7 @@ export default function ProjectHighlightsSection() {
         event.key === "Escape" &&
         !isSubmitting
       ) {
-        setIsEnquiryOpen(false);
+        setIsBrochureOpen(false);
       }
     };
 
@@ -410,7 +429,7 @@ export default function ProjectHighlightsSection() {
         handleEscape,
       );
     };
-  }, [isEnquiryOpen, isSubmitting]);
+  }, [isBrochureOpen, isSubmitting]);
 
   return (
     <>
@@ -816,7 +835,7 @@ export default function ProjectHighlightsSection() {
         </div>
 
         {/* ===================================================
-            EXPLORE DIVYA DESAM
+            DOWNLOAD BROCHURE BANNER
         =================================================== */}
 
         <motion.div
@@ -950,60 +969,91 @@ export default function ProjectHighlightsSection() {
 
                 ease,
               }}
+              className="flex items-start gap-4"
             >
-              <h2
+              {/* <div
                 className="
-                  font-primary
-                  font-semibold
+                  hidden
 
-                  leading-tight
+                  h-14
+                  w-14
+
+                  shrink-0
+
+                  items-center
+                  justify-center
+
+                  rounded-2xl
+
+                  bg-white/15
 
                   text-white
 
-                  text-[28px]
-
-                  sm:text-[34px]
-
-                  lg:text-[39px]
+                  sm:flex
                 "
               >
-                Explore Divya Desam
-              </h2>
+                <FileText
+                  size={26}
+                  strokeWidth={1.7}
+                />
+              </div> */}
 
-              <p
-                className="
-                  mt-3
+              <div>
+                <h2
+                  className="
+                    font-primary
+                    font-semibold
 
-                  max-w-[570px]
+                    leading-tight
 
-                  font-secondary
+                    text-white
 
-                  text-[11px]
-                  leading-[1.65]
+                    text-[28px]
 
-                  text-white/75
+                    sm:text-[34px]
 
-                  sm:text-[12px]
+                    lg:text-[39px]
+                  "
+                >
+                  Download the Brochure
+                </h2>
 
-                  md:text-[13px]
-                "
-              >
-                Discover thoughtfully designed
-                villa layouts, premium amenities,
-                specifications, and everything
-                that makes Divya Desam a
-                distinguished address. Get in
-                touch with our team to know more.
-              </p>
+                <p
+                  className="
+                    mt-3
+
+                    max-w-[570px]
+
+                    font-secondary
+
+                    text-[11px]
+                    leading-[1.65]
+
+                    text-white/75
+
+                    sm:text-[12px]
+
+                    md:text-[13px]
+                  "
+                >
+                  Get the full details on villa
+                  layouts, premium amenities,
+                  specifications, and everything
+                  that makes Divya Desam a
+                  distinguished address. Enter
+                  your details to download the
+                  brochure instantly.
+                </p>
+              </div>
             </motion.div>
 
             {/* ===============================================
-                ENQUIRE NOW BUTTON
+                DOWNLOAD BROCHURE BUTTON
             =============================================== */}
 
             <motion.button
               type="button"
-              onClick={openEnquiry}
+              onClick={openBrochureForm}
               initial={
                 reduceMotion
                   ? false
@@ -1091,29 +1141,28 @@ export default function ProjectHighlightsSection() {
                 lg:text-[13px]
               "
             >
-              <Send
+              <Download
                 size={15}
                 strokeWidth={1.9}
                 className="
                   transition-transform
                   duration-300
 
-                  group-hover:-translate-y-0.5
-                  group-hover:translate-x-0.5
+                  group-hover:translate-y-0.5
                 "
               />
 
-              Enquire Now
+              Download Brochure
             </motion.button>
           </div>
         </motion.div>
       </section>
 
       {/* =====================================================
-          ENQUIRY MODAL
+          DOWNLOAD BROCHURE MODAL
       ===================================================== */}
 
-      {isEnquiryOpen && (
+      {isBrochureOpen && (
         <motion.div
           initial={{
             opacity: 0,
@@ -1126,8 +1175,8 @@ export default function ProjectHighlightsSection() {
           }}
           role="dialog"
           aria-modal="true"
-          aria-labelledby="enquiry-title"
-          onClick={closeEnquiry}
+          aria-labelledby="brochure-title"
+          onClick={closeBrochureForm}
           className="
             fixed
             inset-0
@@ -1194,8 +1243,8 @@ export default function ProjectHighlightsSection() {
 
             <button
               type="button"
-              aria-label="Close enquiry form"
-              onClick={closeEnquiry}
+              aria-label="Close download brochure form"
+              onClick={closeBrochureForm}
               disabled={isSubmitting}
               className="
                 absolute
@@ -1232,6 +1281,30 @@ export default function ProjectHighlightsSection() {
             {/* Modal heading */}
 
             <div className="pr-12">
+              <div
+                className="
+                  mb-4
+
+                  flex
+                  h-12
+                  w-12
+
+                  items-center
+                  justify-center
+
+                  rounded-[14px]
+
+                  bg-[#faf7f1]
+
+                  text-[#b78949]
+                "
+              >
+                <FileText
+                  size={22}
+                  strokeWidth={1.8}
+                />
+              </div>
+
               <p
                 className="
                   mb-2
@@ -1248,11 +1321,11 @@ export default function ProjectHighlightsSection() {
                   text-[#b78949]
                 "
               >
-                Contact Us
+                Project Brochure
               </p>
 
               <h2
-                id="enquiry-title"
+                id="brochure-title"
                 className="
                   font-primary
 
@@ -1264,7 +1337,7 @@ export default function ProjectHighlightsSection() {
                   sm:text-[28px]
                 "
               >
-                Enquire Now
+                Download Brochure
               </h2>
 
               <p
@@ -1281,8 +1354,8 @@ export default function ProjectHighlightsSection() {
                   text-[#777]
                 "
               >
-                Share your requirements and our
-                team will contact you shortly.
+                Enter your details below and the
+                brochure will download instantly.
               </p>
             </div>
 
@@ -1298,7 +1371,7 @@ export default function ProjectHighlightsSection() {
 
               <div>
                 <label
-                  htmlFor="enquiry-name"
+                  htmlFor="brochure-name"
                   className="
                     mb-1.5
                     block
@@ -1313,7 +1386,7 @@ export default function ProjectHighlightsSection() {
                 </label>
 
                 <input
-                  id="enquiry-name"
+                  id="brochure-name"
                   name="name"
                   type="text"
                   required
@@ -1356,7 +1429,7 @@ export default function ProjectHighlightsSection() {
 
               <div>
                 <label
-                  htmlFor="enquiry-phone"
+                  htmlFor="brochure-phone"
                   className="
                     mb-1.5
                     block
@@ -1371,7 +1444,7 @@ export default function ProjectHighlightsSection() {
                 </label>
 
                 <input
-                  id="enquiry-phone"
+                  id="brochure-phone"
                   name="phone"
                   type="tel"
                   required
@@ -1413,7 +1486,7 @@ export default function ProjectHighlightsSection() {
 
               <div>
                 <label
-                  htmlFor="enquiry-email"
+                  htmlFor="brochure-email"
                   className="
                     mb-1.5
                     block
@@ -1428,7 +1501,7 @@ export default function ProjectHighlightsSection() {
                 </label>
 
                 <input
-                  id="enquiry-email"
+                  id="brochure-email"
                   name="email"
                   type="email"
                   required
@@ -1447,63 +1520,6 @@ export default function ProjectHighlightsSection() {
                     border-[#e7e3dc]
 
                     px-4
-
-                    text-[13px]
-
-                    text-[#222]
-
-                    outline-none
-
-                    transition-all
-
-                    placeholder:text-[#aaa]
-
-                    focus:border-[#b78949]
-                    focus:ring-4
-                    focus:ring-[#b78949]/10
-                  "
-                />
-              </div>
-
-              {/* Message */}
-
-              <div>
-                <label
-                  htmlFor="enquiry-message"
-                  className="
-                    mb-1.5
-                    block
-
-                    text-[12px]
-                    font-medium
-
-                    text-[#444]
-                  "
-                >
-                  Message
-                </label>
-
-                <textarea
-                  id="enquiry-message"
-                  name="message"
-                  required
-                  rows={4}
-                  disabled={isSubmitting}
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell us about your requirement"
-                  className="
-                    w-full
-
-                    resize-none
-
-                    rounded-[10px]
-
-                    border
-                    border-[#e7e3dc]
-
-                    px-4
-                    py-3
 
                     text-[13px]
 
@@ -1614,16 +1630,16 @@ export default function ProjectHighlightsSection() {
                       "
                     />
 
-                    Sending...
+                    Submitting...
                   </>
                 ) : (
                   <>
-                    <Send
+                    <Download
                       size={16}
                       strokeWidth={1.8}
                     />
 
-                    Submit Enquiry
+                    Download Brochure
                   </>
                 )}
               </motion.button>

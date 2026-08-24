@@ -10,7 +10,14 @@ import {
   type Variants,
 } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
+import { Download, FileText, X } from "lucide-react";
 
 /* ======================================================
    TYPES
@@ -41,6 +48,19 @@ interface HeroSlide {
   titleColor?: string;
 }
 
+type BrochureFormData = {
+  name: string;
+  email: string;
+  phone: string;
+};
+
+type SubmissionStatus = "idle" | "success" | "error";
+
+type ApiResponse = {
+  success?: boolean;
+  message?: string;
+};
+
 /* ======================================================
    HERO SLIDER DATA
 ====================================================== */
@@ -58,7 +78,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam luxury residential community",
 
     tagline:
-      "Transforming the future of home living",
+      "Where Divine Heritage Meets Coastal Serenity",
 
     title: "Divya Desam",
 
@@ -89,7 +109,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam traditional luxury villa",
 
     tagline:
-      "Rooted in tradition, crafted for modern living",
+      "Where Faith, Peace & Heritage Come Together",
 
     title: "Divya Desam",
 
@@ -120,7 +140,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam premium villa community",
 
     tagline:
-      "A timeless address designed around your family",
+      "Where Ancient Blessings Meet Modern Tranquility",
 
     title: "Divya Desam",
 
@@ -151,7 +171,7 @@ const heroSlides: HeroSlide[] = [
       "Divya Desam peaceful residential destination",
 
     tagline:
-      "Where heritage, comfort and community come together",
+      "A Sacred Abode of Timeless Spirituality",
 
     title: "Divya Desam",
 
@@ -187,6 +207,16 @@ const ease: [
   number,
   number,
 ] = [0.22, 1, 0.36, 1];
+
+/* Brochure PDF served from the public folder */
+const BROCHURE_FILE_URL = "/pdf/brochure.pdf";
+const BROCHURE_FILE_NAME = "Divya-Desam-Brochure.pdf";
+
+const initialFormData: BrochureFormData = {
+  name: "",
+  email: "",
+  phone: "",
+};
 
 /* ======================================================
    BACKGROUND ANIMATION
@@ -294,6 +324,28 @@ const buttonVariants: Variants = {
   },
 };
 
+const secondaryButtonVariants: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 14,
+    scale: 0.96,
+  },
+
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+
+    transition: {
+      type: "spring",
+      stiffness: 145,
+      damping: 17,
+      mass: 0.8,
+      delay: 0.26,
+    },
+  },
+};
+
 /* ======================================================
    COMPONENT
 ====================================================== */
@@ -315,6 +367,226 @@ export default function HeroSection() {
     heroSlides[activeIndex];
 
   const { scrollY } = useScroll();
+
+  /* ====================================================
+     DOWNLOAD BROCHURE MODAL STATE
+  ==================================================== */
+
+  const [isBrochureOpen, setIsBrochureOpen] =
+    useState(false);
+
+  const [formData, setFormData] =
+    useState<BrochureFormData>(initialFormData);
+
+  const [isSubmitting, setIsSubmitting] =
+    useState(false);
+
+  const [submissionStatus, setSubmissionStatus] =
+    useState<SubmissionStatus>("idle");
+
+  const [statusMessage, setStatusMessage] =
+    useState("");
+
+  const openBrochureForm = () => {
+    setIsBrochureOpen(true);
+
+    setSubmissionStatus("idle");
+    setStatusMessage("");
+  };
+
+  const closeBrochureForm = () => {
+    if (isSubmitting) return;
+
+    setIsBrochureOpen(false);
+
+    setSubmissionStatus("idle");
+    setStatusMessage("");
+  };
+
+  const handleFormChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target;
+
+    setFormData((previousData) => ({
+      ...previousData,
+      [name]: value,
+    }));
+
+    if (submissionStatus !== "idle") {
+      setSubmissionStatus("idle");
+      setStatusMessage("");
+    }
+  };
+
+  const triggerBrochureDownload = () => {
+    const link = document.createElement("a");
+
+    link.href = BROCHURE_FILE_URL;
+    link.download = BROCHURE_FILE_NAME;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleBrochureSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
+
+    if (isSubmitting) return;
+
+    const cleanedFormData = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+    };
+
+    if (
+      !cleanedFormData.name ||
+      !cleanedFormData.email ||
+      !cleanedFormData.phone
+    ) {
+      setSubmissionStatus("error");
+
+      setStatusMessage(
+        "Please fill in all required fields.",
+      );
+
+      return;
+    }
+
+    const emailPattern =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (
+      !emailPattern.test(cleanedFormData.email)
+    ) {
+      setSubmissionStatus("error");
+
+      setStatusMessage(
+        "Please enter a valid email address.",
+      );
+
+      return;
+    }
+
+    const phonePattern = /^[0-9+\-\s()]{7,20}$/;
+
+    if (
+      !phonePattern.test(cleanedFormData.phone)
+    ) {
+      setSubmissionStatus("error");
+
+      setStatusMessage(
+        "Please enter a valid phone number.",
+      );
+
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    setSubmissionStatus("idle");
+    setStatusMessage("");
+
+    try {
+      const response = await fetch(
+        "/api/download-brochure",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+
+          body: JSON.stringify(
+            cleanedFormData,
+          ),
+        },
+      );
+
+      const result =
+        (await response.json()) as ApiResponse;
+
+      if (!response.ok) {
+        throw new Error(
+          result.message ||
+            "Unable to submit your request.",
+        );
+      }
+
+      if (result.success === false) {
+        throw new Error(
+          result.message ||
+            "Unable to submit your request.",
+        );
+      }
+
+      setSubmissionStatus("success");
+
+      setStatusMessage(
+        result.message ||
+          "Thank you! Your brochure is downloading now.",
+      );
+
+      triggerBrochureDownload();
+
+      setFormData(initialFormData);
+    } catch (error: unknown) {
+      console.error(
+        "Brochure download submission error:",
+        error,
+      );
+
+      setSubmissionStatus("error");
+
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!isBrochureOpen) return;
+
+    const previousOverflow =
+      document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (
+      event: KeyboardEvent,
+    ) => {
+      if (
+        event.key === "Escape" &&
+        !isSubmitting
+      ) {
+        setIsBrochureOpen(false);
+      }
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleEscape,
+    );
+
+    return () => {
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleEscape,
+      );
+    };
+  }, [isBrochureOpen, isSubmitting]);
 
   /* ====================================================
      PARALLAX
@@ -747,70 +1019,163 @@ export default function HeroSection() {
               {activeSlide.title}
             </motion.h1>
 
-            {/* CTA button */}
-            <motion.a
-              href={
-                activeSlide.buttonLink
-              }
-              variants={buttonVariants}
-              initial={
-                reduceMotion
-                  ? false
-                  : "hidden"
-              }
-              animate="visible"
-              whileHover={{
-                y: -3,
-                scale: 1.04,
-                backgroundColor:
-                  "#FFFFFF",
-                color: "#7A5428",
-              }}
-              whileTap={{
-                scale: 0.96,
-              }}
-              transition={{
-                duration: 0.25,
-                ease,
-              }}
+            {/* CTA buttons */}
+            <div
               className="
                 mt-5
-                inline-flex
-                min-h-[42px]
+
+                flex
+                flex-col
                 items-center
-                justify-center
-                rounded-full
-
-                border
-                border-[#d4ad71]
-                bg-[#B88D48]
-
-                px-6 py-2.5
-
-                font-primary
-                text-[11px]
-                font-semibold
-                text-white
-                no-underline
-
-                shadow-[0_12px_32px_rgba(0,0,0,0.24)]
+                gap-3
 
                 sm:mt-6
-                sm:min-h-[46px]
-                sm:px-7
-                sm:text-[12px]
-
-                md:px-8
-                md:text-[13px]
+                sm:flex-row
+                sm:justify-center
+                sm:gap-4
 
                 lg:mt-7
-                lg:min-h-[50px]
-                lg:px-9
-                lg:text-[14px]
               "
             >
-              {activeSlide.buttonText}
-            </motion.a>
+              <motion.a
+                href={
+                  activeSlide.buttonLink
+                }
+                variants={buttonVariants}
+                initial={
+                  reduceMotion
+                    ? false
+                    : "hidden"
+                }
+                animate="visible"
+                whileHover={{
+                  y: -3,
+                  scale: 1.04,
+                  backgroundColor:
+                    "#FFFFFF",
+                  color: "#7A5428",
+                }}
+                whileTap={{
+                  scale: 0.96,
+                }}
+                transition={{
+                  duration: 0.25,
+                  ease,
+                }}
+                className="
+                  inline-flex
+                  min-h-[42px]
+                  items-center
+                  justify-center
+                  rounded-full
+
+                  border
+                  border-[#d4ad71]
+                  bg-[#B88D48]
+
+                  px-6 py-2.5
+
+                  font-primary
+                  text-[11px]
+                  font-semibold
+                  text-white
+                  no-underline
+
+                  shadow-[0_12px_32px_rgba(0,0,0,0.24)]
+
+                  sm:min-h-[46px]
+                  sm:px-7
+                  sm:text-[12px]
+
+                  md:px-8
+                  md:text-[13px]
+
+                  lg:min-h-[50px]
+                  lg:px-9
+                  lg:text-[14px]
+                "
+              >
+                {activeSlide.buttonText}
+              </motion.a>
+
+              {/* Download brochure button (shown on every slide) */}
+              <motion.button
+                type="button"
+                onClick={openBrochureForm}
+                variants={
+                  secondaryButtonVariants
+                }
+                initial={
+                  reduceMotion
+                    ? false
+                    : "hidden"
+                }
+                animate="visible"
+                whileHover={{
+                  y: -3,
+                  scale: 1.04,
+                  backgroundColor:
+                    "#FFFFFF",
+                  color: "#7A5428",
+                }}
+                whileTap={{
+                  scale: 0.96,
+                }}
+                transition={{
+                  duration: 0.25,
+                  ease,
+                }}
+                className="
+                  group
+
+                  inline-flex
+                  min-h-[42px]
+                  items-center
+                  justify-center
+                  gap-2
+                  rounded-full
+
+                  border
+                  border-white/80
+                  bg-white
+
+                  px-6 py-2.5
+
+                  font-primary
+                  text-[11px]
+                  font-semibold
+                  text-[#b88d48]
+
+                  backdrop-blur-[2px]
+
+                  shadow-[0_12px_32px_rgba(0,0,0,0.18)]
+
+                  sm:min-h-[46px]
+                  sm:px-7
+                  sm:text-[12px]
+
+                  md:px-8
+                  md:text-[13px]
+
+                  lg:min-h-[50px]
+                  lg:px-9
+                  lg:text-[14px]
+                "
+              >
+                <Download
+                  size={15}
+                  strokeWidth={1.9}
+                  className="
+                    transition-transform
+                    duration-300
+
+                    group-hover:translate-y-0.5
+                  "
+                />
+
+                Download Brochure
+              </motion.button>
+            </div>
           </motion.div>
         </AnimatePresence>
       </motion.div>
@@ -853,91 +1218,6 @@ export default function HeroSection() {
           lg:bottom-7
         "
       >
-        {/* Scroll indicator */}
-        {/* <a
-          href="#projects"
-          aria-label="Scroll to projects"
-          className="
-            flex
-            flex-col
-            items-center
-            no-underline
-          "
-        >
-          <div
-            className="
-              relative
-              mb-1.5
-              h-7
-              w-px
-              overflow-hidden
-              bg-white/45
-
-              sm:h-9
-            "
-          >
-            <motion.span
-              animate={
-                reduceMotion
-                  ? undefined
-                  : {
-                      y: [
-                        "-100%",
-                        "160%",
-                      ],
-                    }
-              }
-              transition={{
-                duration: 1.7,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="
-                absolute
-                left-0
-                top-0
-                h-1/2
-                w-full
-                bg-white
-              "
-            />
-          </div>
-
-          <motion.span
-            animate={
-              reduceMotion
-                ? undefined
-                : {
-                    opacity: [
-                      0.6,
-                      1,
-                      0.6,
-                    ],
-                  }
-            }
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="
-              font-secondary
-              text-[9px]
-              font-medium
-              tracking-[0.03em]
-              text-white
-
-              drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]
-
-              sm:text-[10px]
-
-              lg:text-[11px]
-            "
-          >
-            Scroll
-          </motion.span>
-        </a> */}
-
         {/* Slider indicators */}
         {heroSlides.length > 1 && (
           <div
@@ -1044,6 +1324,494 @@ export default function HeroSection() {
           to-transparent
         "
       />
+
+      {/* ================================================
+          DOWNLOAD BROCHURE MODAL
+      ================================================ */}
+
+      {isBrochureOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="hero-brochure-title"
+          onClick={closeBrochureForm}
+          className="
+            fixed
+            inset-0
+
+            z-[99999]
+
+            flex
+            items-center
+            justify-center
+
+            overflow-y-auto
+
+            bg-black/60
+
+            px-4
+            py-6
+
+            backdrop-blur-sm
+          "
+        >
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    opacity: 0,
+                    y: 25,
+                    scale: 0.94,
+                  }
+            }
+            animate={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.3,
+              ease,
+            }}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+            className="
+              relative
+
+              my-auto
+
+              w-full
+              max-w-[500px]
+
+              rounded-[22px]
+
+              bg-white
+
+              p-5
+
+              shadow-[0_30px_90px_rgba(0,0,0,0.30)]
+
+              sm:p-7
+              md:p-8
+            "
+          >
+            {/* Close */}
+
+            <button
+              type="button"
+              aria-label="Close download brochure form"
+              onClick={closeBrochureForm}
+              disabled={isSubmitting}
+              className="
+                absolute
+                right-4
+                top-4
+
+                flex
+                h-10
+                w-10
+
+                items-center
+                justify-center
+
+                rounded-full
+
+                bg-[#f7f5f2]
+
+                text-[#444]
+
+                transition-all
+                duration-300
+
+                hover:rotate-90
+                hover:bg-[#b78949]
+                hover:text-white
+
+                disabled:cursor-not-allowed
+                disabled:opacity-50
+              "
+            >
+              <X size={19} />
+            </button>
+
+            {/* Modal heading */}
+
+            <div className="pr-12">
+              <div
+                className="
+                  mb-4
+
+                  flex
+                  h-12
+                  w-12
+
+                  items-center
+                  justify-center
+
+                  rounded-[14px]
+
+                  bg-[#faf7f1]
+
+                  text-[#b78949]
+                "
+              >
+                <FileText
+                  size={22}
+                  strokeWidth={1.8}
+                />
+              </div>
+
+              <p
+                className="
+                  mb-2
+
+                  font-secondary
+
+                  text-[10px]
+                  font-semibold
+
+                  uppercase
+
+                  tracking-[0.18em]
+
+                  text-[#b78949]
+                "
+              >
+                Project Brochure
+              </p>
+
+              <h2
+                id="hero-brochure-title"
+                className="
+                  font-primary
+
+                  text-[24px]
+                  font-semibold
+
+                  text-[#17213b]
+
+                  sm:text-[28px]
+                "
+              >
+                Download Brochure
+              </h2>
+
+              <p
+                className="
+                  mt-2
+
+                  max-w-[390px]
+
+                  font-secondary
+
+                  text-[12px]
+                  leading-6
+
+                  text-[#777]
+                "
+              >
+                Enter your details below and the
+                brochure will download instantly.
+              </p>
+            </div>
+
+            {/* Form */}
+
+            <form
+              onSubmit={handleBrochureSubmit}
+              className="mt-6 space-y-4"
+            >
+              {/* Name */}
+
+              <div>
+                <label
+                  htmlFor="hero-brochure-name"
+                  className="
+                    mb-1.5
+                    block
+
+                    text-[12px]
+                    font-medium
+
+                    text-[#444]
+                  "
+                >
+                  Name
+                </label>
+
+                <input
+                  id="hero-brochure-name"
+                  name="name"
+                  type="text"
+                  required
+                  autoComplete="name"
+                  disabled={isSubmitting}
+                  value={formData.name}
+                  onChange={
+                    handleFormChange
+                  }
+                  placeholder="Enter your name"
+                  className="
+                    h-12
+                    w-full
+
+                    rounded-[10px]
+
+                    border
+                    border-[#e7e3dc]
+
+                    bg-white
+
+                    px-4
+
+                    text-[13px]
+
+                    text-[#222]
+
+                    outline-none
+
+                    transition-all
+
+                    placeholder:text-[#aaa]
+
+                    focus:border-[#b78949]
+                    focus:ring-4
+                    focus:ring-[#b78949]/10
+                  "
+                />
+              </div>
+
+              {/* Phone */}
+
+              <div>
+                <label
+                  htmlFor="hero-brochure-phone"
+                  className="
+                    mb-1.5
+                    block
+
+                    text-[12px]
+                    font-medium
+
+                    text-[#444]
+                  "
+                >
+                  Phone Number
+                </label>
+
+                <input
+                  id="hero-brochure-phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  autoComplete="tel"
+                  inputMode="tel"
+                  disabled={isSubmitting}
+                  value={formData.phone}
+                  onChange={
+                    handleFormChange
+                  }
+                  placeholder="Enter your phone number"
+                  className="
+                    h-12
+                    w-full
+
+                    rounded-[10px]
+
+                    border
+                    border-[#e7e3dc]
+
+                    px-4
+
+                    text-[13px]
+
+                    text-[#222]
+
+                    outline-none
+
+                    transition-all
+
+                    placeholder:text-[#aaa]
+
+                    focus:border-[#b78949]
+                    focus:ring-4
+                    focus:ring-[#b78949]/10
+                  "
+                />
+              </div>
+
+              {/* Email */}
+
+              <div>
+                <label
+                  htmlFor="hero-brochure-email"
+                  className="
+                    mb-1.5
+                    block
+
+                    text-[12px]
+                    font-medium
+
+                    text-[#444]
+                  "
+                >
+                  Email Address
+                </label>
+
+                <input
+                  id="hero-brochure-email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  disabled={isSubmitting}
+                  value={formData.email}
+                  onChange={
+                    handleFormChange
+                  }
+                  placeholder="Enter your email address"
+                  className="
+                    h-12
+                    w-full
+
+                    rounded-[10px]
+
+                    border
+                    border-[#e7e3dc]
+
+                    px-4
+
+                    text-[13px]
+
+                    text-[#222]
+
+                    outline-none
+
+                    transition-all
+
+                    placeholder:text-[#aaa]
+
+                    focus:border-[#b78949]
+                    focus:ring-4
+                    focus:ring-[#b78949]/10
+                  "
+                />
+              </div>
+
+              {/* Status */}
+
+              {statusMessage && (
+                <div
+                  role={
+                    submissionStatus ===
+                    "error"
+                      ? "alert"
+                      : "status"
+                  }
+                  className={`
+                    rounded-[10px]
+                    border
+
+                    px-4
+                    py-3
+
+                    text-[12px]
+                    leading-5
+
+                    ${
+                      submissionStatus ===
+                      "success"
+                        ? "border-green-200 bg-green-50 text-green-700"
+                        : "border-red-200 bg-red-50 text-red-700"
+                    }
+                  `}
+                >
+                  {statusMessage}
+                </div>
+              )}
+
+              {/* Submit */}
+
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                whileTap={{
+                  scale: isSubmitting
+                    ? 1
+                    : 0.98,
+                }}
+                className="
+                  flex
+                  h-12
+                  w-full
+
+                  items-center
+                  justify-center
+
+                  gap-2
+
+                  rounded-[10px]
+
+                  bg-[#b78949]
+
+                  px-5
+
+                  font-primary
+
+                  text-[13px]
+                  font-semibold
+
+                  text-white
+
+                  transition-all
+                  duration-300
+
+                  hover:bg-[#9f7134]
+
+                  disabled:cursor-not-allowed
+                  disabled:opacity-60
+                "
+              >
+                {isSubmitting ? (
+                  <>
+                    <span
+                      className="
+                        h-4
+                        w-4
+
+                        animate-spin
+
+                        rounded-full
+
+                        border-2
+                        border-white/30
+
+                        border-t-white
+                      "
+                    />
+
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <Download
+                      size={16}
+                      strokeWidth={1.8}
+                    />
+
+                    Download Brochure
+                  </>
+                )}
+              </motion.button>
+            </form>
+          </motion.div>
+        </motion.div>
+      )}
     </section>
   );
 }
