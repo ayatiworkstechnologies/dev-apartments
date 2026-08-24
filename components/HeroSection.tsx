@@ -889,7 +889,7 @@ export default function HeroSection() {
         className="
           absolute
           inset-x-0
-          top-[23%]
+          top-[20%]
           z-20
 
           flex
@@ -899,13 +899,10 @@ export default function HeroSection() {
           px-4
           text-center
 
-          sm:top-[20%]
-
+          sm:top-[18%]
           md:top-[16%]
-
           lg:top-[15%]
-
-          xl:top-[18%]
+          xl:top-[17%]
         "
       >
         <AnimatePresence
@@ -931,10 +928,86 @@ export default function HeroSection() {
             className="
               flex
               w-full
+              max-w-[1440px]
               flex-col
               items-center
             "
           >
+            {/* Launching eyebrow */}
+            <motion.div
+              variants={taglineVariants}
+              initial={
+                reduceMotion
+                  ? false
+                  : "hidden"
+              }
+              animate="visible"
+              className="
+                mb-3
+                inline-flex
+                items-center
+                justify-center
+                gap-3
+
+                rounded-full
+                border
+                border-white/25
+                bg-black/10
+
+                px-4
+                py-2
+
+                shadow-[0_10px_30px_rgba(0,0,0,0.16)]
+                backdrop-blur-md
+
+                sm:mb-4
+                sm:px-5
+                sm:py-2.5
+              "
+            >
+              <span
+                aria-hidden="true"
+                className="
+                  h-px
+                  w-5
+                  bg-gradient-to-r
+                  from-transparent
+                  to-[#D8AE6A]
+                  sm:w-8
+                "
+              />
+
+              <span
+                className="
+                  font-secondary
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.30em]
+                  text-white
+                  drop-shadow-[0_2px_8px_rgba(0,0,0,0.45)]
+
+                  sm:text-[10px]
+                  md:text-[11px]
+                  lg:text-[12px]
+                "
+              >
+                Launching
+              </span>
+
+              <span
+                aria-hidden="true"
+                className="
+                  h-px
+                  w-5
+                  bg-gradient-to-l
+                  from-transparent
+                  to-[#D8AE6A]
+                  sm:w-8
+                "
+              />
+            </motion.div>
+
             {/* Main title */}
             <motion.h1
               variants={titleVariants}
@@ -950,26 +1023,21 @@ export default function HeroSection() {
                   "#FFFFFF",
               }}
               className={`
-                mt-3 pb-5
-                max-w-[94vw]
+                max-w-[96vw]
                 select-none
 
                 font-primary
-                text-[clamp(42px,12vw,62px)]
+                text-[clamp(44px,12vw,64px)]
                 font-bold
-                leading-[0.96]
+                leading-[0.90]
                 tracking-[-0.055em]
 
-                drop-shadow-[0_5px_18px_rgba(0,0,0,0.72)]
+                drop-shadow-[0_6px_24px_rgba(0,0,0,0.48)]
 
-                sm:mt-4
-                sm:text-[clamp(62px,10vw,86px)]
-
-                md:text-[clamp(72px,9vw,98px)]
-
-                lg:text-[clamp(80px,8vw,108px)]
-
-                xl:text-[clamp(86px,7vw,116px)]
+                sm:text-[clamp(64px,10vw,88px)]
+                md:text-[clamp(76px,9vw,102px)]
+                lg:text-[clamp(84px,8vw,112px)]
+                xl:text-[clamp(90px,7vw,120px)]
 
                 ${
                   activeSlide.nowrapTitle
@@ -981,6 +1049,73 @@ export default function HeroSection() {
               {activeSlide.title}
             </motion.h1>
 
+            {/* Premium divider */}
+            <motion.div
+              initial={
+                reduceMotion
+                  ? false
+                  : {
+                      opacity: 0,
+                      scaleX: 0,
+                    }
+              }
+              animate={{
+                opacity: 1,
+                scaleX: 1,
+              }}
+              transition={{
+                duration: reduceMotion
+                  ? 0
+                  : 0.7,
+                delay: reduceMotion
+                  ? 0
+                  : 0.22,
+                ease,
+              }}
+              className="
+                mt-4
+                flex
+                origin-center
+                items-center
+                gap-2
+
+                sm:mt-5
+              "
+            >
+              <span
+                className="
+                  h-px
+                  w-8
+                  bg-gradient-to-r
+                  from-transparent
+                  to-white/55
+
+                  sm:w-12
+                "
+              />
+
+              <span
+                className="
+                  h-[5px]
+                  w-[5px]
+                  rotate-45
+                  bg-[#D8AE6A]
+                  shadow-[0_0_12px_rgba(216,174,106,0.65)]
+                "
+              />
+
+              <span
+                className="
+                  h-px
+                  w-8
+                  bg-gradient-to-l
+                  from-transparent
+                  to-white/55
+
+                  sm:w-12
+                "
+              />
+            </motion.div>
 
             {/* Tagline */}
             <motion.p
@@ -997,47 +1132,49 @@ export default function HeroSection() {
                   "#FFFFFF",
               }}
               className="
-                max-w-[310px]
+                mt-4
+                max-w-[330px]
 
                 font-secondary
                 text-[11px]
-                font-semibold
-                leading-5
-                tracking-[0.02em] pb-5
+                font-medium
+                leading-[1.65]
+                tracking-[0.005em]
 
-                drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]
+                drop-shadow-[0_2px_10px_rgba(0,0,0,0.72)]
 
-                sm:max-w-none
+                sm:max-w-[700px]
                 sm:text-[13px]
 
+                md:max-w-[900px]
                 md:text-[14px]
 
+                lg:max-w-[1120px]
                 lg:text-[15px]
+                lg:leading-[1.7]
 
-                xl:text-[19px]
+                xl:max-w-[1220px]
+                xl:text-[17px]
               "
             >
               {activeSlide.tagline}
             </motion.p>
 
-            
-
             {/* CTA buttons */}
             <div
               className="
-                mt-5
-
+                mt-6
                 flex
                 flex-col
                 items-center
                 gap-3
 
-                sm:mt-6
+                sm:mt-7
                 sm:flex-row
                 sm:justify-center
                 sm:gap-4
 
-                lg:mt-7
+                lg:mt-8
               "
             >
               <motion.a
@@ -1053,30 +1190,30 @@ export default function HeroSection() {
                 animate="visible"
                 whileHover={{
                   y: -3,
-                  scale: 1.04,
-                  backgroundColor:
-                    "#FFFFFF",
-                  color: "#7A5428",
+                  scale: 1.025,
                 }}
                 whileTap={{
-                  scale: 0.96,
+                  scale: 0.97,
                 }}
                 transition={{
                   duration: 0.25,
                   ease,
                 }}
                 className="
+                  group
                   inline-flex
-                  min-h-[42px]
+                  min-h-[44px]
+                  min-w-[170px]
                   items-center
                   justify-center
                   rounded-full
 
                   border
-                  border-[#d4ad71]
-                  bg-[#B88D48]
+                  border-[#D8AE6A]
+                  bg-[#C79643]
 
-                  px-6 py-2.5
+                  px-7
+                  py-3
 
                   font-primary
                   text-[11px]
@@ -1084,16 +1221,24 @@ export default function HeroSection() {
                   text-white
                   no-underline
 
-                  shadow-[0_12px_32px_rgba(0,0,0,0.24)]
+                  shadow-[0_14px_38px_rgba(0,0,0,0.24)]
 
-                  sm:min-h-[46px]
-                  sm:px-7
+                  transition-all
+                  duration-300
+
+                  hover:border-white
+                  hover:bg-white
+                  hover:text-[#835D2B]
+
+                  sm:min-h-[48px]
+                  sm:min-w-[190px]
                   sm:text-[12px]
 
                   md:px-8
                   md:text-[13px]
 
-                  lg:min-h-[50px]
+                  lg:min-h-[52px]
+                  lg:min-w-[205px]
                   lg:px-9
                   lg:text-[14px]
                 "
@@ -1101,7 +1246,7 @@ export default function HeroSection() {
                 {activeSlide.buttonText}
               </motion.a>
 
-              {/* Download brochure button (shown on every slide) */}
+              {/* Download brochure button */}
               <motion.button
                 type="button"
                 onClick={openBrochureForm}
@@ -1116,13 +1261,10 @@ export default function HeroSection() {
                 animate="visible"
                 whileHover={{
                   y: -3,
-                  scale: 1.04,
-                  backgroundColor:
-                    "#FFFFFF",
-                  color: "#7A5428",
+                  scale: 1.025,
                 }}
                 whileTap={{
-                  scale: 0.96,
+                  scale: 0.97,
                 }}
                 transition={{
                   duration: 0.25,
@@ -1130,49 +1272,55 @@ export default function HeroSection() {
                 }}
                 className="
                   group
-
                   inline-flex
-                  min-h-[42px]
+                  min-h-[44px]
+                  min-w-[215px]
                   items-center
                   justify-center
-                  gap-2
+                  gap-2.5
                   rounded-full
 
                   border
-                  border-white/80
+                  border-white/90
                   bg-white
 
-                  px-6 py-2.5
+                  px-7
+                  py-3
 
                   font-primary
                   text-[11px]
                   font-semibold
-                  text-[#b88d48]
+                  text-[#B48742]
 
-                  backdrop-blur-[2px]
+                  shadow-[0_14px_38px_rgba(0,0,0,0.20)]
 
-                  shadow-[0_12px_32px_rgba(0,0,0,0.18)]
+                  transition-all
+                  duration-300
 
-                  sm:min-h-[46px]
-                  sm:px-7
+                  hover:border-[#C79643]
+                  hover:bg-[#C79643]
+                  hover:text-white
+
+                  sm:min-h-[48px]
+                  sm:min-w-[230px]
                   sm:text-[12px]
 
                   md:px-8
                   md:text-[13px]
 
-                  lg:min-h-[50px]
+                  lg:min-h-[52px]
+                  lg:min-w-[245px]
                   lg:px-9
                   lg:text-[14px]
                 "
               >
                 <Download
-                  size={15}
+                  size={16}
                   strokeWidth={1.9}
                   className="
                     transition-transform
                     duration-300
-
-                    group-hover:translate-y-0.5
+                    group-hover:translate-y-[2px]
                   "
                 />
 

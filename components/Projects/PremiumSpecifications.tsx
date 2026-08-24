@@ -25,8 +25,20 @@ const specifications: SpecificationItem[] = [
   },
   {
     number: "02",
+    title: "Thinnai with Traditional Pillars",
+    image: "/images/tinaai-pillars-01.png",
+    points: [
+      "Traditional Thinnai – Classic charm for relaxed living.",
+      "Wooden Pillars – Timeless craftsmanship and elegance.",
+      "Tamil Architecture – Rooted in culture and tradition.",
+      "Modern Comfort – Heritage meets contemporary living.",
+      
+    ],
+  },
+  {
+    number: "03",
     title: "Tiling",
-    image: "/images/tiling.png",
+    image: "/images/tiling-01.png",
     points: [
       "Branded high-end Traditional Floor tiles with skirting.",
       "Toilets Branded Glazed tiles upto 7'-6\" ht from Finished floor level.",
@@ -37,9 +49,9 @@ const specifications: SpecificationItem[] = [
     ],
   },
   {
-    number: "03",
+    number: "04",
     title: "Doors",
-    image: "/images/doors.png",
+    image: "/images/doors-01.png",
     points: [
       "Main Door - Solid Teak wood premium finish",
       "Internal door - Flush door",
@@ -47,9 +59,9 @@ const specifications: SpecificationItem[] = [
     ],
   },
   {
-    number: "04",
+    number: "05",
     title: "Windows",
-    image: "/images/windows.png",
+    image: "/images/windows-01.png",
     points: [
       "Windows –UPVC",
       "Ventilators – UPVC",
@@ -57,7 +69,7 @@ const specifications: SpecificationItem[] = [
     ],
   },
   {
-    number: "05",
+    number: "06",
     title: "Plumbing and Sanitary Fixtures",
     image: "/images/plumbing.png",
     points: [
@@ -67,7 +79,7 @@ const specifications: SpecificationItem[] = [
     ],
   },
   {
-    number: "06",
+    number: "07",
     title: "Electrical Fixtures /Fittings",
     image: "/images/electrical.png",
     points: [
@@ -78,15 +90,15 @@ const specifications: SpecificationItem[] = [
     ],
   },
   {
-    number: "07",
+    number: "08",
     title: "Landscaping",
-    image: "/images/landscaping.png",
+    image: "/images/landscaping-01.png",
     points: [
       "External hard and soft landscape with Native species of trees and plants.",
     ],
   },
   {
-    number: "08",
+    number: "09",
     title: "Other features",
     image: "/images/other-features.png",
     points: [

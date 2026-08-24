@@ -27,7 +27,7 @@ export default function PushpaAvePage() {
 
         <FloorPlans />
 
-        <Gallery />
+        {/* <Gallery /> */}
 
         {/* <LocationSection /> */}
       </main>
