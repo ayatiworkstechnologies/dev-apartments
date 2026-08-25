@@ -5,11 +5,17 @@ import {
   useEffect,
   useState,
 } from "react";
+
 import {
   motion,
   type PanInfo,
 } from "framer-motion";
+
 import { MapPin } from "lucide-react";
+
+/* ======================================================
+   TYPES
+====================================================== */
 
 type Project = {
   id: number;
@@ -17,8 +23,15 @@ type Project = {
   location: string;
   desc: string;
   img: string;
-  thumb: string;
 };
+
+/* ======================================================
+   PROJECT DATA
+
+   IMPORTANT:
+   Only one image path is used for each project.
+   No separate thumb path.
+====================================================== */
 
 const projects: Project[] = [
   {
@@ -27,7 +40,6 @@ const projects: Project[] = [
     location: "ECR",
     desc: "Experience contemporary villa living with thoughtfully planned spaces, premium finishes, and a prime location near the ECR coastline.",
     img: "/images/completed-villa-1.png",
-    thumb: "/images/Villa, Pushpa Ave.png",
   },
   {
     id: 2,
@@ -35,7 +47,6 @@ const projects: Project[] = [
     location: "Chennai",
     desc: "A signature project redefining residential luxury — every detail crafted for the discerning homebuyer.",
     img: "/images/completed-villa-2.png",
-    thumb: "/images/Dev Pristine Villa.png",
   },
   {
     id: 3,
@@ -43,7 +54,6 @@ const projects: Project[] = [
     location: "Chennai",
     desc: "Beautifully designed villas with modern amenities in one of Chennai's most sought-after residential enclaves.",
     img: "/images/completed-villa-3.png",
-    thumb: "/images/Villa, Pea Cock Enclave-4.png",
   },
   {
     id: 4,
@@ -51,20 +61,31 @@ const projects: Project[] = [
     location: "Chennai",
     desc: "Heritage-inspired architecture blended with modern comforts, set amidst lush green surroundings.",
     img: "/images/completed-villa-4.png",
-    thumb: "/images/Dev Pristine Villa-1.png",
   },
 ];
 
 const TOTAL = projects.length;
+
 const AUTO_SLIDE_DELAY = 4000;
 
 const ease: [number, number, number, number] = [
-  0.22, 1, 0.36, 1,
+  0.22,
+  1,
+  0.36,
+  1,
 ];
+
+/* ======================================================
+   COMPONENT
+====================================================== */
 
 export default function CompletedProjects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+
+  /* ======================================================
+     NEXT SLIDE
+  ====================================================== */
 
   const showNextSlide = useCallback(() => {
     setActiveIndex(
@@ -73,12 +94,20 @@ export default function CompletedProjects() {
     );
   }, []);
 
+  /* ======================================================
+     PREVIOUS SLIDE
+  ====================================================== */
+
   const showPreviousSlide = useCallback(() => {
     setActiveIndex(
       (previousIndex) =>
         (previousIndex - 1 + TOTAL) % TOTAL,
     );
   }, []);
+
+  /* ======================================================
+     AUTO SLIDE
+  ====================================================== */
 
   useEffect(() => {
     if (isPaused) return;
@@ -92,6 +121,10 @@ export default function CompletedProjects() {
       window.clearInterval(interval);
     };
   }, [isPaused, showNextSlide]);
+
+  /* ======================================================
+     SWIPE
+  ====================================================== */
 
   const handleDragEnd = (
     _: MouseEvent | TouchEvent | PointerEvent,
@@ -116,6 +149,10 @@ export default function CompletedProjects() {
     }
   };
 
+  /* ======================================================
+     COUNTER
+  ====================================================== */
+
   const counter = `${String(
     activeIndex + 1,
   ).padStart(2, "0")} / ${String(
@@ -137,7 +174,9 @@ export default function CompletedProjects() {
       <div
         className="
           mx-auto w-full max-w-[1400px]
-          px-4 sm:px-8 lg:px-14
+          px-4
+          sm:px-8
+          lg:px-14
         "
       >
         <div
@@ -148,7 +187,10 @@ export default function CompletedProjects() {
             xl:gap-20
           "
         >
-          {/* Left content */}
+          {/* ======================================================
+              LEFT CONTENT
+          ====================================================== */}
+
           <div
             className="
               mx-auto w-full
@@ -196,10 +238,12 @@ export default function CompletedProjects() {
                 2xl:text-[58px]
               "
             >
-              {/* Mobile and tablet */}
+              {/* MOBILE / TABLET */}
+
               <span className="block lg:hidden">
                 <span className="block">
                   Explore{" "}
+
                   <span className="text-[#b08c1c]">
                     Our Successfully
                   </span>
@@ -209,13 +253,16 @@ export default function CompletedProjects() {
                   <span className="text-[#b08c1c]">
                     Completed
                   </span>{" "}
+
                   Residential Projects
                 </span>
               </span>
 
-              {/* Laptop and desktop */}
+              {/* DESKTOP */}
+
               <span className="hidden lg:block">
                 Explore{" "}
+
                 <span className="text-[#b08c1c]">
                   Our
                 </span>
@@ -233,6 +280,8 @@ export default function CompletedProjects() {
                 </span>
               </span>
             </motion.h2>
+
+            {/* DESCRIPTION */}
 
             <motion.p
               initial={{
@@ -285,7 +334,10 @@ export default function CompletedProjects() {
               satisfaction.
             </motion.p>
 
-            {/* Counter and indicators */}
+            {/* ======================================================
+                COUNTER + INDICATORS
+            ====================================================== */}
+
             <motion.div
               initial={{
                 opacity: 0,
@@ -318,7 +370,8 @@ export default function CompletedProjects() {
               <span
                 className="
                   w-12 shrink-0
-                  text-[12px] font-bold
+                  text-[12px]
+                  font-bold
                   tabular-nums
                   text-gray-400
 
@@ -357,16 +410,22 @@ export default function CompletedProjects() {
                     >
                       <span
                         className={`
-                          block h-[3px] cursor-pointer
+                          block h-[3px]
+                          cursor-pointer
                           rounded-full
                           transition-all
                           duration-500
 
                           ${
                             isActive
-                              ? "w-8 bg-[#b08c1c] sm:w-9"
+                              ? `
+                                w-8
+                                bg-[#b08c1c]
+                                sm:w-9
+                              `
                               : `
-                                w-3 bg-gray-200
+                                w-3
+                                bg-gray-200
                                 hover:bg-gray-300
                               `
                           }
@@ -379,7 +438,10 @@ export default function CompletedProjects() {
             </motion.div>
           </div>
 
-          {/* Right project slider */}
+          {/* ======================================================
+              RIGHT PROJECT SLIDER
+          ====================================================== */}
+
           <motion.div
             initial={{
               opacity: 0,
@@ -414,10 +476,16 @@ export default function CompletedProjects() {
             className="
               relative overflow-hidden
               rounded-2xl
+
               shadow-[0_8px_50px_rgba(0,0,0,0.14)]
+
               sm:rounded-3xl
             "
           >
+            {/* ======================================================
+                SLIDER TRACK
+            ====================================================== */}
+
             <motion.div
               drag="x"
               dragConstraints={{
@@ -444,30 +512,50 @@ export default function CompletedProjects() {
                 <article
                   key={project.id}
                   className="
-                    relative w-full shrink-0
+                    relative
+                    w-full
+                    shrink-0
                   "
                 >
-                  {/* Original image heights retained */}
+                  {/* ==================================================
+                      MAIN IMAGE
+
+                      ALWAYS:
+                      completed-villa-1.png
+                      completed-villa-2.png
+                      completed-villa-3.png
+                      completed-villa-4.png
+                  ================================================== */}
+
                   <img
                     src={project.img}
                     alt={project.title}
                     draggable={false}
+                    loading="eager"
+                    decoding="async"
                     className="
-                      h-[44vh] w-full
-                      select-none object-cover
+                      h-[44vh]
+                      w-full
+                      select-none
+                      object-cover
 
                       min-[480px]:h-[50vh]
+
                       sm:h-[58vh]
+
                       lg:h-[74vh]
                     "
                   />
 
-                  {/* Original gradient */}
+                  {/* GRADIENT */}
+
                   <div
                     className="
                       pointer-events-none
-                      absolute inset-x-0 bottom-0
+                      absolute inset-x-0
+                      bottom-0
                       h-2/5
+
                       bg-gradient-to-t
                       from-black/70
                       via-black/20
@@ -475,15 +563,21 @@ export default function CompletedProjects() {
                     "
                   />
 
-                  {/* Original floating card design */}
+                  {/* ==================================================
+                      FLOATING INFO CARD
+                  ================================================== */}
+
                   <div
                     className="
-                      absolute bottom-3
-                      left-3 right-3
+                      absolute
+                      bottom-3
+                      left-3
+                      right-3
 
                       rounded-xl
                       bg-white/95
                       p-3
+
                       shadow-2xl
                       backdrop-blur-md
 
@@ -495,14 +589,29 @@ export default function CompletedProjects() {
                     "
                   >
                     <div className="flex items-start gap-3">
+
+                      {/* ==============================================
+                          CARD IMAGE
+
+                          IMPORTANT:
+                          Uses project.img.
+
+                          NO project.thumb.
+                          NO separate thumbnail request.
+                      ============================================== */}
+
                       <img
-                        src={project.thumb}
-                        alt=""
-                        aria-hidden="true"
+                        src={project.img}
+                        alt={project.title}
                         draggable={false}
+                        loading="eager"
+                        decoding="async"
                         className="
-                          h-12 w-12 shrink-0
-                          rounded-lg object-cover
+                          h-12
+                          w-12
+                          shrink-0
+                          rounded-lg
+                          object-cover
 
                           sm:h-[72px]
                           sm:w-[72px]
@@ -515,7 +624,8 @@ export default function CompletedProjects() {
                           className="
                             mb-0.5
                             font-primary
-                            text-sm font-black
+                            text-sm
+                            font-black
                             leading-snug
                             text-gray-900
 
@@ -525,7 +635,15 @@ export default function CompletedProjects() {
                           {project.title}
                         </h3>
 
-                        <div className="mb-1.5 flex items-center gap-1 sm:mb-2">
+                        {/* LOCATION */}
+
+                        <div
+                          className="
+                            mb-1.5
+                            flex items-center gap-1
+                            sm:mb-2
+                          "
+                        >
                           <MapPin
                             size={11}
                             className="
@@ -537,7 +655,8 @@ export default function CompletedProjects() {
                           <p
                             className="
                               font-primary
-                              text-xs font-semibold
+                              text-xs
+                              font-semibold
                               text-[#b08c1c]
 
                               sm:text-sm
@@ -546,6 +665,8 @@ export default function CompletedProjects() {
                             {project.location}
                           </p>
                         </div>
+
+                        {/* DESCRIPTION */}
 
                         <p
                           className="
@@ -567,7 +688,10 @@ export default function CompletedProjects() {
               ))}
             </motion.div>
 
-            {/* Automatic progress */}
+            {/* ======================================================
+                AUTO PROGRESS
+            ====================================================== */}
+
             {!isPaused && (
               <motion.div
                 key={`progress-${activeIndex}`}
@@ -583,9 +707,13 @@ export default function CompletedProjects() {
                   ease: "linear",
                 }}
                 className="
-                  absolute bottom-0
-                  left-0 z-20
-                  h-[3px] w-full
+                  absolute
+                  bottom-0
+                  left-0
+                  z-20
+
+                  h-[3px]
+                  w-full
                   origin-left
                   bg-[#b08c1c]
                 "
