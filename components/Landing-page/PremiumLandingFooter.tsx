@@ -1315,6 +1315,7 @@ export default function PremiumLandingFooter() {
 
                   h-[54px]
                   w-full
+                  max-w-[230px]
 
                   items-center
                   justify-between

@@ -1339,9 +1339,9 @@ export default function DivyaDesamVillaShowcase() {
                         hover:bg-[#d9511c]
                         hover:shadow-[0_16px_34px_rgba(238,95,36,0.32)]
 
-                        sm:h-[52px]
-                        sm:px-7
-                        sm:text-[13px]
+                        sm:h-[42px]
+                        sm:px-3
+                        sm:text-[12px]
                       "
                     >
                       Book a Site Visit
@@ -1403,10 +1403,10 @@ export default function DivyaDesamVillaShowcase() {
                           text-[12px]
                           font-semibold
 
-                          sm:text-[13px]
+                          sm:text-[12px]
                         "
                       >
-                        ECR, Chennai
+                        ECR, Thiruvidandhai, Chennai
                       </span>
                     </div>
                   </div>
