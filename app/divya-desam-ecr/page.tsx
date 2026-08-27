@@ -1,5 +1,6 @@
 
-import Footer from "@/components/Footer";
+
+import DivyaDesamFloatingActions from "@/components/Landing-page/DivyaDesamFloatingActions";
 import DivyaDesamVillaShowcase from "@/components/Landing-page/DivyaDesamVillaShowcase";
 import ExquisiteLivingSection from "@/components/Landing-page/ExquisiteLivingSection";
 import FloorPlans from "@/components/Landing-page/FloorPlans";
@@ -29,9 +30,12 @@ export default function PushpaAvePage() {
         <FloorPlans />
 
         
+
+        
       </main>
 
       <PremiumLandingFooter />
+      <DivyaDesamFloatingActions />
     </>
   );
 }

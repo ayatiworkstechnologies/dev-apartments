@@ -6,7 +6,6 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
-
 import { motion } from "framer-motion";
 
 import {
@@ -49,22 +48,30 @@ const initialFormData: FormData = {
 export default function PremiumLandingFooter() {
   const router = useRouter();
 
-  const [formData, setFormData] =
-    useState<FormData>(initialFormData);
+  const [
+    formData,
+    setFormData,
+  ] = useState<FormData>(
+    initialFormData,
+  );
 
-  const [isSubmitting, setIsSubmitting] =
-    useState(false);
+  const [
+    isSubmitting,
+    setIsSubmitting,
+  ] = useState(false);
 
   const [
     isVillaSelectOpen,
     setIsVillaSelectOpen,
   ] = useState(false);
 
-  const [status, setStatus] =
-    useState<Status>({
-      type: null,
-      message: "",
-    });
+  const [
+    status,
+    setStatus,
+  ] = useState<Status>({
+    type: null,
+    message: "",
+  });
 
   const handleChange = (
     event:
@@ -72,13 +79,17 @@ export default function PremiumLandingFooter() {
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    const { name, value } =
-      event.target;
+    const {
+      name,
+      value,
+    } = event.target;
 
-    setFormData((previous) => ({
-      ...previous,
-      [name]: value,
-    }));
+    setFormData(
+      (previous) => ({
+        ...previous,
+        [name]: value,
+      }),
+    );
 
     if (status.type) {
       setStatus({
@@ -153,27 +164,35 @@ export default function PremiumLandingFooter() {
     try {
       setIsSubmitting(true);
 
-      const response = await fetch(
-        "/api/landingpage-enquiry",
-        {
-          method: "POST",
+      const response =
+        await fetch(
+          "/api/landingpage-enquiry",
+          {
+            method: "POST",
 
-          headers: {
-            "Content-Type":
-              "application/json",
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+
+            body: JSON.stringify({
+              name:
+                formData.name.trim(),
+
+              phone:
+                formData.phone.trim(),
+
+              email:
+                formData.email.trim(),
+
+              villa_type:
+                formData.villa_type,
+
+              message:
+                formData.message.trim(),
+            }),
           },
-
-          body: JSON.stringify({
-            name: formData.name.trim(),
-            phone: formData.phone.trim(),
-            email: formData.email.trim(),
-            villa_type:
-              formData.villa_type,
-            message:
-              formData.message.trim(),
-          }),
-        },
-      );
+        );
 
       let result: {
         success?: boolean;
@@ -194,9 +213,15 @@ export default function PremiumLandingFooter() {
         );
       }
 
-      setFormData(initialFormData);
+      setFormData(
+        initialFormData,
+      );
 
-      router.push("/thank-you");
+      setIsVillaSelectOpen(false);
+
+      router.push(
+        "/thank-you",
+      );
     } catch (error) {
       console.error(
         "Landing page enquiry error:",
@@ -205,6 +230,7 @@ export default function PremiumLandingFooter() {
 
       setStatus({
         type: "error",
+
         message:
           error instanceof Error
             ? error.message
@@ -221,22 +247,34 @@ export default function PremiumLandingFooter() {
       className="
         relative
         overflow-hidden
+
         bg-[#18130f]
+
         text-white
+
+        pb-[92px]
+
+        md:pb-0
       "
     >
-      {/* Decorative glow */}
+      {/* Background glow */}
       <div
         aria-hidden="true"
         className="
           pointer-events-none
+
           absolute
+
           -left-[160px]
-          top-[30px]
-          h-[320px]
-          w-[320px]
+          top-[40px]
+
+          h-[300px]
+          w-[300px]
+
           rounded-full
+
           bg-[#b88d48]/10
+
           blur-3xl
         "
       />
@@ -245,13 +283,19 @@ export default function PremiumLandingFooter() {
         aria-hidden="true"
         className="
           pointer-events-none
+
           absolute
-          -right-[180px]
-          bottom-[-160px]
-          h-[360px]
-          w-[360px]
+
+          -bottom-[150px]
+          -right-[150px]
+
+          h-[340px]
+          w-[340px]
+
           rounded-full
+
           bg-[#e8612c]/10
+
           blur-3xl
         "
       />
@@ -260,7 +304,9 @@ export default function PremiumLandingFooter() {
         className="
           relative
           z-10
+
           mx-auto
+
           w-full
           max-w-[1360px]
 
@@ -280,6 +326,7 @@ export default function PremiumLandingFooter() {
         <div
           className="
             mb-7
+
             flex
             items-center
             gap-3
@@ -291,6 +338,7 @@ export default function PremiumLandingFooter() {
             className="
               h-px
               w-8
+
               bg-[#b88d48]
             "
           />
@@ -298,10 +346,14 @@ export default function PremiumLandingFooter() {
           <p
             className="
               font-secondary
+
               text-[9px]
               font-semibold
+
               uppercase
+
               tracking-[0.22em]
+
               text-[#cba45e]
 
               sm:text-[10px]
@@ -311,7 +363,7 @@ export default function PremiumLandingFooter() {
           </p>
         </div>
 
-        {/* Main content */}
+        {/* Main grid */}
         <div
           className="
             grid
@@ -325,10 +377,11 @@ export default function PremiumLandingFooter() {
             xl:gap-14
           "
         >
-          {/* LEFT CONTENT
-              MOBILE: SECOND
-              DESKTOP: FIRST
-          */}
+          {/* =================================================
+              LEFT CONTENT
+              Mobile = after form
+              Desktop = left
+          ================================================= */}
           <motion.div
             initial={{
               opacity: 0,
@@ -340,7 +393,7 @@ export default function PremiumLandingFooter() {
             }}
             viewport={{
               once: true,
-              amount: 0.2,
+              amount: 0.15,
             }}
             transition={{
               duration: 0.7,
@@ -348,8 +401,10 @@ export default function PremiumLandingFooter() {
             }}
             className="
               order-2
+
               flex
               max-w-[560px]
+
               flex-col
               justify-start
 
@@ -362,10 +417,12 @@ export default function PremiumLandingFooter() {
               <h2
                 className="
                   max-w-[500px]
+
                   font-primary
 
                   text-[36px]
                   font-bold
+
                   leading-[0.98]
                   tracking-[-0.045em]
 
@@ -381,7 +438,11 @@ export default function PremiumLandingFooter() {
                 Find Your
                 <br />
 
-                <span className="text-[#c89b3c]">
+                <span
+                  className="
+                    text-[#c89b3c]
+                  "
+                >
                   Home at Divya Desam
                 </span>
               </h2>
@@ -389,10 +450,13 @@ export default function PremiumLandingFooter() {
               <p
                 className="
                   mt-4
+
                   max-w-[470px]
 
                   font-secondary
+
                   text-[12px]
+
                   leading-[1.7]
 
                   text-white/55
@@ -402,25 +466,25 @@ export default function PremiumLandingFooter() {
                   lg:text-[14px]
                 "
               >
-                Schedule a visit and explore
-                premium 3 &amp; 4 BHK villas
-                designed for elegant,
-                comfortable living.
+                Schedule a visit and explore premium
+                3 &amp; 4 BHK villas designed for
+                elegant, comfortable living.
               </p>
             </div>
 
-            {/* Contact information */}
+            {/* Address */}
             <div
               className="
                 mt-8
+
                 border-t
                 border-white/10
+
                 pt-6
 
                 sm:mt-9
               "
             >
-              {/* Address */}
               <div
                 className="
                   flex
@@ -428,11 +492,13 @@ export default function PremiumLandingFooter() {
                   gap-3.5
                 "
               >
-                <div
+                <span
                   className="
                     flex
+
                     h-9
                     w-9
+
                     shrink-0
 
                     items-center
@@ -452,16 +518,20 @@ export default function PremiumLandingFooter() {
                     size={15}
                     strokeWidth={1.8}
                   />
-                </div>
+                </span>
 
                 <div>
                   <p
                     className="
                       font-secondary
+
                       text-[9px]
                       font-semibold
+
                       uppercase
+
                       tracking-[0.15em]
+
                       text-white/35
                     "
                   >
@@ -474,12 +544,16 @@ export default function PremiumLandingFooter() {
                     rel="noopener noreferrer"
                     className="
                       mt-1.5
+
                       block
+
                       max-w-[460px]
 
                       font-secondary
+
                       text-[13px]
                       font-medium
+
                       leading-[1.7]
 
                       text-white/80
@@ -493,20 +567,20 @@ export default function PremiumLandingFooter() {
                     "
                   >
                     New No. 15/2, Old No. 7/2,
-                    First Main Road, Kasturibai
-                    Nagar, Adyar, Chennai –
-                    600020
+                    First Main Road, Kasturibai Nagar,
+                    Adyar, Chennai – 600020
                   </a>
                 </div>
               </div>
 
-              {/* Phone + Email */}
+              {/* Contact */}
               <div
                 className="
                   mt-6
 
                   flex
                   flex-col
+
                   gap-4
 
                   sm:flex-row
@@ -519,7 +593,9 @@ export default function PremiumLandingFooter() {
                   href="tel:+919840333117"
                   className="
                     group
+
                     inline-flex
+
                     items-center
                     gap-2.5
                   "
@@ -527,8 +603,10 @@ export default function PremiumLandingFooter() {
                   <span
                     className="
                       flex
+
                       h-8
                       w-8
+
                       items-center
                       justify-center
 
@@ -556,10 +634,15 @@ export default function PremiumLandingFooter() {
                     <span
                       className="
                         block
+
                         font-secondary
+
                         text-[8px]
+
                         uppercase
+
                         tracking-[0.13em]
+
                         text-white/30
                       "
                     >
@@ -570,9 +653,12 @@ export default function PremiumLandingFooter() {
                       className="
                         mt-0.5
                         block
+
                         font-secondary
+
                         text-[12px]
                         font-semibold
+
                         text-white/80
 
                         sm:text-[13px]
@@ -588,7 +674,9 @@ export default function PremiumLandingFooter() {
                   href="mailto:info@devappartments.com"
                   className="
                     group
+
                     inline-flex
+
                     items-center
                     gap-2.5
                   "
@@ -596,8 +684,10 @@ export default function PremiumLandingFooter() {
                   <span
                     className="
                       flex
+
                       h-8
                       w-8
+
                       items-center
                       justify-center
 
@@ -625,10 +715,15 @@ export default function PremiumLandingFooter() {
                     <span
                       className="
                         block
+
                         font-secondary
+
                         text-[8px]
+
                         uppercase
+
                         tracking-[0.13em]
+
                         text-white/30
                       "
                     >
@@ -639,9 +734,12 @@ export default function PremiumLandingFooter() {
                       className="
                         mt-0.5
                         block
+
                         font-secondary
+
                         text-[12px]
                         font-semibold
+
                         text-white/80
 
                         sm:text-[13px]
@@ -655,10 +753,11 @@ export default function PremiumLandingFooter() {
             </div>
           </motion.div>
 
-          {/* RIGHT FORM
-              MOBILE: FIRST
-              DESKTOP: SECOND
-          */}
+          {/* =================================================
+              FORM
+              Mobile = first
+              Desktop = right
+          ================================================= */}
           <motion.div
             initial={{
               opacity: 0,
@@ -670,7 +769,7 @@ export default function PremiumLandingFooter() {
             }}
             viewport={{
               once: true,
-              amount: 0.2,
+              amount: 0.15,
             }}
             transition={{
               duration: 0.7,
@@ -679,6 +778,7 @@ export default function PremiumLandingFooter() {
             }}
             className="
               order-1
+
               w-full
 
               rounded-[22px]
@@ -700,12 +800,14 @@ export default function PremiumLandingFooter() {
               lg:p-7
             "
           >
-            {/* Form heading */}
+            {/* Heading */}
             <div
               className="
                 flex
+
                 items-start
                 justify-between
+
                 gap-5
               "
             >
@@ -713,10 +815,14 @@ export default function PremiumLandingFooter() {
                 <p
                   className="
                     font-secondary
+
                     text-[9px]
                     font-semibold
+
                     uppercase
+
                     tracking-[0.18em]
+
                     text-[#b88d48]
 
                     sm:text-[10px]
@@ -728,10 +834,12 @@ export default function PremiumLandingFooter() {
                 <h3
                   className="
                     mt-1.5
+
                     font-primary
 
                     text-[26px]
                     font-bold
+
                     tracking-[-0.035em]
 
                     text-[#211811]
@@ -748,8 +856,10 @@ export default function PremiumLandingFooter() {
               <span
                 className="
                   hidden
+
                   h-10
                   w-10
+
                   shrink-0
 
                   items-center
@@ -771,7 +881,7 @@ export default function PremiumLandingFooter() {
               </span>
             </div>
 
-            {/* Form */}
+            {/* FORM */}
             <form
               onSubmit={handleSubmit}
               className="
@@ -811,6 +921,7 @@ export default function PremiumLandingFooter() {
                     px-3.5
 
                     font-secondary
+
                     text-[12px]
 
                     text-[#241b15]
@@ -855,6 +966,7 @@ export default function PremiumLandingFooter() {
                     px-3.5
 
                     font-secondary
+
                     text-[12px]
 
                     text-[#241b15]
@@ -901,6 +1013,7 @@ export default function PremiumLandingFooter() {
                   px-3.5
 
                   font-secondary
+
                   text-[12px]
 
                   text-[#241b15]
@@ -922,7 +1035,7 @@ export default function PremiumLandingFooter() {
                 "
               />
 
-              {/* Villa type */}
+              {/* Villa Type */}
               <div
                 className="
                   relative
@@ -931,16 +1044,26 @@ export default function PremiumLandingFooter() {
               >
                 <select
                   name="villa_type"
-                  value={formData.villa_type}
-                  onChange={handleVillaChange}
+                  value={
+                    formData.villa_type
+                  }
+                  onChange={
+                    handleVillaChange
+                  }
                   onMouseDown={() =>
-                    setIsVillaSelectOpen(true)
+                    setIsVillaSelectOpen(
+                      true,
+                    )
                   }
                   onFocus={() =>
-                    setIsVillaSelectOpen(true)
+                    setIsVillaSelectOpen(
+                      true,
+                    )
                   }
                   onBlur={() =>
-                    setIsVillaSelectOpen(false)
+                    setIsVillaSelectOpen(
+                      false,
+                    )
                   }
                   required
                   disabled={isSubmitting}
@@ -963,6 +1086,7 @@ export default function PremiumLandingFooter() {
                     pr-11
 
                     font-secondary
+
                     text-[12px]
 
                     text-[#7e766e]
@@ -1010,11 +1134,14 @@ export default function PremiumLandingFooter() {
                   }}
                   className="
                     pointer-events-none
+
                     absolute
+
                     right-3
                     top-1/2
 
                     flex
+
                     h-6
                     w-6
 
@@ -1058,6 +1185,7 @@ export default function PremiumLandingFooter() {
                   py-3
 
                   font-secondary
+
                   text-[12px]
 
                   text-[#241b15]
@@ -1104,6 +1232,7 @@ export default function PremiumLandingFooter() {
                     py-2.5
 
                     font-secondary
+
                     text-[11px]
                     font-medium
 
@@ -1114,7 +1243,7 @@ export default function PremiumLandingFooter() {
                 </motion.div>
               )}
 
-              {/* CTA */}
+              {/* Button */}
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
@@ -1138,6 +1267,7 @@ export default function PremiumLandingFooter() {
                   mt-1
 
                   flex
+
                   h-[46px]
                   w-full
 
@@ -1151,6 +1281,7 @@ export default function PremiumLandingFooter() {
                   px-4
 
                   font-secondary
+
                   text-[12px]
                   font-semibold
 
@@ -1162,7 +1293,6 @@ export default function PremiumLandingFooter() {
                   duration-300
 
                   hover:bg-[#d65322]
-                  hover:shadow-[0_13px_28px_rgba(232,97,44,0.28)]
 
                   disabled:cursor-not-allowed
                   disabled:opacity-70
@@ -1180,6 +1310,7 @@ export default function PremiumLandingFooter() {
                 <span
                   className="
                     flex
+
                     h-7
                     w-7
 
@@ -1191,11 +1322,6 @@ export default function PremiumLandingFooter() {
                     rounded-full
 
                     bg-white/15
-
-                    transition-transform
-                    duration-300
-
-                    group-hover:translate-x-0.5
                   "
                 >
                   {isSubmitting ? (
@@ -1215,14 +1341,17 @@ export default function PremiumLandingFooter() {
           </motion.div>
         </div>
 
-        {/* Bottom footer */}
+        {/* =================================================
+            COPYRIGHT
+        ================================================= */}
         <div
           className="
             mt-9
 
             flex
             flex-col
-            gap-2.5
+
+            gap-2
 
             border-t
             border-white/10
@@ -1230,6 +1359,7 @@ export default function PremiumLandingFooter() {
             py-4
 
             font-secondary
+
             text-[9px]
 
             text-white/35
@@ -1237,19 +1367,18 @@ export default function PremiumLandingFooter() {
             sm:flex-row
             sm:items-center
             sm:justify-between
+
             sm:text-[10px]
 
             lg:mt-10
           "
         >
           <p>
-            © 2026 Dev Appartments.
-            All rights reserved.
+            © 2026 Dev Appartments. All rights reserved.
           </p>
 
           <p>
-            Divya Desam · Premium Villas
-            · ECR, Chennai
+            Divya Desam · Premium Villas · ECR, Chennai
           </p>
         </div>
       </div>
