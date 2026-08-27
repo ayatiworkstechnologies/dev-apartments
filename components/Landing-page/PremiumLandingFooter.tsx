@@ -7,9 +7,7 @@ import {
 
 import { useRouter } from "next/navigation";
 
-import {
-  motion,
-} from "framer-motion";
+import { motion } from "framer-motion";
 
 import {
   ArrowUpRight,
@@ -20,12 +18,7 @@ import {
   Phone,
 } from "lucide-react";
 
-const ease: [
-  number,
-  number,
-  number,
-  number,
-] = [
+const ease: [number, number, number, number] = [
   0.22,
   1,
   0.36,
@@ -41,38 +34,25 @@ type FormData = {
 };
 
 type Status = {
-  type:
-    | "error"
-    | null;
-
+  type: "error" | null;
   message: string;
 };
 
-const initialFormData: FormData =
-  {
-    name: "",
-    phone: "",
-    email: "",
-    villa_type: "",
-    message: "",
-  };
+const initialFormData: FormData = {
+  name: "",
+  phone: "",
+  email: "",
+  villa_type: "",
+  message: "",
+};
 
 export default function PremiumLandingFooter() {
-  const router =
-    useRouter();
+  const router = useRouter();
 
-  const [
-    formData,
-    setFormData,
-  ] =
-    useState<FormData>(
-      initialFormData,
-    );
+  const [formData, setFormData] =
+    useState<FormData>(initialFormData);
 
-  const [
-    isSubmitting,
-    setIsSubmitting,
-  ] =
+  const [isSubmitting, setIsSubmitting] =
     useState(false);
 
   const [
@@ -80,10 +60,7 @@ export default function PremiumLandingFooter() {
     setIsVillaSelectOpen,
   ] = useState(false);
 
-  const [
-    status,
-    setStatus,
-  ] =
+  const [status, setStatus] =
     useState<Status>({
       type: null,
       message: "",
@@ -95,25 +72,15 @@ export default function PremiumLandingFooter() {
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    const {
-      name,
-      value,
-    } =
+    const { name, value } =
       event.target;
 
-    setFormData(
-      (
-        previous,
-      ) => ({
-        ...previous,
-        [name]:
-          value,
-      }),
-    );
+    setFormData((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
 
-    if (
-      status.type
-    ) {
+    if (status.type) {
       setStatus({
         type: null,
         message: "",
@@ -125,165 +92,128 @@ export default function PremiumLandingFooter() {
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     handleChange(event);
+
     setIsVillaSelectOpen(false);
   };
 
-  const handleSubmit =
-    async (
-      event: FormEvent<HTMLFormElement>,
-    ) => {
-      event.preventDefault();
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ) => {
+    event.preventDefault();
 
-      if (
-        isSubmitting
-      ) {
-        return;
-      }
+    if (isSubmitting) {
+      return;
+    }
 
+    setStatus({
+      type: null,
+      message: "",
+    });
+
+    if (!formData.name.trim()) {
       setStatus({
-        type: null,
-        message: "",
+        type: "error",
+        message:
+          "Please enter your full name.",
       });
 
-      if (
-        !formData.name.trim()
-      ) {
-        setStatus({
-          type: "error",
-          message:
-            "Please enter your full name.",
-        });
+      return;
+    }
 
-        return;
-      }
+    if (!formData.phone.trim()) {
+      setStatus({
+        type: "error",
+        message:
+          "Please enter your phone number.",
+      });
 
-      if (
-        !formData.phone.trim()
-      ) {
-        setStatus({
-          type: "error",
-          message:
-            "Please enter your phone number.",
-        });
+      return;
+    }
 
-        return;
-      }
+    if (!formData.email.trim()) {
+      setStatus({
+        type: "error",
+        message:
+          "Please enter your email address.",
+      });
 
-      if (
-        !formData.email.trim()
-      ) {
-        setStatus({
-          type: "error",
-          message:
-            "Please enter your email address.",
-        });
+      return;
+    }
 
-        return;
-      }
+    if (!formData.villa_type) {
+      setStatus({
+        type: "error",
+        message:
+          "Please select your villa type.",
+      });
 
-      if (
-        !formData.villa_type
-      ) {
-        setStatus({
-          type: "error",
-          message:
-            "Please select your villa type.",
-        });
+      return;
+    }
 
-        return;
-      }
+    try {
+      setIsSubmitting(true);
+
+      const response = await fetch(
+        "/api/landingpage-enquiry",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            phone: formData.phone.trim(),
+            email: formData.email.trim(),
+            villa_type:
+              formData.villa_type,
+            message:
+              formData.message.trim(),
+          }),
+        },
+      );
+
+      let result: {
+        success?: boolean;
+        message?: string;
+      } = {};
 
       try {
-        setIsSubmitting(
-          true,
-        );
+        result =
+          await response.json();
+      } catch {
+        result = {};
+      }
 
-        const response =
-          await fetch(
-            "/api/landingpage-enquiry",
-            {
-              method:
-                "POST",
-
-              headers: {
-                "Content-Type":
-                  "application/json",
-              },
-
-              body:
-                JSON.stringify(
-                  {
-                    name:
-                      formData.name.trim(),
-
-                    phone:
-                      formData.phone.trim(),
-
-                    email:
-                      formData.email.trim(),
-
-                    villa_type:
-                      formData.villa_type,
-
-                    message:
-                      formData.message.trim(),
-                  },
-                ),
-            },
-          );
-
-        let result: {
-          success?: boolean;
-          message?: string;
-        } = {};
-
-        try {
-          result =
-            await response.json();
-        } catch {
-          result =
-            {};
-        }
-
-        if (
-          !response.ok
-        ) {
-          throw new Error(
-            result.message ||
-              "Unable to submit your enquiry.",
-          );
-        }
-
-        setFormData(
-          initialFormData,
-        );
-
-        router.push(
-          "/thank-you",
-        );
-      } catch (
-        error
-      ) {
-        console.error(
-          "Landing page enquiry error:",
-          error,
-        );
-
-        setStatus({
-          type: "error",
-
-          message:
-            error instanceof
-            Error
-              ? error.message
-              : "Something went wrong. Please try again.",
-        });
-      } finally {
-        setIsSubmitting(
-          false,
+      if (!response.ok) {
+        throw new Error(
+          result.message ||
+            "Unable to submit your enquiry.",
         );
       }
-    };
+
+      setFormData(initialFormData);
+
+      router.push("/thank-you");
+    } catch (error) {
+      console.error(
+        "Landing page enquiry error:",
+        error,
+      );
+
+      setStatus({
+        type: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer
@@ -291,9 +221,7 @@ export default function PremiumLandingFooter() {
       className="
         relative
         overflow-hidden
-
         bg-[#18130f]
-
         text-white
       "
     >
@@ -302,19 +230,13 @@ export default function PremiumLandingFooter() {
         aria-hidden="true"
         className="
           pointer-events-none
-
           absolute
-
-          -left-[140px]
-          top-[80px]
-
-          h-[360px]
-          w-[360px]
-
+          -left-[160px]
+          top-[30px]
+          h-[320px]
+          w-[320px]
           rounded-full
-
           bg-[#b88d48]/10
-
           blur-3xl
         "
       />
@@ -323,19 +245,13 @@ export default function PremiumLandingFooter() {
         aria-hidden="true"
         className="
           pointer-events-none
-
           absolute
-
           -right-[180px]
-          bottom-[-140px]
-
-          h-[420px]
-          w-[420px]
-
+          bottom-[-160px]
+          h-[360px]
+          w-[360px]
           rounded-full
-
           bg-[#e8612c]/10
-
           blur-3xl
         "
       />
@@ -344,41 +260,37 @@ export default function PremiumLandingFooter() {
         className="
           relative
           z-10
-
           mx-auto
-
           w-full
-          max-w-[1500px]
+          max-w-[1360px]
 
           px-5
-          pt-14
+          pt-9
 
           sm:px-8
-          sm:pt-16
+          sm:pt-10
 
-          lg:px-12
-          lg:pt-20
+          lg:px-10
+          lg:pt-11
 
-          xl:px-20
+          xl:px-12
         "
       >
         {/* Top label */}
         <div
           className="
-            mb-10
-
+            mb-7
             flex
             items-center
-            gap-4
+            gap-3
 
-            sm:mb-12
+            sm:mb-8
           "
         >
           <span
             className="
               h-px
-              w-10
-
+              w-8
               bg-[#b88d48]
             "
           />
@@ -386,42 +298,41 @@ export default function PremiumLandingFooter() {
           <p
             className="
               font-secondary
-
-              text-[10px]
+              text-[9px]
               font-semibold
-
               uppercase
-
-              tracking-[0.24em]
-
+              tracking-[0.22em]
               text-[#cba45e]
+
+              sm:text-[10px]
             "
           >
             Visit. Experience. Own.
           </p>
         </div>
 
-        {/* Main */}
+        {/* Main content */}
         <div
           className="
             grid
-            gap-12
+            gap-8
 
-            lg:grid-cols-[0.9fr_1.1fr]
-            lg:gap-16
+            lg:grid-cols-[minmax(0,1fr)_520px]
+            lg:items-start
+            lg:gap-12
 
-            xl:grid-cols-[0.85fr_1.15fr]
-            xl:gap-24
+            xl:grid-cols-[minmax(0,1fr)_550px]
+            xl:gap-14
           "
         >
           {/* LEFT CONTENT
-              MOBILE = SECOND
-              DESKTOP = FIRST
+              MOBILE: SECOND
+              DESKTOP: FIRST
           */}
           <motion.div
             initial={{
               opacity: 0,
-              y: 24,
+              y: 20,
             }}
             whileInView={{
               opacity: 1,
@@ -432,107 +343,96 @@ export default function PremiumLandingFooter() {
               amount: 0.2,
             }}
             transition={{
-              duration: 0.75,
+              duration: 0.7,
               ease,
             }}
             className="
               order-2
-
               flex
+              max-w-[560px]
               flex-col
-              justify-between
+              justify-start
 
               lg:order-1
+              lg:pt-1
             "
           >
+            {/* Heading */}
             <div>
               <h2
                 className="
-                  max-w-[520px]
-
+                  max-w-[500px]
                   font-primary
 
-                  text-[38px]
+                  text-[36px]
                   font-bold
-
-                  leading-[1.02]
+                  leading-[0.98]
                   tracking-[-0.045em]
 
                   text-white
 
-                  sm:text-[48px]
+                  sm:text-[43px]
 
-                  lg:text-[58px]
+                  lg:text-[50px]
 
-                  xl:text-[64px]
+                  xl:text-[56px]
                 "
               >
                 Find Your
                 <br />
 
-                <span
-                  className="
-                    text-[#c89b3c]
-                  "
-                >
-                  Home at Divya
-                  Desam
+                <span className="text-[#c89b3c]">
+                  Home at Divya Desam
                 </span>
               </h2>
 
               <p
                 className="
-                  mt-5
-
-                  max-w-[500px]
+                  mt-4
+                  max-w-[470px]
 
                   font-secondary
-
-                  text-[13px]
-
-                  leading-[1.8]
+                  text-[12px]
+                  leading-[1.7]
 
                   text-white/55
 
-                  sm:text-[14px]
+                  sm:text-[13px]
 
-                  lg:text-[15px]
+                  lg:text-[14px]
                 "
               >
-                Schedule a visit
-                and explore premium
-                3 &amp; 4 BHK villas
+                Schedule a visit and explore
+                premium 3 &amp; 4 BHK villas
                 designed for elegant,
                 comfortable living.
               </p>
             </div>
 
-            {/* Address */}
+            {/* Contact information */}
             <div
               className="
-                mt-10
-
+                mt-8
                 border-t
                 border-white/10
+                pt-6
 
-                pt-8
-
-                sm:mt-12
+                sm:mt-9
               "
             >
+              {/* Address */}
               <div
                 className="
                   flex
                   items-start
-                  gap-4
+                  gap-3.5
                 "
               >
                 <div
                   className="
                     flex
-
-                    h-10
-                    w-10
+                    h-9
+                    w-9
                     shrink-0
 
                     items-center
@@ -549,10 +449,8 @@ export default function PremiumLandingFooter() {
                   "
                 >
                   <MapPin
-                    size={17}
-                    strokeWidth={
-                      1.8
-                    }
+                    size={15}
+                    strokeWidth={1.8}
                   />
                 </div>
 
@@ -560,14 +458,10 @@ export default function PremiumLandingFooter() {
                   <p
                     className="
                       font-secondary
-
-                      text-[10px]
+                      text-[9px]
                       font-semibold
-
                       uppercase
-
-                      tracking-[0.16em]
-
+                      tracking-[0.15em]
                       text-white/35
                     "
                   >
@@ -579,18 +473,14 @@ export default function PremiumLandingFooter() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="
-                      mt-2
-
+                      mt-1.5
                       block
-
                       max-w-[460px]
 
                       font-secondary
-
-                      text-[14px]
+                      text-[13px]
                       font-medium
-
-                      leading-[1.8]
+                      leading-[1.7]
 
                       text-white/80
 
@@ -599,52 +489,46 @@ export default function PremiumLandingFooter() {
 
                       hover:text-[#c89b3c]
 
-                      sm:text-[15px]
+                      sm:text-[14px]
                     "
                   >
-                    New No. 15/2,
-                    Old No. 7/2,
-                    First Main Road,
-                    Kasturibai Nagar,
-                    Adyar, Chennai –
+                    New No. 15/2, Old No. 7/2,
+                    First Main Road, Kasturibai
+                    Nagar, Adyar, Chennai –
                     600020
                   </a>
                 </div>
               </div>
 
-              {/* Phone + email */}
+              {/* Phone + Email */}
               <div
                 className="
-                  mt-7
+                  mt-6
 
                   flex
                   flex-col
-
-                  gap-5
+                  gap-4
 
                   sm:flex-row
                   sm:items-center
-                  sm:gap-8
+                  sm:gap-7
                 "
               >
+                {/* Phone */}
                 <a
                   href="tel:+919840333117"
                   className="
                     group
-
                     inline-flex
-
                     items-center
-                    gap-3
+                    gap-2.5
                   "
                 >
                   <span
                     className="
                       flex
-
-                      h-9
-                      w-9
-
+                      h-8
+                      w-8
                       items-center
                       justify-center
 
@@ -663,10 +547,8 @@ export default function PremiumLandingFooter() {
                     "
                   >
                     <Phone
-                      size={15}
-                      strokeWidth={
-                        1.8
-                      }
+                      size={13}
+                      strokeWidth={1.8}
                     />
                   </span>
 
@@ -674,15 +556,10 @@ export default function PremiumLandingFooter() {
                     <span
                       className="
                         block
-
                         font-secondary
-
-                        text-[9px]
-
+                        text-[8px]
                         uppercase
-
-                        tracking-[0.14em]
-
+                        tracking-[0.13em]
                         text-white/30
                       "
                     >
@@ -692,15 +569,13 @@ export default function PremiumLandingFooter() {
                     <span
                       className="
                         mt-0.5
-
                         block
-
                         font-secondary
-
-                        text-[13px]
+                        text-[12px]
                         font-semibold
-
                         text-white/80
+
+                        sm:text-[13px]
                       "
                     >
                       +91 98403 33117
@@ -708,24 +583,21 @@ export default function PremiumLandingFooter() {
                   </div>
                 </a>
 
+                {/* Email */}
                 <a
                   href="mailto:info@devappartments.com"
                   className="
                     group
-
                     inline-flex
-
                     items-center
-                    gap-3
+                    gap-2.5
                   "
                 >
                   <span
                     className="
                       flex
-
-                      h-9
-                      w-9
-
+                      h-8
+                      w-8
                       items-center
                       justify-center
 
@@ -744,10 +616,8 @@ export default function PremiumLandingFooter() {
                     "
                   >
                     <Mail
-                      size={15}
-                      strokeWidth={
-                        1.8
-                      }
+                      size={13}
+                      strokeWidth={1.8}
                     />
                   </span>
 
@@ -755,15 +625,10 @@ export default function PremiumLandingFooter() {
                     <span
                       className="
                         block
-
                         font-secondary
-
-                        text-[9px]
-
+                        text-[8px]
                         uppercase
-
-                        tracking-[0.14em]
-
+                        tracking-[0.13em]
                         text-white/30
                       "
                     >
@@ -773,15 +638,13 @@ export default function PremiumLandingFooter() {
                     <span
                       className="
                         mt-0.5
-
                         block
-
                         font-secondary
-
-                        text-[13px]
+                        text-[12px]
                         font-semibold
-
                         text-white/80
+
+                        sm:text-[13px]
                       "
                     >
                       info@devappartments.com
@@ -792,14 +655,14 @@ export default function PremiumLandingFooter() {
             </div>
           </motion.div>
 
-          {/* FORM
-              MOBILE = FIRST
-              DESKTOP = SECOND
+          {/* RIGHT FORM
+              MOBILE: FIRST
+              DESKTOP: SECOND
           */}
           <motion.div
             initial={{
               opacity: 0,
-              y: 24,
+              y: 20,
             }}
             whileInView={{
               opacity: 1,
@@ -810,14 +673,15 @@ export default function PremiumLandingFooter() {
               amount: 0.2,
             }}
             transition={{
-              duration: 0.75,
+              duration: 0.7,
               delay: 0.08,
               ease,
             }}
             className="
               order-1
+              w-full
 
-              rounded-[28px]
+              rounded-[22px]
 
               border
               border-white/10
@@ -828,39 +692,34 @@ export default function PremiumLandingFooter() {
 
               text-[#241b15]
 
-              shadow-[0_28px_80px_rgba(0,0,0,0.22)]
+              shadow-[0_22px_65px_rgba(0,0,0,0.20)]
 
-              sm:p-8
+              sm:p-6
 
               lg:order-2
-              lg:p-9
-
-              xl:p-10
+              lg:p-7
             "
           >
+            {/* Form heading */}
             <div
               className="
                 flex
-
                 items-start
                 justify-between
-
-                gap-6
+                gap-5
               "
             >
               <div>
                 <p
                   className="
                     font-secondary
-
-                    text-[10px]
+                    text-[9px]
                     font-semibold
-
                     uppercase
-
-                    tracking-[0.2em]
-
+                    tracking-[0.18em]
                     text-[#b88d48]
+
+                    sm:text-[10px]
                   "
                 >
                   Enquire Now
@@ -868,20 +727,18 @@ export default function PremiumLandingFooter() {
 
                 <h3
                   className="
-                    mt-2
-
+                    mt-1.5
                     font-primary
 
-                    text-[28px]
+                    text-[26px]
                     font-bold
-
                     tracking-[-0.035em]
 
                     text-[#211811]
 
-                    sm:text-[32px]
+                    sm:text-[29px]
 
-                    lg:text-[36px]
+                    lg:text-[31px]
                   "
                 >
                   Book a Site Visit
@@ -891,9 +748,9 @@ export default function PremiumLandingFooter() {
               <span
                 className="
                   hidden
-
-                  h-12
-                  w-12
+                  h-10
+                  w-10
+                  shrink-0
 
                   items-center
                   justify-center
@@ -908,28 +765,25 @@ export default function PremiumLandingFooter() {
                 "
               >
                 <ArrowUpRight
-                  size={19}
-                  strokeWidth={
-                    1.8
-                  }
+                  size={17}
+                  strokeWidth={1.8}
                 />
               </span>
             </div>
 
+            {/* Form */}
             <form
-              onSubmit={
-                handleSubmit
-              }
+              onSubmit={handleSubmit}
               className="
-                mt-7
-                space-y-4
+                mt-5
+                space-y-3
               "
             >
               {/* Name + Phone */}
               <div
                 className="
                   grid
-                  gap-4
+                  gap-3
 
                   sm:grid-cols-2
                 "
@@ -937,34 +791,27 @@ export default function PremiumLandingFooter() {
                 <input
                   type="text"
                   name="name"
-                  value={
-                    formData.name
-                  }
-                  onChange={
-                    handleChange
-                  }
+                  value={formData.name}
+                  onChange={handleChange}
                   required
-                  disabled={
-                    isSubmitting
-                  }
+                  disabled={isSubmitting}
                   autoComplete="name"
                   placeholder="Full Name"
                   className="
-                    h-[52px]
+                    h-[46px]
                     w-full
 
-                    rounded-[12px]
+                    rounded-[10px]
 
                     border
                     border-[#e7e0d8]
 
                     bg-[#faf8f5]
 
-                    px-4
+                    px-3.5
 
                     font-secondary
-
-                    text-[13px]
+                    text-[12px]
 
                     text-[#241b15]
 
@@ -977,6 +824,8 @@ export default function PremiumLandingFooter() {
 
                     focus:border-[#b88d48]
                     focus:bg-white
+                    focus:ring-4
+                    focus:ring-[#b88d48]/10
 
                     disabled:cursor-not-allowed
                     disabled:opacity-60
@@ -986,34 +835,27 @@ export default function PremiumLandingFooter() {
                 <input
                   type="tel"
                   name="phone"
-                  value={
-                    formData.phone
-                  }
-                  onChange={
-                    handleChange
-                  }
+                  value={formData.phone}
+                  onChange={handleChange}
                   required
-                  disabled={
-                    isSubmitting
-                  }
+                  disabled={isSubmitting}
                   autoComplete="tel"
                   placeholder="Phone Number"
                   className="
-                    h-[52px]
+                    h-[46px]
                     w-full
 
-                    rounded-[12px]
+                    rounded-[10px]
 
                     border
                     border-[#e7e0d8]
 
                     bg-[#faf8f5]
 
-                    px-4
+                    px-3.5
 
                     font-secondary
-
-                    text-[13px]
+                    text-[12px]
 
                     text-[#241b15]
 
@@ -1026,6 +868,8 @@ export default function PremiumLandingFooter() {
 
                     focus:border-[#b88d48]
                     focus:bg-white
+                    focus:ring-4
+                    focus:ring-[#b88d48]/10
 
                     disabled:cursor-not-allowed
                     disabled:opacity-60
@@ -1037,34 +881,27 @@ export default function PremiumLandingFooter() {
               <input
                 type="email"
                 name="email"
-                value={
-                  formData.email
-                }
-                onChange={
-                  handleChange
-                }
+                value={formData.email}
+                onChange={handleChange}
                 required
-                disabled={
-                  isSubmitting
-                }
+                disabled={isSubmitting}
                 autoComplete="email"
                 placeholder="Email Address"
                 className="
-                  h-[52px]
+                  h-[46px]
                   w-full
 
-                  rounded-[12px]
+                  rounded-[10px]
 
                   border
                   border-[#e7e0d8]
 
                   bg-[#faf8f5]
 
-                  px-4
+                  px-3.5
 
                   font-secondary
-
-                  text-[13px]
+                  text-[12px]
 
                   text-[#241b15]
 
@@ -1077,22 +914,25 @@ export default function PremiumLandingFooter() {
 
                   focus:border-[#b88d48]
                   focus:bg-white
+                  focus:ring-4
+                  focus:ring-[#b88d48]/10
 
                   disabled:cursor-not-allowed
                   disabled:opacity-60
                 "
               />
 
-              {/* Villa */}
-              <div className="relative w-full">
+              {/* Villa type */}
+              <div
+                className="
+                  relative
+                  w-full
+                "
+              >
                 <select
                   name="villa_type"
-                  value={
-                    formData.villa_type
-                  }
-                  onChange={
-                    handleVillaChange
-                  }
+                  value={formData.villa_type}
+                  onChange={handleVillaChange}
                   onMouseDown={() =>
                     setIsVillaSelectOpen(true)
                   }
@@ -1103,17 +943,15 @@ export default function PremiumLandingFooter() {
                     setIsVillaSelectOpen(false)
                   }
                   required
-                  disabled={
-                    isSubmitting
-                  }
+                  disabled={isSubmitting}
                   className="
-                    h-[52px]
+                    h-[46px]
                     w-full
 
                     cursor-pointer
                     appearance-none
 
-                    rounded-[12px]
+                    rounded-[10px]
 
                     border
                     border-[#e7e0d8]
@@ -1121,12 +959,11 @@ export default function PremiumLandingFooter() {
                     bg-[#faf8f5]
 
                     py-0
-                    pl-4
-                    pr-12
+                    pl-3.5
+                    pr-11
 
                     font-secondary
-
-                    text-[13px]
+                    text-[12px]
 
                     text-[#7e766e]
 
@@ -1173,14 +1010,13 @@ export default function PremiumLandingFooter() {
                   }}
                   className="
                     pointer-events-none
-
                     absolute
-                    right-4
+                    right-3
                     top-1/2
 
                     flex
-                    h-7
-                    w-7
+                    h-6
+                    w-6
 
                     -translate-y-1/2
 
@@ -1191,7 +1027,7 @@ export default function PremiumLandingFooter() {
                   "
                 >
                   <ChevronDown
-                    size={18}
+                    size={16}
                     strokeWidth={2}
                   />
                 </motion.span>
@@ -1200,36 +1036,29 @@ export default function PremiumLandingFooter() {
               {/* Message */}
               <textarea
                 name="message"
-                value={
-                  formData.message
-                }
-                onChange={
-                  handleChange
-                }
-                rows={3}
-                disabled={
-                  isSubmitting
-                }
+                value={formData.message}
+                onChange={handleChange}
+                rows={2}
+                disabled={isSubmitting}
                 placeholder="Message"
                 className="
-                  min-h-[96px]
+                  min-h-[76px]
                   w-full
 
                   resize-none
 
-                  rounded-[12px]
+                  rounded-[10px]
 
                   border
                   border-[#e7e0d8]
 
                   bg-[#faf8f5]
 
-                  px-4
-                  py-3.5
+                  px-3.5
+                  py-3
 
                   font-secondary
-
-                  text-[13px]
+                  text-[12px]
 
                   text-[#241b15]
 
@@ -1242,55 +1071,53 @@ export default function PremiumLandingFooter() {
 
                   focus:border-[#b88d48]
                   focus:bg-white
+                  focus:ring-4
+                  focus:ring-[#b88d48]/10
 
                   disabled:cursor-not-allowed
                   disabled:opacity-60
                 "
               />
 
-              {/* Error only */}
+              {/* Error */}
               {status.type ===
                 "error" && (
                 <motion.div
                   initial={{
                     opacity: 0,
-                    y: -6,
+                    y: -5,
                   }}
                   animate={{
                     opacity: 1,
                     y: 0,
                   }}
+                  role="alert"
                   className="
-                    rounded-[12px]
+                    rounded-[10px]
 
                     border
                     border-red-200
 
                     bg-red-50
 
-                    px-4
-                    py-3
+                    px-3.5
+                    py-2.5
 
                     font-secondary
-
-                    text-[12px]
+                    text-[11px]
                     font-medium
 
                     text-red-600
                   "
                 >
-                  {
-                    status.message
-                  }
+                  {status.message}
                 </motion.div>
               )}
 
-              {/* Submit */}
+              {/* CTA */}
               <motion.button
                 type="submit"
-                disabled={
-                  isSubmitting
-                }
+                disabled={isSubmitting}
                 whileHover={
                   isSubmitting
                     ? {}
@@ -1302,8 +1129,7 @@ export default function PremiumLandingFooter() {
                   isSubmitting
                     ? {}
                     : {
-                        scale:
-                          0.98,
+                        scale: 0.98,
                       }
                 }
                 className="
@@ -1312,10 +1138,8 @@ export default function PremiumLandingFooter() {
                   mt-1
 
                   flex
-
-                  h-[54px]
+                  h-[46px]
                   w-full
-                  max-w-[230px]
 
                   items-center
                   justify-between
@@ -1324,28 +1148,27 @@ export default function PremiumLandingFooter() {
 
                   bg-[#e8612c]
 
-                  px-5
+                  px-4
 
                   font-secondary
-
-                  text-[13px]
+                  text-[12px]
                   font-semibold
 
                   text-white
 
-                  shadow-[0_12px_28px_rgba(232,97,44,0.25)]
+                  shadow-[0_10px_24px_rgba(232,97,44,0.22)]
 
                   transition-all
                   duration-300
 
                   hover:bg-[#d65322]
+                  hover:shadow-[0_13px_28px_rgba(232,97,44,0.28)]
 
                   disabled:cursor-not-allowed
                   disabled:opacity-70
 
-                  sm:px-6
-
-                  sm:text-[14px]
+                  sm:max-w-[220px]
+                  sm:px-5
                 "
               >
                 <span>
@@ -1357,9 +1180,10 @@ export default function PremiumLandingFooter() {
                 <span
                   className="
                     flex
+                    h-7
+                    w-7
 
-                    h-8
-                    w-8
+                    shrink-0
 
                     items-center
                     justify-center
@@ -1371,24 +1195,18 @@ export default function PremiumLandingFooter() {
                     transition-transform
                     duration-300
 
-                    group-hover:translate-x-1
+                    group-hover:translate-x-0.5
                   "
                 >
                   {isSubmitting ? (
                     <Loader2
-                      size={
-                        15
-                      }
+                      size={14}
                       className="animate-spin"
                     />
                   ) : (
                     <ArrowUpRight
-                      size={
-                        15
-                      }
-                      strokeWidth={
-                        2
-                      }
+                      size={14}
+                      strokeWidth={2}
                     />
                   )}
                 </span>
@@ -1400,40 +1218,38 @@ export default function PremiumLandingFooter() {
         {/* Bottom footer */}
         <div
           className="
-            mt-14
+            mt-9
 
             flex
             flex-col
-            gap-3
+            gap-2.5
 
             border-t
             border-white/10
 
-            py-5
+            py-4
 
             font-secondary
-
-            text-[11px]
+            text-[9px]
 
             text-white/35
 
             sm:flex-row
             sm:items-center
             sm:justify-between
+            sm:text-[10px]
 
-            lg:mt-16
+            lg:mt-10
           "
         >
           <p>
-            © 2026 Dev
-            Appartments. All
-            rights reserved.
+            © 2026 Dev Appartments.
+            All rights reserved.
           </p>
 
           <p>
-            Divya Desam ·
-            Premium Villas ·
-            ECR, Chennai
+            Divya Desam · Premium Villas
+            · ECR, Chennai
           </p>
         </div>
       </div>
