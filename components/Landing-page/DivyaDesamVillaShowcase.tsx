@@ -1107,18 +1107,49 @@ export default function DivyaDesamVillaShowcase() {
                     </motion.p>
                   </div>
 
+                  {/* Mobile / Tablet heading: exactly 2 rows */}
                   <h1
                     className="
                       max-w-[470px]
                       font-primary
                       text-[42px]
                       font-bold
+                      leading-[0.92]
+                      tracking-[-0.06em]
+                      text-[#120e0a]
+
+                      sm:text-[50px]
+
+                      lg:hidden
+                    "
+                  >
+                    <span className="block whitespace-nowrap">
+                      Where Life
+                    </span>
+
+                    <span
+                      className="
+                        block
+                        whitespace-nowrap
+                        text-[#bd8d07]
+                      "
+                    >
+                      Feels Complete
+                    </span>
+                  </h1>
+
+                  {/* Desktop heading: keep existing layout */}
+                  <h1
+                    className="
+                      hidden
+                      max-w-[470px]
+                      font-primary
+                      font-bold
                       leading-[0.9]
                       tracking-[-0.06em]
                       text-[#120e0a]
 
-                      sm:text-[54px]
-
+                      lg:block
                       lg:text-[64px]
 
                       xl:text-[76px]
@@ -1129,11 +1160,7 @@ export default function DivyaDesamVillaShowcase() {
                     Life
                     <br />
 
-                    <span
-                      className="
-                        text-[#bd8d07]
-                      "
-                    >
+                    <span className="text-[#bd8d07]">
                       Feels
                       <br />
                       Complete
@@ -1302,11 +1329,12 @@ export default function DivyaDesamVillaShowcase() {
                     className="
                       mt-6
                       flex
-                      flex-wrap
+                      flex-nowrap
                       items-center
-                      gap-4
+                      gap-2
 
                       sm:mt-7
+                      sm:gap-4
                     "
                   >
                     <motion.button
@@ -1322,6 +1350,7 @@ export default function DivyaDesamVillaShowcase() {
                         group
                         inline-flex
                         h-[48px]
+                        shrink-0
                         items-center
                         justify-center
                         gap-3
@@ -1373,9 +1402,12 @@ export default function DivyaDesamVillaShowcase() {
                     <div
                       className="
                         flex
+                        min-w-0
                         items-center
-                        gap-2
+                        gap-1.5
                         text-[#a97d09]
+
+                        sm:gap-2
                       "
                     >
                       <span
@@ -1383,6 +1415,7 @@ export default function DivyaDesamVillaShowcase() {
                           flex
                           h-8
                           w-8
+                          shrink-0
                           items-center
                           justify-center
                           rounded-full
@@ -1399,14 +1432,22 @@ export default function DivyaDesamVillaShowcase() {
 
                       <span
                         className="
+                          min-w-0
                           font-secondary
-                          text-[12px]
+                          text-[11px]
                           font-semibold
+                          leading-[1.1]
 
                           sm:text-[12px]
+                          sm:leading-[1.2]
                         "
                       >
-                        ECR, Thiruvidandhai, Chennai
+                        <span className="block">
+                          ECR, Thiruvidandhai,
+                        </span>
+                        <span className="block">
+                          Chennai
+                        </span>
                       </span>
                     </div>
                   </div>

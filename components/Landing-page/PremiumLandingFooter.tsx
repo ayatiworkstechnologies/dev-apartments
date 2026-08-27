@@ -1378,7 +1378,7 @@ export default function PremiumLandingFooter() {
           </p>
 
           <p>
-            Divya Desam · Premium Villas · ECR, Chennai
+            Divya Desam · Premium Villas · ECR, Thiruvidandhai, Chennai
           </p>
         </div>
       </div>

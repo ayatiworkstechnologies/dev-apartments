@@ -580,7 +580,7 @@ export default function Highlights() {
                       }
                       className={`flex min-w-[180px] snap-center items-center gap-3 rounded-2xl border p-3 text-left transition-all duration-300 ${
                         isActive
-                          ? "border-[#b78949] bg-[#b78949] text-white shadow-[0_12px_28px_rgba(183,137,73,0.25)]"
+                          ? "border-[#b78949] bg-[#b78949] text-white"
                           : "border-[#b78949]/15 bg-[#fbfaf7] text-[#3d3329]"
                       }`}
                     >
