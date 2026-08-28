@@ -264,7 +264,7 @@ export default function DivyaDesamFloatingActions() {
       setIsEnquiryOpen(false);
 
       router.push(
-        "/thank-you",
+        "/divya-desam-ecr/thank-you",
       );
     } catch (error) {
       console.error(

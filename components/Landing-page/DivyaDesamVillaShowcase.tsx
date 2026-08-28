@@ -695,7 +695,7 @@ export default function DivyaDesamVillaShowcase() {
       setIsModalOpen(false);
 
       router.push(
-        "/thank-you",
+        "/divya-desam-ecr/thank-you",
       );
     } catch (error) {
       console.error(
