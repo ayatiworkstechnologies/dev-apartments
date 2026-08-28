@@ -8,6 +8,7 @@ import {
 } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
 import {
   AnimatePresence,
   motion,
@@ -695,7 +696,7 @@ export default function DivyaDesamVillaShowcase() {
       setIsModalOpen(false);
 
       router.push(
-        "/divya-desam-ecr/thank-you",
+        getDivyaDesamThankYouUrl(),
       );
     } catch (error) {
       console.error(

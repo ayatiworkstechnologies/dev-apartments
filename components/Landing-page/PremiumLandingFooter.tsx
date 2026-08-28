@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
+import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
 import { motion } from "framer-motion";
 
 import {
@@ -220,7 +221,7 @@ export default function PremiumLandingFooter() {
       setIsVillaSelectOpen(false);
 
       router.push(
-        "/divya-desam-ecr/thank-you",
+        getDivyaDesamThankYouUrl(),
       );
     } catch (error) {
       console.error(

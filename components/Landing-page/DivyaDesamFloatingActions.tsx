@@ -7,6 +7,7 @@ import {
 } from "react";
 
 import { useRouter } from "next/navigation";
+import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
 
 import {
   AnimatePresence,
@@ -264,7 +265,7 @@ export default function DivyaDesamFloatingActions() {
       setIsEnquiryOpen(false);
 
       router.push(
-        "/divya-desam-ecr/thank-you",
+        getDivyaDesamThankYouUrl(),
       );
     } catch (error) {
       console.error(

@@ -7,6 +7,7 @@ import {
 } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
 import {
   AnimatePresence,
   motion,
@@ -256,7 +257,7 @@ export default function LandingHeader() {
       setIsModalOpen(false);
 
       router.push(
-        "/divya-desam-ecr/thank-you",
+        getDivyaDesamThankYouUrl(),
       );
     } catch (error) {
       console.error(
