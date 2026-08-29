@@ -6,8 +6,7 @@ import {
   useState,
 } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
+import { redirectToDivyaDesamThankYouPage } from "@/lib/campaignTracking";
 import {
   AnimatePresence,
   motion,
@@ -53,7 +52,6 @@ const ease: [
 ];
 
 export default function LandingHeader() {
-  const router = useRouter();
 
   const [
     isModalOpen,
@@ -256,9 +254,7 @@ export default function LandingHeader() {
       setIsVillaSelectOpen(false);
       setIsModalOpen(false);
 
-      router.push(
-        getDivyaDesamThankYouUrl(),
-      );
+      redirectToDivyaDesamThankYouPage();
     } catch (error) {
       console.error(
         "Header enquiry error:",

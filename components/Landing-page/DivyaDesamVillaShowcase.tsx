@@ -7,8 +7,7 @@ import {
   useState,
 } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
+import { redirectToDivyaDesamThankYouPage } from "@/lib/campaignTracking";
 import {
   AnimatePresence,
   motion,
@@ -455,7 +454,6 @@ function ImagePanel({
 }
 
 export default function DivyaDesamVillaShowcase() {
-  const router = useRouter();
 
   const sectionRef =
     useRef<HTMLElement>(null);
@@ -695,9 +693,7 @@ export default function DivyaDesamVillaShowcase() {
       setIsVillaSelectOpen(false);
       setIsModalOpen(false);
 
-      router.push(
-        getDivyaDesamThankYouUrl(),
-      );
+      redirectToDivyaDesamThankYouPage();
     } catch (error) {
       console.error(
         "Site visit popup error:",

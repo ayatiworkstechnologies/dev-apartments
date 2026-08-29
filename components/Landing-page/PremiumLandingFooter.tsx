@@ -5,8 +5,7 @@ import {
   useState,
 } from "react";
 
-import { useRouter } from "next/navigation";
-import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
+import { redirectToDivyaDesamThankYouPage } from "@/lib/campaignTracking";
 import { motion } from "framer-motion";
 
 import {
@@ -47,7 +46,6 @@ const initialFormData: FormData = {
 };
 
 export default function PremiumLandingFooter() {
-  const router = useRouter();
 
   const [
     formData,
@@ -220,9 +218,7 @@ export default function PremiumLandingFooter() {
 
       setIsVillaSelectOpen(false);
 
-      router.push(
-        getDivyaDesamThankYouUrl(),
-      );
+      redirectToDivyaDesamThankYouPage();
     } catch (error) {
       console.error(
         "Landing page enquiry error:",

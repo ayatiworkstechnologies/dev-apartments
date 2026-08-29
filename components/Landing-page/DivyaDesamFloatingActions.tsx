@@ -6,8 +6,7 @@ import {
   useState,
 } from "react";
 
-import { useRouter } from "next/navigation";
-import { getDivyaDesamThankYouUrl } from "@/lib/campaignTracking";
+import { redirectToDivyaDesamThankYouPage } from "@/lib/campaignTracking";
 
 import {
   AnimatePresence,
@@ -59,7 +58,6 @@ const ease: [
 ];
 
 export default function DivyaDesamFloatingActions() {
-  const router = useRouter();
 
   const [
     isEnquiryOpen,
@@ -264,9 +262,7 @@ export default function DivyaDesamFloatingActions() {
 
       setIsEnquiryOpen(false);
 
-      router.push(
-        getDivyaDesamThankYouUrl(),
-      );
+      redirectToDivyaDesamThankYouPage();
     } catch (error) {
       console.error(
         "Divya Desam enquiry error:",

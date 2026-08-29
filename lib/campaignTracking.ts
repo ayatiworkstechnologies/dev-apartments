@@ -12,3 +12,12 @@ export function getDivyaDesamThankYouUrl() {
 
   return `${DIVYA_DESAM_THANK_YOU_PATH}${window.location.search}`;
 }
+
+/**
+ * Use a document navigation after a successful lead submission. The full page
+ * load lets GTM run its page-view/conversion triggers for the thank-you URL;
+ * a Next.js client transition does not create a new browser page load.
+ */
+export function redirectToDivyaDesamThankYouPage() {
+  window.location.assign(getDivyaDesamThankYouUrl());
+}
